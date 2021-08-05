@@ -6,7 +6,7 @@ export const REQUEST_ERROR = "REQUEST_ERROR";
 export const REQUEST_LOGOUT = "REQUEST_LOGOUT";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
 
-export function receiveLoginInfo(loginReponse) {
+export const receiveLoginInfo = loginReponse => {
     return {
         type: LOGIN_INFO_RECEIVED,
         payload: {
