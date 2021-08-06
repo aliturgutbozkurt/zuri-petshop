@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/category")
 public class ProductCategoryResource {
 
     private final CategoryService categoryService;
@@ -27,21 +27,29 @@ public class ProductCategoryResource {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/listCategories")
+    @GetMapping("/listByParentId")
     public ResponseEntity<List<GetCategoryResponse>> listCategoriesByParentId(
             @RequestParam(required = false, value = "parentId") Long parentId) {
         List<GetCategoryResponse> response= categoryService.getCategoryByParentId(parentId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/pageByParentId")
+    public ResponseEntity<PageResponse<GetCategoryResponse>> pageCategoriesByParentId(
+            @RequestParam(required = false, value = "parentId") Long parentId,
+            @RequestParam("page") int page, @RequestParam("size") int size) {
+        PageResponse<GetCategoryResponse> response= categoryService.getCategoryByParentId(parentId, page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping
     public ResponseEntity<PageResponse<GetCategoryResponse>> listPage(
             @RequestParam("page") int page, @RequestParam("size") int size) {
         PageResponse<GetCategoryResponse> response = categoryService.list(page, size);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/category")
+    @PostMapping
     public ResponseEntity<CreateCategoryResponse> create(
             @Valid @RequestBody CreateCategoryRequest request) {
         CreateCategoryResponse response = categoryService.create(request);

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 function AddCategoryModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
-    const [activeCategory, setActiveCategory] = useState(null);
+    const [activeCategory, setActiveCategory] = useState("");
     const {open, handleClose} = props;
 
     useEffect(() => {
@@ -73,7 +73,7 @@ function AddCategoryModal(props) {
 
                 <CategoryList
                     handleActiveCategoryChange={handleActiveCategoryChange}
-                    handleChangeActiveCategories={()=> {}}
+                    handlePageChange={()=>{}}
                     active={open}/>
 
                 <TextField

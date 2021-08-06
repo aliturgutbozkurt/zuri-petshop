@@ -26,22 +26,22 @@ const useStyles1 = makeStyles((theme) => ({
 function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
-    const { count, page, rowsPerPage, onPageChange } = props;
+    const { count, page, rowsPerPage, onChangePage } = props;
 
     const handleFirstPageButtonClick = (event) => {
-        onPageChange(event, 0);
+        onChangePage(event, 0);
     };
 
     const handleBackButtonClick = (event) => {
-        onPageChange(event, page - 1);
+        onChangePage(event, page - 1);
     };
 
     const handleNextButtonClick = (event) => {
-        onPageChange(event, page + 1);
+        onChangePage(event, page + 1);
     };
 
     const handleLastPageButtonClick = (event) => {
-        onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
     };
 
     return (
@@ -74,14 +74,6 @@ function TablePaginationActions(props) {
     );
 }
 
-TablePaginationActions.propTypes = {
-    count: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-};
-
-
 const useStyles2 = makeStyles({
     table: {
         minWidth: 500,
@@ -98,34 +90,35 @@ function CustomTable(props) {
     const {rows, columns} = props;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+    const {handlePageChange,handleRowsPerPageChange,count} = props;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
+        handlePageChange(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+        handlePageChange(0);
+        handleRowsPerPageChange(parseInt(event.target.value, 10));
     };
-
-
 
     return (<TableContainer component={Paper}>
         <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
                 <TableRow>
-                    {columns.map(col=><TableCell align={"left"}>{col}&nbsp;</TableCell>)}
+                    {columns.map((col,index)=><TableCell key={index} align={"left"}>{col}&nbsp;</TableCell>)}
                 </TableRow>
             </TableHead>
             <TableBody>
                 {(rowsPerPage > 0
-                        ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : rows
+                        && rows
                 ).map((row,index) => (
 
                     <TableRow key={index}>
                         { Object.keys(row).map((item, i) => (
-                                <TableCell align={"left"}> {row[item]}</TableCell>
+                                <TableCell key={i} align={"left"}> {row[item]}</TableCell>
                         ))}
                     </TableRow>
                 ))}
@@ -139,17 +132,17 @@ function CustomTable(props) {
             <TableFooter>
                 <TableRow>
                     <TablePagination
-                        rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                        rowsPerPageOptions={[5, 10, 25, {label: 'Hepsi', value: -1}]}
                         colSpan={3}
-                        count={rows.length}
+                        count={count}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         SelectProps={{
-                            inputProps: {'aria-label': 'rows per page'},
+                            inputProps: {'aria-label': 'Sayfa başına gösterim'},
                             native: true,
                         }}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        onChangePage={handleChangePage}
+                        onChangeRowsPerPage={handleChangeRowsPerPage}
                         ActionsComponent={TablePaginationActions}
                     />
                 </TableRow>

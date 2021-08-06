@@ -18,10 +18,11 @@ public interface CategoryService {
 
     List<GetCategoryResponse> getCategoryByParentId(Long parentId);
 
+    public PageResponse<GetCategoryResponse> getCategoryByParentId(Long parentId, int page, int size);
+
     public CreateCategoryResponse create(CreateCategoryRequest category);
 
     public UpdateCategoryResponse update(UpdateCategoryRequest category);
 
     public void delete(Long id);
-
 }

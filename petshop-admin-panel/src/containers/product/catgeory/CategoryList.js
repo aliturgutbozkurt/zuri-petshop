@@ -2,7 +2,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import React, {useEffect, useState} from "react";
-import {listCategoriesByParentId, listCategoriesByParentIdNull} from "./ProductCategoryService";
+import {listCategoriesByParentId} from "./ProductCategoryService";
 import {makeStyles} from "@material-ui/core/styles";
 import {bindActionCreators} from "redux";
 
@@ -32,18 +32,18 @@ function CategoryList(props) {
     const [categoryListDepth4, setCategoryListDepth4] = useState([]);
     const [categoryListDepth5, setCategoryListDepth5] = useState([]);
 
-    const {handleActiveCategoryChange,handleChangeActiveCategories, active} = props;
+    const {handleActiveCategoryChange, active, handlePageChange} = props;
 
     useEffect(() => {
         if (active) {
-            handleActiveCategoryChange(null);
+            handleActiveCategoryChange("");
             setCategoryListDepth1([]);
             setCategoryListDepth2([]);
             setCategoryListDepth3([]);
             setCategoryListDepth4([]);
             setCategoryListDepth5([]);
             setActiveDepth(0);
-            listCategoriesByParentIdNull().then(response => {
+            listCategoriesByParentId("").then(response => {
                 setCategoryListDepth0(response.data);
             }).catch(e => {
                 console.log(e);
@@ -51,9 +51,13 @@ function CategoryList(props) {
         }
     }, [active]);
 
+    useEffect(() => {
+        handleActiveCategoryChange(categoryDepth5 || categoryDepth4 || categoryDepth3 || categoryDepth2 || categoryDepth1 || categoryDepth0 || "");
+    }, [categoryDepth5, categoryDepth4, categoryDepth3, categoryDepth2, categoryDepth1, categoryDepth0]);
+
     const handleCategoryChange = (e, depth) => {
         const parentId = e.target.value;
-        handleActiveCategoryChange(parentId);
+        handlePageChange(0);
         switch (depth) {
             case 0:
                 setCategoryDepth0(parentId);
@@ -92,11 +96,10 @@ function CategoryList(props) {
             // code block
         }
         setActiveDepth(parentId ? depth + 1 : depth);
-        if (parentId && depth < 5) {
+        if (parentId && depth < 6) {
 
             listCategoriesByParentId(parentId).then(response => {
                 const categories = response.data;
-                handleChangeActiveCategories(categories);
                 switch (depth) {
                     case 0:
                         setCategoryListDepth1(categories);
@@ -141,7 +144,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth0.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth0.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }
@@ -159,7 +162,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth1.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth1.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }
@@ -177,7 +180,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth2.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth2.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }
@@ -194,7 +197,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth3.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth3.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }
@@ -211,7 +214,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth4.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth4.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }
@@ -228,7 +231,7 @@ function CategoryList(props) {
                     }}
                 >
                     <option aria-label="None" value=""/>
-                    {categoryListDepth5.map(c => <option value={c.id}>{c.name}</option>)}
+                    {categoryListDepth5.map((c,index)=> <option key={index} value={c.id}>{c.name}</option>)}
                 </Select>
             </FormControl>
             }</>);

@@ -49,9 +49,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<GetCategoryResponse> getCategoryByParentId(Long parentId) {
-        List<CategoryEntity> categories = categoryRepository.findByParentIdAndActiveTrue(parentId);
+        List<CategoryEntity> categoryEntities = categoryRepository.findByParentIdAndActiveTrue(parentId);
 
-        return categoryMapper.listEntitesToGetListResponse(categories);
+        return categoryMapper.listEntitesToGetListResponse(categoryEntities);
+    }
+
+    @Override
+    public PageResponse<GetCategoryResponse> getCategoryByParentId(Long parentId, int page, int size) {
+        Page<CategoryEntity> categoryEntities = null;
+        if(Objects.nonNull(parentId)) {
+            categoryEntities = categoryRepository
+                    .findByParentIdAndActiveTrue(parentId, PageRequest.of(page, size, Sort.by("name")));
+        } else {
+            categoryEntities = categoryRepository.findByParentIdIsNullAndActiveTrue(PageRequest.of(page, size, Sort.by("name")));
+        }
+        return categoryMapper.pageEntitiesToGetPageResponse(categoryEntities);
     }
 
     @Override
