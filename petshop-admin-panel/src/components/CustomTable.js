@@ -15,6 +15,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {TableHead} from "@material-ui/core";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -90,7 +94,7 @@ function CustomTable(props) {
     const {rows, columns} = props;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    const {handlePageChange,handleRowsPerPageChange,count} = props;
+    const {handlePageChange,handleRowsPerPageChange,count,isOperation} = props;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -120,6 +124,7 @@ function CustomTable(props) {
                         { Object.keys(row).map((item, i) => (
                                 <TableCell key={i} align={"left"}> {row[item]}</TableCell>
                         ))}
+                        {isOperation && <TableCell align={"left"}><DeleteIcon onClick={()=>alert("aha")}/>&nbsp;&nbsp;<UpdateIcon/>&nbsp;&nbsp;<VisibilityIcon/></TableCell> }
                     </TableRow>
                 ))}
 

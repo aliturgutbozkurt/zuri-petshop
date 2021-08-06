@@ -33,7 +33,7 @@ public class ProductEntity extends BaseEntity {
     private List<ProductImageEntity> images = new ArrayList<>();
 
     @ManyToMany(mappedBy="products",cascade = CascadeType.ALL)
-    private List<CategoryEntity> categories = new ArrayList<>();
+    private List<ProductCategoryEntity> categories = new ArrayList<>();
 
 
 }

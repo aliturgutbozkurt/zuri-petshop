@@ -1,6 +1,6 @@
 package com.turkninja.petshop.product.impl;
 
-import com.turkninja.petshop.CategoryRepository;
+import com.turkninja.petshop.ProductCategoryRepository;
 import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
 import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
@@ -8,11 +8,11 @@ import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
 import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
-import com.turkninja.petshop.entity.product.CategoryEntity;
+import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.exception.AppMessage;
 import com.turkninja.petshop.exception.AppParameter;
 import com.turkninja.petshop.exception.ApplicationException;
-import com.turkninja.petshop.mapper.CategoryMapper;
+import com.turkninja.petshop.mapper.ProductCategoryMapper;
 import com.turkninja.petshop.product.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,63 +29,71 @@ import java.util.Objects;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ProductCategoryMapper productCategoryMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryMapper = categoryMapper;
+    public CategoryServiceImpl(ProductCategoryRepository productCategoryRepository, ProductCategoryMapper productCategoryMapper) {
+        this.productCategoryRepository = productCategoryRepository;
+        this.productCategoryMapper = productCategoryMapper;
     }
 
 
     @Override
     public GetSoleCategoryResponse getCategoryById(Long id) {
-        CategoryEntity categoryEntity = categoryRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
+        ProductCategoryEntity productCategoryEntity = productCategoryRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
                 new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                         AppParameter.get("categoryId", id)));
 
-        return categoryMapper.entityToGetSoleResponse(categoryEntity);
+        return productCategoryMapper.entityToGetSoleResponse(productCategoryEntity);
     }
 
     @Override
     public List<GetCategoryResponse> getCategoryByParentId(Long parentId) {
-        List<CategoryEntity> categoryEntities = categoryRepository.findByParentIdAndActiveTrue(parentId);
+        List<ProductCategoryEntity> categoryEntities = productCategoryRepository.findByParentIdAndActiveTrueOrderByNameAsc(parentId);
 
-        return categoryMapper.listEntitesToGetListResponse(categoryEntities);
+        return productCategoryMapper.listEntitesToGetListResponse(categoryEntities);
     }
 
     @Override
     public PageResponse<GetCategoryResponse> getCategoryByParentId(Long parentId, int page, int size) {
-        Page<CategoryEntity> categoryEntities = null;
-        if(Objects.nonNull(parentId)) {
-            categoryEntities = categoryRepository
+        Page<ProductCategoryEntity> categoryEntities = null;
+        if (Objects.nonNull(parentId)) {
+            categoryEntities = productCategoryRepository
                     .findByParentIdAndActiveTrue(parentId, PageRequest.of(page, size, Sort.by("name")));
         } else {
-            categoryEntities = categoryRepository.findByParentIdIsNullAndActiveTrue(PageRequest.of(page, size, Sort.by("name")));
+            categoryEntities = productCategoryRepository.findByParentIdIsNullAndActiveTrue(PageRequest.of(page, size, Sort.by("name")));
         }
-        return categoryMapper.pageEntitiesToGetPageResponse(categoryEntities);
+        return productCategoryMapper.pageEntitiesToGetPageResponse(categoryEntities);
     }
 
     @Override
     public PageResponse<GetCategoryResponse> list(int page, int size) {
 
-        Page<CategoryEntity> categoryEntities = categoryRepository
+        Page<ProductCategoryEntity> categoryEntities = productCategoryRepository
                 .findAllByActiveTrue(PageRequest.of(page, size, Sort.by("name")));
-        return categoryMapper.pageEntitiesToGetPageResponse(categoryEntities);
+        return productCategoryMapper.pageEntitiesToGetPageResponse(categoryEntities);
     }
 
     @Override
     public CreateCategoryResponse create(CreateCategoryRequest request) {
 
-        CategoryEntity parent = null;
+        ProductCategoryEntity parent = null;
         if (Objects.nonNull(request.getParentId())) {
-            parent = categoryRepository.findByIdAndActiveTrue(request.getParentId()).orElseThrow(() ->
+            parent = productCategoryRepository.findByIdAndActiveTrue(request.getParentId()).orElseThrow(() ->
                     new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                             AppParameter.get("categoryId", request.getParentId())));
+            checkCategoryHasProducts(request, parent);
         }
-        CategoryEntity entity = categoryMapper.createRequestToEntity(request);
+        ProductCategoryEntity entity = productCategoryMapper.createRequestToEntity(request);
         entity.setParent(parent);
-        return categoryMapper.entityToCreateResponse(categoryRepository.save(entity));
+        return productCategoryMapper.entityToCreateResponse(productCategoryRepository.save(entity));
+    }
+
+    private void checkCategoryHasProducts(CreateCategoryRequest request, ProductCategoryEntity parent) {
+        if (parent.getProducts().size() > 0) {
+            throw new ApplicationException(AppMessage.CATEGORY_ALREADY_HAVE_PRODUCTS,
+                    AppParameter.get("categoryId", request.getParentId()));
+        }
     }
 
     @Override

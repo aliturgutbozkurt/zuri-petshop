@@ -50,7 +50,11 @@ public enum AppMessage {
 
     //JAVAX_VALIDATION (JVL)
     // Status Code (400)
-    JAVAX_VALIDATION_NOT_VALID_FIELD(HttpStatus.BAD_REQUEST, "JVL_4000001");
+    JAVAX_VALIDATION_NOT_VALID_FIELD(HttpStatus.BAD_REQUEST, "JVL_4000001"),
+
+    //CATEGORY
+    // Status Code (500)
+    CATEGORY_ALREADY_HAVE_PRODUCTS(HttpStatus.INTERNAL_SERVER_ERROR, "CAT_5000001");
 
     private final HttpStatus statusCode;
 

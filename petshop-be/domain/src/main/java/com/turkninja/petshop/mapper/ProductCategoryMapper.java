@@ -7,35 +7,34 @@ import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
 import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
-import com.turkninja.petshop.entity.product.CategoryEntity;
+import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface CategoryMapper {
+public interface ProductCategoryMapper {
 
-    CategoryEntity createRequestToEntity(CreateCategoryRequest categoryRequest);
-    CategoryEntity updateRequestToEntity(UpdateCategoryRequest categoryRequest);
-    GetCategoryResponse entityToGetResponse(CategoryEntity entity);
-    CreateCategoryResponse entityToCreateResponse(CategoryEntity entity);
-    UpdateCategoryResponse entityToUpdateResponse(CategoryEntity entity);
+    ProductCategoryEntity createRequestToEntity(CreateCategoryRequest categoryRequest);
+    ProductCategoryEntity updateRequestToEntity(UpdateCategoryRequest categoryRequest);
+    GetCategoryResponse entityToGetResponse(ProductCategoryEntity entity);
+    CreateCategoryResponse entityToCreateResponse(ProductCategoryEntity entity);
+    UpdateCategoryResponse entityToUpdateResponse(ProductCategoryEntity entity);
 
-    default PageResponse<GetCategoryResponse> pageEntitiesToGetPageResponse(Page<CategoryEntity> entities){
+    default PageResponse<GetCategoryResponse> pageEntitiesToGetPageResponse(Page<ProductCategoryEntity> entities){
         PageResponse<GetCategoryResponse> response = new PageResponse<GetCategoryResponse>();
-        List<CategoryEntity> content = entities.getContent();
+        List<ProductCategoryEntity> content = entities.getContent();
         response.setContent(content.stream().map(ce->this.entityToGetResponse(ce)).collect(Collectors.toList()));
         response.setTotalPages(entities.getTotalPages());
         response.setTotalElements(entities.getTotalElements());
         return response;
     }
 
-    default List<GetCategoryResponse> listEntitesToGetListResponse (List<CategoryEntity> entities){
+    default List<GetCategoryResponse> listEntitesToGetListResponse (List<ProductCategoryEntity> entities){
         return entities.stream().map(ce->this.entityToGetResponse(ce)).collect(Collectors.toList());
     }
 
-    GetSoleCategoryResponse entityToGetSoleResponse(CategoryEntity categoryEntity);
+    GetSoleCategoryResponse entityToGetSoleResponse(ProductCategoryEntity productCategoryEntity);
 }

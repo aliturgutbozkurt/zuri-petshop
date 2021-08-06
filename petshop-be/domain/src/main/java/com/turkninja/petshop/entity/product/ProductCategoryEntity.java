@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "CATEGORY")
 @EqualsAndHashCode(of = {"id"})
 @Data
-public class CategoryEntity extends BaseEntity {
+public class ProductCategoryEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -27,11 +27,11 @@ public class CategoryEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_PARENT_ID")
-    private CategoryEntity parent;
+    private ProductCategoryEntity parent;
 
     @ManyToMany
     @JoinTable(name = "CATEGORY", joinColumns = {@JoinColumn(name = "CATEGORY_PARENT_ID")}, inverseJoinColumns = {@JoinColumn(name = "ID")})
-    private List<CategoryEntity> subCategories = new ArrayList<CategoryEntity>();
+    private List<ProductCategoryEntity> subCategories = new ArrayList<ProductCategoryEntity>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "CATEGORY_PRODUCT"

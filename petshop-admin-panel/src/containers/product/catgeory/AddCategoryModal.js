@@ -27,11 +27,12 @@ function AddCategoryModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
     const [activeCategory, setActiveCategory] = useState("");
-    const {open, handleClose} = props;
+    const [lastDepth, setLastDepth] = useState(false);
+    const {open, handleClose, handleUpdateUpsertStatus} = props;
 
     useEffect(() => {
         if (open) {
-           setName("");
+            setName("");
         }
     }, [open]);
 
@@ -41,9 +42,12 @@ function AddCategoryModal(props) {
     }
 
 
-
-    const handleActiveCategoryChange = parentId =>{
+    const handleActiveCategoryChange = parentId => {
         setActiveCategory(parentId);
+    }
+
+    const handleLastDepthChange = status => {
+        setLastDepth(status);
     }
 
 
@@ -55,6 +59,7 @@ function AddCategoryModal(props) {
         createProductCategory(request).then(response => {
             console.log("created");
             setName("");
+            handleUpdateUpsertStatus();
             handleClose();
         }).catch(e => {
             console.error(e);
@@ -73,9 +78,11 @@ function AddCategoryModal(props) {
 
                 <CategoryList
                     handleActiveCategoryChange={handleActiveCategoryChange}
-                    handlePageChange={()=>{}}
+                    handlePageChange={() => {
+                    }}
+                    handleLastDepthChange={handleLastDepthChange}
                     active={open}/>
-
+                {!lastDepth  &&
                 <TextField
                     autoFocus
                     margin="dense"
@@ -85,15 +92,17 @@ function AddCategoryModal(props) {
                     label="Kategori Adı"
                     type="name"
                     fullWidth
-                />
+                />}
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     İptal
                 </Button>
-                <Button onClick={handleCreate} color="primary">
+                {!lastDepth &&
+                < Button onClick={handleCreate} color="primary">
                     Ekle
                 </Button>
+                }
             </DialogActions>
         </Dialog>
     );
