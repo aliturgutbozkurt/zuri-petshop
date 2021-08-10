@@ -95,7 +95,7 @@ function CustomTable(props) {
 
     const {
         handlePageChange, handleRowsPerPageChange, count, isOperation,
-        handleDelete, handleVisible, hiddenIndexes
+        handleDelete, handleVisible, handleUpdate, hiddenIndexes
     } = props;
 
     const handleChangePage = (event, newPage) => {
@@ -129,7 +129,7 @@ function CustomTable(props) {
                         {isOperation && <TableCell
                             align={"left"}>
                             <DeleteIcon onClick={() => handleDelete(row.id)}/>&nbsp;&nbsp;
-                            <UpdateIcon/>&nbsp;&nbsp;
+                            <UpdateIcon onClick={() => handleUpdate(row.id)}/>&nbsp;&nbsp;
                             <VisibilityIcon onClick={() => handleVisible(row.id)}/></TableCell>
                         }
                     </TableRow>

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class GetCategoryResponse {
     private Long id;
     private String name;
-    private int depth;
     private String createdBy;
+    private int depth;
     private LocalDateTime createdAt;
     private LocalDateTime revisedAt;
 }

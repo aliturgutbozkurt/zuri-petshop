@@ -22,8 +22,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from '@material-ui/icons/Menu';
-import ProductCategory from "../containers/product/catgeory/ProductCategory";
 import Link from "@material-ui/core/Link";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 240;
 
@@ -114,7 +114,10 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                     <ListItemIcon><AccountBoxIcon/></ListItemIcon>
                     <ListItemText primary={'Kullanıcılar'}/>
                 </ListItem>
-
+            </List>
+            <Divider/>
+            <List>
+                <ListItemLink to="/logout" primary="Çıkış" icon={<ExitToAppIcon />} />
             </List>
         </div>
     );

@@ -17,8 +17,8 @@ public class GetSoleCategoryResponse {
     private Long id;
     private String name;
     private GetSoleCategoryResponse parent;
-    private int depth;
     private String createdBy;
+    private int depth;
     private LocalDateTime createdAt;
     private LocalDateTime revisedAt;
 }

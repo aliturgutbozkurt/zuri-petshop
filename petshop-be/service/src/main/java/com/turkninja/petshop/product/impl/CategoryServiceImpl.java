@@ -83,24 +83,36 @@ public class CategoryServiceImpl implements CategoryService {
             parent = productCategoryRepository.findByIdAndActiveTrue(request.getParentId()).orElseThrow(() ->
                     new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                             AppParameter.get("categoryId", request.getParentId())));
-            checkCategoryHasProducts(request, parent);
+            checkCategoryHasProducts(request.getParentId(), parent);
         }
         ProductCategoryEntity entity = productCategoryMapper.createRequestToEntity(request);
         entity.setParent(parent);
         return productCategoryMapper.entityToCreateResponse(productCategoryRepository.save(entity));
     }
 
-    private void checkCategoryHasProducts(CreateCategoryRequest request, ProductCategoryEntity parent) {
+
+    @Override
+    public UpdateCategoryResponse update(UpdateCategoryRequest request) {
+        ProductCategoryEntity parent = null;
+        if (Objects.nonNull(request.getParentId())) {
+            parent = productCategoryRepository.findByIdAndActiveTrue(request.getParentId()).orElseThrow(() ->
+                    new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                            AppParameter.get("categoryId", request.getParentId())));
+            checkCategoryHasProducts(request.getParentId(), parent);
+        }
+
+        ProductCategoryEntity entity = productCategoryMapper.updateRequestToEntity(request);
+        entity.setParent(parent);
+        return productCategoryMapper.entityToUpdateResponse(productCategoryRepository.save(entity));
+    }
+
+    private void checkCategoryHasProducts(Long parentId, ProductCategoryEntity parent) {
         if (parent.getProducts().size() > 0) {
             throw new ApplicationException(AppMessage.CATEGORY_ALREADY_HAVE_PRODUCTS,
-                    AppParameter.get("categoryId", request.getParentId()));
+                    AppParameter.get("categoryId", parentId));
         }
     }
 
-    @Override
-    public UpdateCategoryResponse update(UpdateCategoryRequest category) {
-        return null;
-    }
 
     @Override
     @Transactional

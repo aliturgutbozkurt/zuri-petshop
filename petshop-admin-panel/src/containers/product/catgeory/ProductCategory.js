@@ -7,6 +7,7 @@ import CategoryList from "./CategoryList";
 import CustomTable from "../../../components/CustomTable";
 import {deleteCategoryById, getCategoryById, pageCategoriesByParentId} from "./ProductCategoryService";
 import ViewCategoryModal from "./ViewCategoryModal";
+import UpdateCategoryModal from "./UpdateCategoryModal";
 
 
 const columns = [
@@ -18,6 +19,7 @@ function ProductCategory(props) {
 
     const [createModalOpen, setCreateModalOpen] = React.useState(false);
     const [viewModalOpen, setViewModalOpen] = React.useState(false);
+    const [updateModalOpen, setUpdateModalOpen] = React.useState(false);
     const [activeCategory, setActiveCategory] = useState("");
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
@@ -77,6 +79,15 @@ function ProductCategory(props) {
         })
     }
 
+    const handleUpdate = id => {
+        setUpdateModalOpen(true);
+        getCategoryById(id).then(response=> {
+            setViewCategoryData(response.data);
+        }).catch(e=> {
+            console.log(e);
+        })
+    }
+
     const handleCreateModalClickOpen = () => {
         setCreateModalOpen(true);
     };
@@ -87,6 +98,10 @@ function ProductCategory(props) {
 
     const handleViewModalClose = () => {
         setViewModalOpen(false);
+    }
+
+    const handleUpdateModalClose = () => {
+        setUpdateModalOpen(false);
     }
 
     const handleUpdateUpsertStatus = () => {
@@ -115,6 +130,11 @@ function ProductCategory(props) {
                         Kategori Ekle
                     </Button>
                     <AddCategoryModal open={createModalOpen} handleClose={handleCreateModalClose} handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+                    <UpdateCategoryModal open={updateModalOpen}
+                                         handleClose={handleUpdateModalClose}
+                                         handleUpdateUpsertStatus={handleUpdateUpsertStatus}
+                                         categoryData={viewCategoryData}
+                    />
                 </div>
                 <div>
 
@@ -143,7 +163,8 @@ function ProductCategory(props) {
                              count={count}
                              handleDelete={handleDelete}
                              handleVisible={handleVisible}
-                             hiddenIndexes={[3,4]}
+                             handleUpdate={handleUpdate}
+                             hiddenIndexes={[3,4,5]}
                 />
             </Container>
         </React.Fragment>

@@ -29,11 +29,19 @@ export const createProductCategory = data => {
     }
     return request(createProductRequest);
 }
+export const updateProductCategory = data => {
+    const updateProductRequest = {
+        method: "PUT",
+        path: "/api/v1/category",
+        data: data,
+    }
+    return request(updateProductRequest);
+}
 
 export const deleteCategoryById = id => {
     const deleteProductRequest = {
         method: "DELETE",
-        path: "/api/v1/category/" + id ,
+        path: "/api/v1/category/" + id,
     }
     return request(deleteProductRequest);
 }
@@ -41,7 +49,7 @@ export const deleteCategoryById = id => {
 export const getCategoryById = id => {
     const getProductRequest = {
         method: "GET",
-        path: "/api/v1/category/" + id ,
+        path: "/api/v1/category/" + id,
     }
     return request(getProductRequest);
 }

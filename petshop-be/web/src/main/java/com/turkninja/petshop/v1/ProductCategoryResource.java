@@ -1,10 +1,12 @@
 package com.turkninja.petshop.v1;
 
 import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
+import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
+import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
 import com.turkninja.petshop.product.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +64,14 @@ public class ProductCategoryResource {
     public ResponseEntity<CreateCategoryResponse> create(
             @Valid @RequestBody CreateCategoryRequest request) {
         CreateCategoryResponse response = categoryService.create(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
+    @PutMapping
+    public ResponseEntity<UpdateCategoryResponse> create(
+            @Valid @RequestBody UpdateCategoryRequest request) {
+        UpdateCategoryResponse response = categoryService.update(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

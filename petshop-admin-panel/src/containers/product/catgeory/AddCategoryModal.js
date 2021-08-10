@@ -88,7 +88,8 @@ function AddCategoryModal(props) {
                     }}
                     handleLastDepthChange={handleLastDepthChange}
                     handleActiveDepthChange={handleActiveDepthChange}
-                    active={open}/>
+                    active={open}
+                />
                 {!lastDepth  &&
                 <TextField
                     autoFocus
