@@ -4,12 +4,14 @@ import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
+import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
 import com.turkninja.petshop.product.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -30,7 +32,7 @@ public class ProductCategoryResource {
     @GetMapping("/listByParentId")
     public ResponseEntity<List<GetCategoryResponse>> listCategoriesByParentId(
             @RequestParam(required = false, value = "parentId") Long parentId) {
-        List<GetCategoryResponse> response= categoryService.getCategoryByParentId(parentId);
+        List<GetCategoryResponse> response = categoryService.getCategoryByParentId(parentId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -38,7 +40,14 @@ public class ProductCategoryResource {
     public ResponseEntity<PageResponse<GetCategoryResponse>> pageCategoriesByParentId(
             @RequestParam(required = false, value = "parentId") Long parentId,
             @RequestParam("page") int page, @RequestParam("size") int size) {
-        PageResponse<GetCategoryResponse> response= categoryService.getCategoryByParentId(parentId, page, size);
+        PageResponse<GetCategoryResponse> response = categoryService.getCategoryByParentId(parentId, page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<GetSoleCategoryResponse> getById(
+            @PathVariable("categoryId") Long id) {
+        GetSoleCategoryResponse response = categoryService.getCategoryById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -54,5 +63,11 @@ public class ProductCategoryResource {
             @Valid @RequestBody CreateCategoryRequest request) {
         CreateCategoryResponse response = categoryService.create(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Object> delete(@PathVariable("categoryId") Long id) {
+        categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

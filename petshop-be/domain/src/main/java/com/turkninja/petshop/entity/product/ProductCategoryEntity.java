@@ -6,7 +6,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author ali turgut bozkurt
@@ -25,13 +27,15 @@ public class ProductCategoryEntity extends BaseEntity {
     @Column(name = "about")
     private String about;
 
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_PARENT_ID")
+    @Column(name = "depth", nullable = false, columnDefinition = "int default 0")
+    private int depth;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional=true)
+    @JoinColumn(name="parent_id")
     private ProductCategoryEntity parent;
 
-    @ManyToMany
-    @JoinTable(name = "CATEGORY", joinColumns = {@JoinColumn(name = "CATEGORY_PARENT_ID")}, inverseJoinColumns = {@JoinColumn(name = "ID")})
-    private List<ProductCategoryEntity> subCategories = new ArrayList<ProductCategoryEntity>();
+    @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    private Set<ProductCategoryEntity> subCategories = new HashSet<ProductCategoryEntity>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "CATEGORY_PRODUCT"

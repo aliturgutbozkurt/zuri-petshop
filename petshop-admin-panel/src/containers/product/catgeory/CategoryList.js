@@ -32,7 +32,8 @@ function CategoryList(props) {
     const [categoryListDepth4, setCategoryListDepth4] = useState([]);
     const [categoryListDepth5, setCategoryListDepth5] = useState([]);
 
-    const {handleActiveCategoryChange, handleLastDepthChange, active, handlePageChange, upsertStatus} = props;
+    const {handleActiveCategoryChange, handleLastDepthChange, active,
+        handlePageChange, handleActiveDepthChange, upsertStatus} = props;
 
     useEffect(() => {
         if (active || upsertStatus) {
@@ -65,6 +66,10 @@ function CategoryList(props) {
             handleLastDepthChange(false)
         }
     }, [categoryDepth5]);
+
+    useEffect(() => {
+        handleActiveDepthChange(activeDepth);
+    }, [activeDepth]);
 
     const handleCategoryChange = (e, depth) => {
         const parentId = e.target.value;

@@ -5,23 +5,26 @@ import Container from "@material-ui/core/Container";
 import AddCategoryModal from "./AddCategoryModal";
 import CategoryList from "./CategoryList";
 import CustomTable from "../../../components/CustomTable";
-import { pageCategoriesByParentId} from "./ProductCategoryService";
+import {deleteCategoryById, getCategoryById, pageCategoriesByParentId} from "./ProductCategoryService";
+import ViewCategoryModal from "./ViewCategoryModal";
 
 
 const columns = [
-    "id","Kategori Adı","İşlemler"
+    "id","Kategori Adı","Oluşturan Kullanıcı","İşlemler"
 ]
 
 
 function ProductCategory(props) {
 
-    const [open, setOpen] = React.useState(false);
+    const [createModalOpen, setCreateModalOpen] = React.useState(false);
+    const [viewModalOpen, setViewModalOpen] = React.useState(false);
     const [activeCategory, setActiveCategory] = useState("");
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
     const [count, setCount] = useState(0);
     const [upsertStatus, setUpsertStatus] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [viewCategoryData, setViewCategoryData] = useState([]);
 
     useEffect(() => {
         pageCategoriesByParentId(activeCategory,page,size).then(response => {
@@ -41,25 +44,50 @@ function ProductCategory(props) {
         });
     }, [activeCategory, page, size]);
 
+    function pageCategoriesDefault() {
+        pageCategoriesByParentId("", 0, 5).then(response => {
+            setCategories(response.data.content);
+            setCount(response.data.totalElements);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
     useEffect(() => {
         if(upsertStatus) {
-            pageCategoriesByParentId("", 0, 5).then(response => {
-                setCategories(response.data.content);
-                setCount(response.data.totalElements);
-            }).catch(e => {
-                console.log(e);
-            });
+            pageCategoriesDefault();
             setUpsertStatus(false);
         }
     }, [upsertStatus]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleDelete = (id) =>{
+        deleteCategoryById(id).then(response=> {
+            pageCategoriesDefault();
+        }).catch(e=> {
+            console.log(e);
+        })
+    }
+
+    const handleVisible = (id) => {
+        setViewModalOpen(true);
+        getCategoryById(id).then(response=> {
+            setViewCategoryData(response.data);
+        }).catch(e=> {
+            console.log(e);
+        })
+    }
+
+    const handleCreateModalClickOpen = () => {
+        setCreateModalOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCreateModalClose = () => {
+        setCreateModalOpen(false);
     };
+
+    const handleViewModalClose = () => {
+        setViewModalOpen(false);
+    }
 
     const handleUpdateUpsertStatus = () => {
         setUpsertStatus(true);
@@ -77,19 +105,22 @@ function ProductCategory(props) {
         setActiveCategory(parentId);
     }
 
-    const handleChangeActiveCategories = categories => {
-        setCategories(categories);
-    }
 
     return (
         <React.Fragment>
             <CssBaseline/>
             <Container maxWidth="xl">
                 <div>
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                    <Button variant="outlined" color="primary" onClick={handleCreateModalClickOpen}>
                         Kategori Ekle
                     </Button>
-                    <AddCategoryModal open={open} handleClose={handleClose} handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+                    <AddCategoryModal open={createModalOpen} handleClose={handleCreateModalClose} handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+                </div>
+                <div>
+
+                    <ViewCategoryModal open={viewModalOpen}
+                                       categoryData={viewCategoryData}
+                                       handleClose={handleViewModalClose} />
                 </div>
                 <div>
                     <h2>Ürün Kategorilerini Listele</h2>
@@ -101,6 +132,7 @@ function ProductCategory(props) {
                         handlePageChange={handlePageChange}
                         upsertStatus={upsertStatus}
                         handleLastDepthChange={()=>{}}
+                        handleActiveDepthChange={()=>{}}
                         active={true}/>
                 </div>
                 <CustomTable rows={categories}
@@ -108,7 +140,10 @@ function ProductCategory(props) {
                              handlePageChange={handlePageChange}
                              handleRowsPerPageChange={handleRowsPerPageChange}
                              isOperation={true}
-                            count={count}
+                             count={count}
+                             handleDelete={handleDelete}
+                             handleVisible={handleVisible}
+                             hiddenIndexes={[3,4]}
                 />
             </Container>
         </React.Fragment>

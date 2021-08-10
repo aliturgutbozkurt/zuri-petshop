@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -30,7 +30,7 @@ const useStyles1 = makeStyles((theme) => ({
 function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
-    const { count, page, rowsPerPage, onChangePage } = props;
+    const {count, page, rowsPerPage, onChangePage} = props;
 
     const handleFirstPageButtonClick = (event) => {
         onChangePage(event, 0);
@@ -55,24 +55,24 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+                {theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}
             </IconButton>
             <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+                {theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}
             </IconButton>
         </div>
     );
@@ -85,7 +85,6 @@ const useStyles2 = makeStyles({
 });
 
 
-
 function CustomTable(props) {
 
     const classes = useStyles2();
@@ -94,7 +93,10 @@ function CustomTable(props) {
     const {rows, columns} = props;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    const {handlePageChange,handleRowsPerPageChange,count,isOperation} = props;
+    const {
+        handlePageChange, handleRowsPerPageChange, count, isOperation,
+        handleDelete, handleVisible, hiddenIndexes
+    } = props;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -112,19 +114,24 @@ function CustomTable(props) {
         <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
                 <TableRow>
-                    {columns.map((col,index)=><TableCell key={index} align={"left"}>{col}&nbsp;</TableCell>)}
+                    {columns.map((col, index) => <TableCell key={index} align={"left"}>{col}&nbsp;</TableCell>)}
                 </TableRow>
             </TableHead>
             <TableBody>
                 {(rowsPerPage > 0
-                        && rows
-                ).map((row,index) => (
+                    && rows
+                ).map((row, index) => (
 
                     <TableRow key={index}>
-                        { Object.keys(row).map((item, i) => (
-                                <TableCell key={i} align={"left"}> {row[item]}</TableCell>
+                        {Object.keys(row).map((item, i) => (
+                            !hiddenIndexes.includes(i) && <TableCell key={i} align={"left"}> {row[item]}</TableCell>
                         ))}
-                        {isOperation && <TableCell align={"left"}><DeleteIcon onClick={()=>alert("aha")}/>&nbsp;&nbsp;<UpdateIcon/>&nbsp;&nbsp;<VisibilityIcon/></TableCell> }
+                        {isOperation && <TableCell
+                            align={"left"}>
+                            <DeleteIcon onClick={() => handleDelete(row.id)}/>&nbsp;&nbsp;
+                            <UpdateIcon/>&nbsp;&nbsp;
+                            <VisibilityIcon onClick={() => handleVisible(row.id)}/></TableCell>
+                        }
                     </TableRow>
                 ))}
 

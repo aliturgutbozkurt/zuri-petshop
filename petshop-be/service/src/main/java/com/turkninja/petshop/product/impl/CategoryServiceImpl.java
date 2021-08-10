@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -102,7 +103,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
+        ProductCategoryEntity categoryEntity = productCategoryRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
+                new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                        AppParameter.get("categoryId", id)));
+        deactiveateCategoryAndSubs(categoryEntity);
+    }
+
+
+    private void deactiveateCategoryAndSubs(ProductCategoryEntity entity){
+        entity.setActive(false);
+        productCategoryRepository.save(entity);
+        entity.getSubCategories().forEach(sc->deactiveateCategoryAndSubs(sc));
 
     }
 }

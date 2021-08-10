@@ -27,6 +27,7 @@ function AddCategoryModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
     const [activeCategory, setActiveCategory] = useState("");
+    const [activeDepth, setActiveDepth] = useState(0);
     const [lastDepth, setLastDepth] = useState(false);
     const {open, handleClose, handleUpdateUpsertStatus} = props;
 
@@ -46,6 +47,10 @@ function AddCategoryModal(props) {
         setActiveCategory(parentId);
     }
 
+    const handleActiveDepthChange = activeDepth => {
+        setActiveDepth(activeDepth)
+    }
+
     const handleLastDepthChange = status => {
         setLastDepth(status);
     }
@@ -54,6 +59,7 @@ function AddCategoryModal(props) {
     const handleCreate = () => {
         const request = {
             name: name,
+            depth: activeDepth,
             parentId: activeCategory
         }
         createProductCategory(request).then(response => {
@@ -81,6 +87,7 @@ function AddCategoryModal(props) {
                     handlePageChange={() => {
                     }}
                     handleLastDepthChange={handleLastDepthChange}
+                    handleActiveDepthChange={handleActiveDepthChange}
                     active={open}/>
                 {!lastDepth  &&
                 <TextField
