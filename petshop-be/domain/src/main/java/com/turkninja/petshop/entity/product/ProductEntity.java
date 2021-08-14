@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author ali turgut bozkurt
@@ -30,10 +30,13 @@ public class ProductEntity extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ProductImageEntity> images = new ArrayList<>();
+    private Set<ProductImageEntity> images = new HashSet<>();
 
-    @ManyToMany(mappedBy="products",cascade = CascadeType.ALL)
-    private List<ProductCategoryEntity> categories = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "category_id")
+    private ProductCategoryEntity category;
 
-
+    public void addImage(ProductImageEntity imageEntity){
+        getImages().add(imageEntity);
+    }
 }

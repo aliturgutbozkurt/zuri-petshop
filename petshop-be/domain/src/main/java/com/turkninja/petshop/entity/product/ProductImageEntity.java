@@ -20,9 +20,6 @@ public class ProductImageEntity extends BaseEntity {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @Column(name = "type")
-    private String type;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductEntity product;
 

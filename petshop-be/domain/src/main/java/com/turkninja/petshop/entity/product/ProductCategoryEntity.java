@@ -37,14 +37,6 @@ public class ProductCategoryEntity extends BaseEntity {
     @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<ProductCategoryEntity> subCategories = new HashSet<ProductCategoryEntity>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "CATEGORY_PRODUCT"
-            , joinColumns = {
-            @JoinColumn(name = "CATEGORY_ID")
-    }
-            , inverseJoinColumns = {
-            @JoinColumn(name = "PRODUCT_ID")
-    }
-    )
-    private List<ProductEntity> products;
+    @OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    private Set<ProductEntity> products;
 }

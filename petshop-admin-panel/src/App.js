@@ -13,6 +13,7 @@ import PrivateRoute from "./hoc/PrivateRoute";
 import DefaultLayout from "./layouts/DefaultLayout";
 import {Redirect} from "react-router";
 import ProductCategory from "./containers/product/catgeory/ProductCategory";
+import Product from "./containers/product/product/Product";
 
 
 function App(props) {
@@ -25,6 +26,9 @@ function App(props) {
                                   loggedIn={props.loggedIn}/>
                     <PrivateRoute exact path="/product-category" layout={DefaultLayout}
                                   component={ProductCategory}
+                                  loggedIn={props.loggedIn}/>
+                    <PrivateRoute exact path="/product" layout={DefaultLayout}
+                                  component={Product}
                                   loggedIn={props.loggedIn}/>
                     <Route
                         exact

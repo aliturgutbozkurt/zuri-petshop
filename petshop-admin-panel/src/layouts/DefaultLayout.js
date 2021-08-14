@@ -81,11 +81,8 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                 <ListItem>
                     <ListItemText>Ürün Yönetimi</ListItemText>
                 </ListItem>
-                <ListItemLink to="/product-category" primary="Kategoriler" icon={<CategoryIcon />} />
-                <ListItem button key={2}>
-                    <ListItemIcon><ArtTrackIcon/></ListItemIcon>
-                    <ListItemText primary={'Ürünler'}/>
-                </ListItem>
+                <ListItemLink to="/product-category" primary="Kategoriler" icon={<CategoryIcon/>}/>
+                <ListItemLink to="/product" primary="Ürünler" icon={<ArtTrackIcon/>}/>
                 <ListItem button key={3}>
                     <ListItemIcon><AssignmentIcon/></ListItemIcon>
                     <ListItemText primary={'Siparişler'}/>
@@ -117,7 +114,7 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
             </List>
             <Divider/>
             <List>
-                <ListItemLink to="/logout" primary="Çıkış" icon={<ExitToAppIcon />} />
+                <ListItemLink to="/logout" primary="Çıkış" icon={<ExitToAppIcon/>}/>
             </List>
         </div>
     );
