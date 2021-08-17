@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import CustomTable from "../../../components/CustomTable";
+import AddProductModal from "./AddProductModal";
 
 
 const columns = [
@@ -84,6 +85,9 @@ function Product(props) {
                     <Button variant="outlined" color="primary" onClick={handleCreateModalClickOpen}>
                         Ürün Ekle
                     </Button>
+                    <AddProductModal open={createModalOpen} handleClose={handleCreateModalClose}
+                                     handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+
                 </div>
                 <div>
                     <h2>Ürünleri Listele</h2>
