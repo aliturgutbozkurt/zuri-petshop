@@ -13,14 +13,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "PRODUCT_IMAGE")
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id", "url", "orderNumber"})
 @Data
 public class ProductImageEntity extends BaseEntity {
 
     @Column(name = "url", nullable = false)
     private String url;
 
+    @Column(name = "order_number", nullable = false)
+    private int orderNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductEntity product;
-
 }

@@ -14,7 +14,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "PRODUCT")
-@EqualsAndHashCode(of = {"id"})
 @Data
 public class ProductEntity extends BaseEntity {
 
@@ -35,6 +34,12 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "category_id")
     private ProductCategoryEntity category;
+
+    public void setProductToImage(){
+        for(ProductImageEntity imageEntity:getImages()){
+            imageEntity.setProduct(this);
+        }
+    }
 
     public void addImage(ProductImageEntity imageEntity){
         getImages().add(imageEntity);

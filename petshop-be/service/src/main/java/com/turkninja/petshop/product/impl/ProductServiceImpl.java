@@ -57,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
         }
         ProductEntity entity = productMapper.createRequestToEntity(request);
         entity.setCategory(category);
+        entity.setProductToImage();
         return productMapper.entityToCreateResponse(productRepository.save(entity));
     }
 

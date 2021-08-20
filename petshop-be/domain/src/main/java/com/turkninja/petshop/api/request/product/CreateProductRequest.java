@@ -14,6 +14,6 @@ public class CreateProductRequest {
 
     private String name;
     private String about;
-    private Set<String> imageUrls;
+    private Set<CreateProductImageRequest> images;
     private Long categoryId;
 }

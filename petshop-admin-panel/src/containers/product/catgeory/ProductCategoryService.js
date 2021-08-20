@@ -22,12 +22,12 @@ export const listCategoriesByParentId = parentId => {
 }
 
 export const createProductCategory = data => {
-    const createProductRequest = {
+    const createProductCategoryRequest = {
         method: "POST",
         path: "/api/v1/category",
         data: data,
     }
-    return request(createProductRequest);
+    return request(createProductCategoryRequest);
 }
 export const updateProductCategory = data => {
     const updateProductRequest = {
