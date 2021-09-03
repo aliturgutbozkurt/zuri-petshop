@@ -34,9 +34,9 @@ public class ProductCategoryEntity extends BaseEntity {
     @JoinColumn(name="parent_id")
     private ProductCategoryEntity parent;
 
-    @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProductCategoryEntity> subCategories = new HashSet<ProductCategoryEntity>();
 
-    @OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy="category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProductEntity> products;
 }

@@ -1,17 +1,22 @@
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import React, {useEffect, useState} from "react";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import {makeStyles} from '@material-ui/core/styles';
-import {createProductCategory, listCategoriesByParentId, listCategoriesByParentIdNull} from "./ProductCategoryService";
+import {createProductCategory} from "./ProductCategoryService";
 import CategoryList from "./CategoryList";
+import {
+    emptyValidationErrors,
+    isValid,
+    nameError,
+    depthError,
+    validateDepth,
+    validateName
+} from "./ProductCategoryValidation";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 function AddCategoryModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
+    const [nameErrorArray, setNameErrorArray] = useState(nameError);
+    const [depthErrorArray, setDepthErrorArray] = useState(depthError);
     const [activeCategory, setActiveCategory] = useState("");
     const [activeDepth, setActiveDepth] = useState(0);
     const [lastDepth, setLastDepth] = useState(false);
@@ -34,12 +41,17 @@ function AddCategoryModal(props) {
     useEffect(() => {
         if (open) {
             setName("");
+            emptyValidationErrors();
+            setNameErrorArray([]);
+            setDepthErrorArray([]);
         }
     }, [open]);
 
 
     const handleNameChange = (e) => {
-        setName(e.target.value);
+        const name = e.target.value;
+        setNameErrorArray(validateName(name))
+        setName(name);
     }
 
 
@@ -48,7 +60,8 @@ function AddCategoryModal(props) {
     }
 
     const handleActiveDepthChange = activeDepth => {
-        setActiveDepth(activeDepth)
+        setDepthErrorArray(validateDepth(activeDepth));
+        setActiveDepth(activeDepth);
     }
 
     const handleLastDepthChange = status => {
@@ -57,18 +70,27 @@ function AddCategoryModal(props) {
 
 
     const handleCreate = () => {
+        const {handleCreateResult} = props;
         const request = {
             name: name,
             depth: activeDepth,
             parentId: activeCategory
         }
+
+        if (!isValid(request)) {
+            setNameErrorArray(nameError);
+            setDepthErrorArray(depthError);
+            return;
+        }
         createProductCategory(request).then(response => {
             console.log("created");
             setName("");
             handleUpdateUpsertStatus();
+            handleCreateResult(true);
             handleClose();
         }).catch(e => {
             console.error(e);
+            handleCreateResult(false);
         })
     }
 
@@ -90,7 +112,7 @@ function AddCategoryModal(props) {
                     handleActiveDepthChange={handleActiveDepthChange}
                     active={open}
                 />
-                {!lastDepth  &&
+                {!lastDepth &&
                 <TextField
                     autoFocus
                     margin="dense"
@@ -100,7 +122,12 @@ function AddCategoryModal(props) {
                     label="Kategori Adı"
                     type="name"
                     fullWidth
-                />}
+                />
+                }
+                <br/>
+                <br/>
+                <div className="error">{nameErrorArray.map(error => error)}</div>
+                <div className="eroor">{depthErrorArray.map(error => error)}</div>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">

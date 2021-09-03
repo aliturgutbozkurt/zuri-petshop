@@ -8,10 +8,20 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import {updateProductCategory} from "./ProductCategoryService";
 import UpdateCategoryList from "./UpdateCategoryList";
+import {
+    depthError,
+    emptyValidationErrors,
+    isValid,
+    nameError,
+    validateDepth,
+    validateName
+} from "./ProductCategoryValidation";
 
 function UpdateCategoryModal(props) {
     const {open, handleClose, handleUpdateUpsertStatus, categoryData} = props;
     const [name, setName] = useState("");
+    const [nameErrorArray, setNameErrorArray] = useState(nameError);
+    const [depthErrorArray, setDepthErrorArray] = useState(depthError);
     const [activeCategory, setActiveCategory] = useState("");
     const [activeDepth, setActiveDepth] = useState(0);
     const [lastDepth, setLastDepth] = useState(false);
@@ -19,6 +29,9 @@ function UpdateCategoryModal(props) {
 
     useEffect(() => {
         if (open) {
+            emptyValidationErrors();
+            setNameErrorArray([]);
+            setDepthErrorArray([]);
         }
     }, [open]);
 
@@ -31,7 +44,9 @@ function UpdateCategoryModal(props) {
 
 
     const handleNameChange = (e) => {
-        setName(e.target.value);
+        const name = e.target.value;
+        setNameErrorArray(validateName(name))
+        setName(name);
     }
 
 
@@ -40,7 +55,8 @@ function UpdateCategoryModal(props) {
     }
 
     const handleActiveDepthChange = activeDepth => {
-        setActiveDepth(activeDepth)
+        setDepthErrorArray(validateDepth(activeDepth));
+        setActiveDepth(activeDepth);
     }
 
     const handleLastDepthChange = status => {
@@ -52,18 +68,26 @@ function UpdateCategoryModal(props) {
     }
 
     const handleUpdate = () => {
+        const {handleUpdateResult} = props;
         const request = {
             id: categoryData.id,
             name: name,
             depth: activeDepth,
             parentId: activeCategory
         }
+        if (!isValid(request)) {
+            setNameErrorArray(nameError);
+            setDepthErrorArray(depthError);
+            return;
+        }
         updateProductCategory(request).then(response => {
             setName("");
             handleUpdateUpsertStatus();
+            handleUpdateResult(true);
             handleClose();
         }).catch(e => {
             console.error(e);
+            handleUpdateResult(false);
         })
     }
 
@@ -71,11 +95,11 @@ function UpdateCategoryModal(props) {
     return (
         <React.Fragment>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="add-category">Kategori Ekle</DialogTitle>
+                <DialogTitle id="add-category">Kategori Düzenle</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Eğer Ana Kategori ekliyorsanız herhangi bir kategori seçmeyiniz. Eğer alt
-                        kategori ekliyorsanız ilgili üst kategorileri seçerek ilerleyiniz.
+                        Eğer Ana Kategori düzenliyorsanız herhangi bir kategori seçmeyiniz. Eğer alt
+                        kategori düzenliyorsanız ilgili üst kategorileri seçerek ilerleyiniz.
                     </DialogContentText>
 
                     <UpdateCategoryList
@@ -97,6 +121,10 @@ function UpdateCategoryModal(props) {
                         type="name"
                         fullWidth
                     />}
+                    <br/>
+                    <br/>
+                    <div className="error">{nameErrorArray.map(error => error)}</div>
+                    <div className="eroor">{depthErrorArray.map(error => error)}</div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
