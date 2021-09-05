@@ -1,19 +1,22 @@
 package com.turkninja.petshop.v1;
 
-import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
-import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
+import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
 import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
 import com.turkninja.petshop.product.CategoryService;
+import com.turkninja.petshop.validation.product.ProductCategoryValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -27,8 +30,11 @@ public class ProductCategoryResource {
 
     private final CategoryService categoryService;
 
-    public ProductCategoryResource(CategoryService categoryService) {
+    private final ProductCategoryValidator productCategoryValidator;
+
+    public ProductCategoryResource(CategoryService categoryService, ProductCategoryValidator productCategoryValidator) {
         this.categoryService = categoryService;
+        this.productCategoryValidator = productCategoryValidator;
     }
 
     @GetMapping("/listByParentId")
@@ -61,16 +67,24 @@ public class ProductCategoryResource {
     }
 
     @PostMapping
-    public ResponseEntity<CreateCategoryResponse> create(
-            @Valid @RequestBody CreateCategoryRequest request) {
+    public ResponseEntity<Object> create(@RequestBody @Valid UpsertCategoryRequest request,
+                                         BindingResult bindingResult) {
+        productCategoryValidator.validate(request,bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         CreateCategoryResponse response = categoryService.create(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
     @PutMapping
-    public ResponseEntity<UpdateCategoryResponse> create(
-            @Valid @RequestBody UpdateCategoryRequest request) {
+    public ResponseEntity<Object> update(@RequestBody UpsertCategoryRequest request,
+                                         BindingResult bindingResult) {
+        productCategoryValidator.validate(request,bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         UpdateCategoryResponse response = categoryService.update(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

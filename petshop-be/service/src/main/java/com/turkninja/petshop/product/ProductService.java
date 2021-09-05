@@ -1,7 +1,6 @@
 package com.turkninja.petshop.product;
 
-import com.turkninja.petshop.api.request.product.CreateProductRequest;
-import com.turkninja.petshop.api.request.product.UpdateProductRequest;
+import com.turkninja.petshop.api.request.product.UpsertProductRequest;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
@@ -13,9 +12,9 @@ public interface ProductService {
 
     public Page<GetProductResponse> list();
 
-    public CreateProductResponse create(CreateProductRequest product);
+    public CreateProductResponse create(UpsertProductRequest product);
 
-    public UpdateProductResponse update(UpdateProductRequest product);
+    public UpdateProductResponse update(UpsertProductRequest product);
 
     public void delete(Long id);
 }

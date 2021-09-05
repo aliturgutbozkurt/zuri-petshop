@@ -1,8 +1,7 @@
 package com.turkninja.petshop.product.impl;
 
 import com.turkninja.petshop.ProductCategoryRepository;
-import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
-import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
+import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
@@ -76,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CreateCategoryResponse create(CreateCategoryRequest request) {
+    public CreateCategoryResponse create(UpsertCategoryRequest request) {
 
         ProductCategoryEntity parent = null;
         if (Objects.nonNull(request.getParentId())) {
@@ -85,14 +84,14 @@ public class CategoryServiceImpl implements CategoryService {
                             AppParameter.get("categoryId", request.getParentId())));
             checkCategoryHasProducts(request.getParentId(), parent);
         }
-        ProductCategoryEntity entity = productCategoryMapper.createRequestToEntity(request);
+        ProductCategoryEntity entity = productCategoryMapper.upsertRequestToEntity(request);
         entity.setParent(parent);
         return productCategoryMapper.entityToCreateResponse(productCategoryRepository.save(entity));
     }
 
 
     @Override
-    public UpdateCategoryResponse update(UpdateCategoryRequest request) {
+    public UpdateCategoryResponse update(UpsertCategoryRequest request) {
         ProductCategoryEntity parent = null;
         if (Objects.nonNull(request.getParentId())) {
             parent = productCategoryRepository.findByIdAndActiveTrue(request.getParentId()).orElseThrow(() ->
@@ -101,7 +100,7 @@ public class CategoryServiceImpl implements CategoryService {
             checkCategoryHasProducts(request.getParentId(), parent);
         }
 
-        ProductCategoryEntity entity = productCategoryMapper.updateRequestToEntity(request);
+        ProductCategoryEntity entity = productCategoryMapper.upsertRequestToEntity(request);
         entity.setParent(parent);
         return productCategoryMapper.entityToUpdateResponse(productCategoryRepository.save(entity));
     }

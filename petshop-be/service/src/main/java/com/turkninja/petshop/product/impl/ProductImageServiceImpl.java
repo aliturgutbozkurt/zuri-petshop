@@ -1,10 +1,8 @@
 package com.turkninja.petshop.product.impl;
 
-import com.turkninja.petshop.api.request.product.CreateProductRequest;
-import com.turkninja.petshop.api.request.product.UpdateProductRequest;
-import com.turkninja.petshop.api.response.product.*;
+import com.turkninja.petshop.api.response.product.CreateProductImageResponse;
+import com.turkninja.petshop.api.response.product.GetProductImageResponse;
 import com.turkninja.petshop.product.ProductImageService;
-import com.turkninja.petshop.product.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

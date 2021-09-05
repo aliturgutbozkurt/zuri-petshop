@@ -10,8 +10,9 @@ import java.util.Set;
  */
 
 @Data
-public class CreateProductRequest {
+public class UpsertProductRequest {
 
+    private Long id;
     private String name;
     private String about;
     private Set<CreateProductImageRequest> images;

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CreateCategoryRequest {
 
-    @NotNull
     private String name;
 
     private Long parentId;

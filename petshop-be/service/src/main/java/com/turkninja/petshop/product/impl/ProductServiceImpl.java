@@ -2,8 +2,7 @@ package com.turkninja.petshop.product.impl;
 
 import com.turkninja.petshop.ProductCategoryRepository;
 import com.turkninja.petshop.ProductRepository;
-import com.turkninja.petshop.api.request.product.CreateProductRequest;
-import com.turkninja.petshop.api.request.product.UpdateProductRequest;
+import com.turkninja.petshop.api.request.product.UpsertProductRequest;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
@@ -47,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CreateProductResponse create(CreateProductRequest request) {
+    public CreateProductResponse create(UpsertProductRequest request) {
         ProductCategoryEntity category = null;
         if (Objects.nonNull(request.getCategoryId())) {
             category = productCategoryRepository.findByIdAndActiveTrue(request.getCategoryId()).orElseThrow(() ->
@@ -55,21 +54,21 @@ public class ProductServiceImpl implements ProductService {
                             AppParameter.get("categoryId", request.getCategoryId())));
             checkCategoryHasSubCategories(category);
         }
-        ProductEntity entity = productMapper.createRequestToEntity(request);
+        ProductEntity entity = productMapper.upsertRequestToEntity(request);
         entity.setCategory(category);
         entity.setProductToImage();
         return productMapper.entityToCreateResponse(productRepository.save(entity));
     }
 
     private void checkCategoryHasSubCategories(ProductCategoryEntity category) {
-        if(category.getSubCategories().size()>0){
+        if (category.getSubCategories().size() > 0) {
             throw new ApplicationException(AppMessage.CATEGORY_ALREADY_HAVE_CATEGORIES,
                     AppParameter.get("categoryId", category.getId()));
         }
     }
 
     @Override
-    public UpdateProductResponse update(UpdateProductRequest product) {
+    public UpdateProductResponse update(UpsertProductRequest product) {
         return null;
     }
 

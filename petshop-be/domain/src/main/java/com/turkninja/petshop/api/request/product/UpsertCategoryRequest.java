@@ -10,14 +10,10 @@ import javax.validation.constraints.NotNull;
  */
 
 @Data
-public class UpdateCategoryRequest {
+public class UpsertCategoryRequest {
 
     private Long id;
-
-    @NotNull
     private String name;
-
     private Long parentId;
-
     private int depth;
 }

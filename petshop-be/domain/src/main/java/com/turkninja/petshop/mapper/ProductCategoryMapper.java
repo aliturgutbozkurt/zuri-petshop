@@ -1,7 +1,7 @@
 package com.turkninja.petshop.mapper;
 
 import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
-import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
+import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
@@ -17,8 +17,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ProductCategoryMapper {
 
-    ProductCategoryEntity createRequestToEntity(CreateCategoryRequest categoryRequest);
-    ProductCategoryEntity updateRequestToEntity(UpdateCategoryRequest categoryRequest);
+    ProductCategoryEntity upsertRequestToEntity(UpsertCategoryRequest categoryRequest);
     GetCategoryResponse entityToGetResponse(ProductCategoryEntity entity);
     CreateCategoryResponse entityToCreateResponse(ProductCategoryEntity entity);
     UpdateCategoryResponse entityToUpdateResponse(ProductCategoryEntity entity);

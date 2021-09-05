@@ -1,7 +1,7 @@
 package com.turkninja.petshop.product;
 
 import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
-import com.turkninja.petshop.api.request.product.UpdateCategoryRequest;
+import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;
 import com.turkninja.petshop.api.response.product.GetCategoryResponse;
@@ -20,9 +20,9 @@ public interface CategoryService {
 
     public PageResponse<GetCategoryResponse> getCategoryByParentId(Long parentId, int page, int size);
 
-    public CreateCategoryResponse create(CreateCategoryRequest category);
+    public CreateCategoryResponse create(UpsertCategoryRequest category);
 
-    public UpdateCategoryResponse update(UpdateCategoryRequest category);
+    public UpdateCategoryResponse update(UpsertCategoryRequest category);
 
     public void delete(Long id);
 }
