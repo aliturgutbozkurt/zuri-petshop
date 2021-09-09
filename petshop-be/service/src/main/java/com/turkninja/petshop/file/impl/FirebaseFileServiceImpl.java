@@ -28,7 +28,9 @@ public class FirebaseFileServiceImpl implements FirebaseFileService {
 
     @Override
     public String uploadFile(InputStream is, String contentType, String path, String fileName) throws IOException {
-        InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("zuri-petshop-firebase.json");
+        InputStream serviceAccount = getClass()
+                .getClassLoader()
+                .getResourceAsStream("firebase.json");
         Storage storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setProjectId(PETSHOP_FIREBASE_PROJECT_ID).build().getService();
         Map<String, String> map = new HashMap<>();
