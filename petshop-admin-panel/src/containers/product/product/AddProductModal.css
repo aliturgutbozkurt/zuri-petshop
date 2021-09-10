@@ -6,7 +6,6 @@ img {
 .productImageItem {
     width: 120px;
     min-height: 120px;
-    max-height: auto;
-    margin: 3px;
+    height: auto;
     padding: 3px;
 }

@@ -17,11 +17,17 @@ import java.util.Set;
 @Data
 public class ProductEntity extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
 
     @Column(name = "about")
     private String about;
+
+    @Column(name = "oldPrice",nullable = false, columnDefinition = "int default 0")
+    private double oldPrice;
+
+    @Column(name = "price",nullable = false, columnDefinition = "int default 1")
+    private double price;
 
 
     @OneToMany(

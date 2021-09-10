@@ -30,6 +30,23 @@ public class ProductValidator implements Validator {
         valdidateCategory(request.getCategoryId(), errors);
         validateAbout(request.getAbout(), errors);
         validateImages(request.getImages(), errors);
+        validatePrice(request, errors);
+        validateOldPrice(request, errors);
+    }
+
+    private void validateOldPrice(UpsertProductRequest request, Errors errors) {
+        if (request.getOldPrice() < 0) {
+            errors.rejectValue("oldPrice", null, "Ürünün eski fiyatı sıfırdan üçük olamaz");
+        }
+    }
+
+    private void validatePrice(UpsertProductRequest request, Errors errors) {
+        if (request.getOldPrice() != 0 && request.getPrice() >= request.getOldPrice()) {
+            errors.rejectValue("price", null, "Ürün fiyatı eski fiyatından küçük olmalı");
+        }
+        if (request.getPrice() < 0) {
+            errors.rejectValue("price", null, "Ürünün fiyatı negatif olamaz");
+        }
     }
 
     private void validateImages(Set<CreateProductImageRequest> images, Errors errors) {

@@ -30,7 +30,7 @@ public class FirebaseFileServiceImpl implements FirebaseFileService {
     public String uploadFile(InputStream is, String contentType, String path, String fileName) throws IOException {
         InputStream serviceAccount = getClass()
                 .getClassLoader()
-                .getResourceAsStream("firebase.json");
+                .getResourceAsStream("zuri-petshop-firebase.json");
         Storage storage = StorageOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setProjectId(PETSHOP_FIREBASE_PROJECT_ID).build().getService();
         Map<String, String> map = new HashMap<>();

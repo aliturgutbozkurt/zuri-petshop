@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 function AddProductModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
+    const [oldPrice, setOldPrice] = useState("");
+    const [price, setPrice] = useState("");
     const [photo1, setPhoto1] = useState("");
     const photo1Ref = useRef(null);
     const [photo2, setPhoto2] = useState("");
@@ -44,7 +46,7 @@ function AddProductModal(props) {
 
     useEffect(() => {
         if (open) {
-            setName("");
+            resetFormValues();
         }
     }, [open]);
 
@@ -68,7 +70,12 @@ function AddProductModal(props) {
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
-
+    const handlePriceChange = (e) => {
+        setPrice(e.target.value);
+    }
+    const handleOldPriceChange = (e) => {
+        setOldPrice(e.target.value);
+    }
     const handleAboutChange = (e) => {
         setAbout(e.target.value);
     }
@@ -141,6 +148,8 @@ function AddProductModal(props) {
 
     const resetFormValues = () => {
         setName("");
+        setPrice("");
+        setOldPrice("");
         setAbout("");
         setPhoto1("");
         setPhoto2("");
@@ -152,6 +161,8 @@ function AddProductModal(props) {
     const handleCreate = () => {
         const request = {
             name: name,
+            oldPrice: oldPrice,
+            price: price,
             about: about,
             images: createImageSet(),
             categoryId: activeCategory
@@ -209,6 +220,32 @@ function AddProductModal(props) {
                     <br/>
                     <br/>
                     <TextField
+                        autoFocus
+                        margin="dense"
+                        id="oldPrice"
+                        value={oldPrice}
+                        onChange={handleOldPriceChange}
+                        label="Ürünün Eski fiyatı"
+                        type="name"
+                        fullWidth
+                        variant="outlined"
+                    />
+                    <br/>
+                    <br/>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="price"
+                        value={price}
+                        onChange={handlePriceChange}
+                        label="Ürün Fiyatı"
+                        type="name"
+                        fullWidth
+                        variant="outlined"
+                    />
+                    <br/>
+                    <br/>
+                    <TextField
                         id="about"
                         label="Ürün Açıklması"
                         multiline
@@ -233,7 +270,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
-                    <div className="productImageItem"><img src={photo1}/></div>
+                    {photo1 && <div className="productImageItem"><img src={photo1}/></div>}
                     <Divider/>
                     <div>
                         <p>Foto 2</p>
@@ -249,7 +286,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
-                    <div className="productImageItem"><img src={photo2}/></div>
+                    {photo2 && <div className="productImageItem"><img src={photo2}/></div>}
                     <Divider/>
                     <div>
                         <p>Foto 3</p>
@@ -266,7 +303,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
-                    <div className="productImageItem"><img src={photo3}/></div>
+                    {photo3 && <div className="productImageItem"><img src={photo3}/></div>}
                     <Divider/>
                     <div>
                         <p>Foto 4</p>
@@ -284,7 +321,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
-                    <div className="productImageItem"><img src={photo4}/></div>
+                    {photo4 && <div className="productImageItem"><img src={photo4}/></div>}
                 </form>
 
             </DialogContent>

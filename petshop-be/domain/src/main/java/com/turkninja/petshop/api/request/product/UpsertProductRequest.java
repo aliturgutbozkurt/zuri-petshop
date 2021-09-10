@@ -14,6 +14,8 @@ public class UpsertProductRequest {
 
     private Long id;
     private String name;
+    private double oldPrice;
+    private double price;
     private String about;
     private Set<CreateProductImageRequest> images;
     private Long categoryId;
