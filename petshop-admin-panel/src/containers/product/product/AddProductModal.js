@@ -13,6 +13,7 @@ import {createProductCategory} from "../catgeory/ProductCategoryService";
 import {createProductImage} from "./ProductImageService";
 import {createErrorAlert, createSuccessAlert} from "../../../components/Alert";
 import {createProduct} from "./ProductService";
+import "./AddProductModal.css";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -51,7 +52,7 @@ function AddProductModal(props) {
         if (photoSuccess) {
             setTimeout(function () {
                 setPhotoSuccess(false);
-            },3000);
+            }, 3000);
         }
     }, [photoSuccess]);
 
@@ -59,7 +60,7 @@ function AddProductModal(props) {
         if (photoError) {
             setTimeout(function () {
                 setPhotoError(false);
-            },3000);
+            }, 3000);
         }
     }, [photoError]);
 
@@ -232,6 +233,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
+                    <div className="productImageItem"><img src={photo1}/></div>
                     <Divider/>
                     <div>
                         <p>Foto 2</p>
@@ -247,6 +249,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
+                    <div className="productImageItem"><img src={photo2}/></div>
                     <Divider/>
                     <div>
                         <p>Foto 3</p>
@@ -263,6 +266,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
+                    <div className="productImageItem"><img src={photo3}/></div>
                     <Divider/>
                     <div>
                         <p>Foto 4</p>
@@ -272,6 +276,7 @@ function AddProductModal(props) {
                                accept="image/png, image/jpeg"
                                onChange={handlePhoto4Change}
                         />
+
                         <Button onClick={() => {
                             photo4Ref.current.value = null;
                             setPhoto4("");
@@ -279,6 +284,7 @@ function AddProductModal(props) {
                             Temizle
                         </Button>
                     </div>
+                    <div className="productImageItem"><img src={photo4}/></div>
                 </form>
 
             </DialogContent>
