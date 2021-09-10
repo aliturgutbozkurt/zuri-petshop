@@ -23,7 +23,14 @@ public class ProductCategoryValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UpsertCategoryRequest request = (UpsertCategoryRequest) target;
         validateName(request.getName(), errors);
+        validatePhotoUrl(request.getPhotoUrl(), errors);
         valdidateDepth(request.getDepth(), errors);
+    }
+
+    private void validatePhotoUrl(String photoUrl, Errors errors) {
+        if (ValidationUtil.isEmptyOrNull(photoUrl)) {
+            errors.rejectValue("photoUrl", null, "Foto alanı boş olamaz");
+        }
     }
 
     private void validateName(String name, Errors errors) {

@@ -16,6 +16,7 @@ import java.util.List;
 public class GetSoleCategoryResponse {
     private Long id;
     private String name;
+    private String photoUrl;
     private GetSoleCategoryResponse parent;
     private String createdBy;
     private int depth;

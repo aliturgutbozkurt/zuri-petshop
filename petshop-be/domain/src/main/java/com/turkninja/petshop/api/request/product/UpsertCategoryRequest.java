@@ -14,6 +14,7 @@ public class UpsertCategoryRequest {
 
     private Long id;
     private String name;
+    private String photoUrl;
     private Long parentId;
     private int depth;
 }

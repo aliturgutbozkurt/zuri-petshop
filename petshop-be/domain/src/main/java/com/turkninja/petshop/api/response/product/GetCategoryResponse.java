@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class GetCategoryResponse {
     private Long id;
     private String name;
+    private String photoUrl;
     private String createdBy;
     private int depth;
     private LocalDateTime createdAt;

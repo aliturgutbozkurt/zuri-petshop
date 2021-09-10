@@ -53,3 +53,17 @@ export const getCategoryById = id => {
     }
     return request(getProductRequest);
 }
+
+export const createCategoryImage= data => {
+    const formData = new FormData();
+    formData.append('file', data);
+
+    const createImageRequest = {
+        method: "POST",
+        path: "/api/v1/file",
+        data: formData,
+        params: ["firebasePath"],
+        values: ["category-images"]
+    }
+    return request(createImageRequest);
+}

@@ -1,0 +1,11 @@
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.productImageItem {
+    width: 120px;
+    min-height: 120px;
+    height: auto;
+    padding: 3px;
+}

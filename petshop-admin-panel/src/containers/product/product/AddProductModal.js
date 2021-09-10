@@ -219,6 +219,7 @@ function AddProductModal(props) {
 
                     <br/>
                     <br/>
+                    <div>Eski fiyat yoksa, yani indirim söz konusu değilse boş bırakınız</div>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -226,7 +227,7 @@ function AddProductModal(props) {
                         value={oldPrice}
                         onChange={handleOldPriceChange}
                         label="Ürünün Eski fiyatı"
-                        type="name"
+                        type="number"
                         fullWidth
                         variant="outlined"
                     />
@@ -239,7 +240,7 @@ function AddProductModal(props) {
                         value={price}
                         onChange={handlePriceChange}
                         label="Ürün Fiyatı"
-                        type="name"
+                        type="number"
                         fullWidth
                         variant="outlined"
                     />

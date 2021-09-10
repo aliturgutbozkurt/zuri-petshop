@@ -5,6 +5,7 @@ import {DialogContentText} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
+import "./CategoryModal.css";
 
 
 function ViewCategoryModal(props) {
@@ -65,6 +66,8 @@ function ViewCategoryModal(props) {
                 <DialogContent>
                     <h4>Kategori</h4>
                     <DialogContentText>{categoryStr}</DialogContentText>
+                    <h4>Kategori Resmi</h4>
+                    {categoryData.photoUrl && <div className="productImageItem"><img src={categoryData.photoUrl}/></div>}
                     <h4>Oluşturulma Tarihi</h4>
                     <DialogContentText>{categoryData.createdAt}</DialogContentText>
                     <h4>Oluşturan Kullanıcı</h4>

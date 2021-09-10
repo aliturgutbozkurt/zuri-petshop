@@ -5,18 +5,22 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import {createProductCategory} from "./ProductCategoryService";
+import {createCategoryImage, createProductCategory} from "./ProductCategoryService";
 import CategoryList from "./CategoryList";
+import "./CategoryModal.css";
 import {
     emptyValidationErrors,
     isValid,
     nameError,
     depthError,
+    photoUrlError,
     validateDepth,
-    validateName
+    validateName, validatePhotoUrl
 } from "./ProductCategoryValidation";
+import {createProductImage} from "../product/ProductImageService";
+import {createErrorAlert, createSuccessAlert} from "../../../components/Alert";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -31,21 +35,49 @@ const useStyles = makeStyles((theme) => ({
 function AddCategoryModal(props) {
     const classes = useStyles();
     const [name, setName] = useState("");
+    const [photoUrl, setPhotoUrl] = useState("");
+    const photoUrlRef = useRef(null);
     const [nameErrorArray, setNameErrorArray] = useState(nameError);
     const [depthErrorArray, setDepthErrorArray] = useState(depthError);
+    const [photoUrlErrorArray, setPhotoUrlErrorArray] = useState(photoUrlError);
     const [activeCategory, setActiveCategory] = useState("");
     const [activeDepth, setActiveDepth] = useState(0);
     const [lastDepth, setLastDepth] = useState(false);
     const {open, handleClose, handleUpdateUpsertStatus} = props;
+    const [photoSuccess, setPhotoSuccess] = useState(false);
+    const [photoError, setPhotoError] = useState(false);
 
     useEffect(() => {
         if (open) {
             setName("");
+            setPhotoUrl("");
             emptyValidationErrors();
             setNameErrorArray([]);
             setDepthErrorArray([]);
+            setPhotoUrlErrorArray([]);
         }
     }, [open]);
+
+    useEffect(() => {
+        if (photoSuccess) {
+            setTimeout(function () {
+                setPhotoSuccess(false);
+            }, 3000);
+        }
+    }, [photoSuccess]);
+
+    useEffect(() => {
+        if (photoError) {
+            setTimeout(function () {
+                setPhotoError(false);
+            }, 3000);
+        }
+    }, [photoError]);
+
+    useEffect(() => {
+        let url = photoUrl;
+        setPhotoUrlErrorArray(validatePhotoUrl(url));
+    }, [photoUrl]);
 
 
     const handleNameChange = (e) => {
@@ -68,11 +100,24 @@ function AddCategoryModal(props) {
         setLastDepth(status);
     }
 
+    const handlePhotoUrlChange = (e) => {
+        e.preventDefault();
+
+        createCategoryImage(e.target.files[0]).then(response => {
+            setPhotoUrl(response.data);
+            setPhotoSuccess(true);
+        }).catch(e => {
+            console.log(e);
+            setPhotoError(true);
+        })
+    }
+
 
     const handleCreate = () => {
         const {handleCreateResult} = props;
         const request = {
             name: name,
+            photoUrl: photoUrl,
             depth: activeDepth,
             parentId: activeCategory
         }
@@ -80,6 +125,7 @@ function AddCategoryModal(props) {
         if (!isValid(request)) {
             setNameErrorArray(nameError);
             setDepthErrorArray(depthError);
+            setPhotoUrlErrorArray(photoUrlError);
             return;
         }
         createProductCategory(request).then(response => {
@@ -97,6 +143,13 @@ function AddCategoryModal(props) {
 
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            {photoSuccess &&
+            createSuccessAlert("Resim Yükleme Başarılı")
+            }
+
+            {photoError &&
+            createErrorAlert("Resim Yükleme Başarısız")
+            }
             <DialogTitle id="add-category">Kategori Ekle</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -128,6 +181,22 @@ function AddCategoryModal(props) {
                 <br/>
                 <div className="error">{nameErrorArray.map(error => error)}</div>
                 <div className="eroor">{depthErrorArray.map(error => error)}</div>
+                <div>
+                    <p>Foto</p>
+                    <input ref={photoUrlRef} type="file"
+                           id="photoUrl" name="photoUrl"
+                           accept="image/png, image/jpeg"
+                           onChange={handlePhotoUrlChange}
+                    />
+                    <Button onClick={() => {
+                        photoUrlRef.current.value = null
+                        setPhotoUrl("");
+                    }} color="primary">
+                        Temizle
+                    </Button>
+                </div>
+                <div className="error">{photoUrlErrorArray.map(error => error)}</div>
+                {photoUrl && <div className="productImageItem"><img src={photoUrl}/></div>}
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
