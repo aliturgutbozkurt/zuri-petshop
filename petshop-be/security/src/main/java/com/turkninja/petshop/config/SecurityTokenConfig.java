@@ -67,7 +67,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                 // any other requests must be authenticated
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
     }
 
     // Spring has UserDetailsService interface, which can be overriden to provide our implementation for fetching user from database (or any other source).
