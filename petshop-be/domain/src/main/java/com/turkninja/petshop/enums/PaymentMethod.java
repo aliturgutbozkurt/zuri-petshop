@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum PaymentMethod implements PersistableEnum<Integer> {
-    CASH(1, "Cash"), CREDIT_CARD(2, "Credit Card"), DEBIT_CARD(3, "Debit Card");
+    CASH(1, "Cash"), CREDIT_CARD(2, "Credit Card"), MONEY_TRANSFER(3, "Money Transfer");
 
     private PaymentMethod(int code, String name) {
         this.code = code;
