@@ -3,6 +3,7 @@ package com.turkninja.petshop.product.impl;
 import com.turkninja.petshop.ProductCategoryRepository;
 import com.turkninja.petshop.ProductRepository;
 import com.turkninja.petshop.api.request.product.UpsertProductRequest;
+import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
@@ -14,6 +15,8 @@ import com.turkninja.petshop.exception.ApplicationException;
 import com.turkninja.petshop.mapper.ProductMapper;
 import com.turkninja.petshop.product.ProductService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -36,13 +39,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GetProductResponse getCategoryById(Long id) {
+    public GetProductResponse getProductById(Long id) {
         return null;
     }
 
     @Override
-    public Page<GetProductResponse> list() {
-        return null;
+    public PageResponse<GetProductResponse> list(int page, int size) {
+        Page<ProductEntity> productEntities =
+                productRepository.findAllByActiveTrue(PageRequest.of(page, size, Sort.by("name")));
+        return productMapper.pageEntitiesToGetPageResponse(productEntities);
     }
 
     @Override
@@ -74,6 +79,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-
+        ProductEntity productEntity = productRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
+                new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                        AppParameter.get("productId", id)));
+       productEntity.setActive(false);
+       productRepository.save(productEntity);
     }
 }

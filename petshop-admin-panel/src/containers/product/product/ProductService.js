@@ -1,5 +1,15 @@
 import request from "../../../common/request";
 
+export const pageProducts = (page, size) => {
+    const categoriesRequest = {
+        method: "GET",
+        path: "/api/v1/product",
+        params: ["page", "size"],
+        values: [page, size]
+    }
+    return request(categoriesRequest);
+}
+
 export const createProduct = data => {
     const createProductRequest = {
         method: "POST",
@@ -7,4 +17,12 @@ export const createProduct = data => {
         data: data,
     }
     return request(createProductRequest);
+}
+
+export const deleteProductById = id => {
+    const deleteProductRequest = {
+        method: "DELETE",
+        path: "/api/v1/product/" + id,
+    }
+    return request(deleteProductRequest);
 }

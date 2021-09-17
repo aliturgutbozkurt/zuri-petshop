@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -19,6 +19,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import {pageProducts} from "../containers/product/product/ProductService";
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -94,9 +95,13 @@ function CustomTable(props) {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     const {
-        handlePageChange, handleRowsPerPageChange, count, isOperation,
+        handlePageChange, handleRowsPerPageChange, count, isOperation, activePage,
         handleDelete, handleVisible, handleUpdate, hiddenIndexes
     } = props;
+
+    useEffect(() => {
+        setPage(activePage);
+    }, [activePage]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);

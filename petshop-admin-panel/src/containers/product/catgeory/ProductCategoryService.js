@@ -39,11 +39,11 @@ export const updateProductCategory = data => {
 }
 
 export const deleteCategoryById = id => {
-    const deleteProductRequest = {
+    const deleteCategoryRequest = {
         method: "DELETE",
         path: "/api/v1/category/" + id,
     }
-    return request(deleteProductRequest);
+    return request(deleteCategoryRequest);
 }
 
 export const getCategoryById = id => {

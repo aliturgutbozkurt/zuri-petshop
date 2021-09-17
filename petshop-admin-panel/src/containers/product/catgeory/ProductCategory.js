@@ -113,6 +113,7 @@ function ProductCategory(props) {
 
     function pageCategoriesDefault() {
         pageCategoriesByParentId("", 0, 5).then(response => {
+            setPage(0);
             setCategories(response.data.content);
             setCount(response.data.totalElements);
         }).catch(e => {
@@ -269,6 +270,7 @@ function ProductCategory(props) {
                              handlePageChange={handlePageChange}
                              handleRowsPerPageChange={handleRowsPerPageChange}
                              isOperation={true}
+                             activePage={page}
                              count={count}
                              handleDelete={handleDelete}
                              handleVisible={handleVisible}

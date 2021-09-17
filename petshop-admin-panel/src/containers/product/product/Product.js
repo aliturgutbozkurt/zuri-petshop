@@ -4,12 +4,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import CustomTable from "../../../components/CustomTable";
 import AddProductModal from "./AddProductModal";
+import {deleteProductById, pageProducts} from "./ProductService";
+import {deleteCategoryById} from "../catgeory/ProductCategoryService";
+import {createConfirmAlert} from "../../../components/Alert";
 
 
 const columns = [
-    "id", "Ürün Adı", "Oluşturan Kullanıcı", "İşlemler"
+    "id", "Ürün Adı", "Oluşturan Kullanıcı", "Fiyat", "İşlemler"
 ]
-
+const deleteDialogText = "Ürünü silmek istediğinizden emin misiniz?"
 
 function Product(props) {
 
@@ -22,14 +25,37 @@ function Product(props) {
     const [count, setCount] = useState(0);
     const [upsertStatus, setUpsertStatus] = useState(false);
     const [products, setProducts] = useState([]);
+    const [productDeleteSuccess, setProductDeleteSuccess] = useState(false);
+    const [productDeleteError, setProductDeleteError] = useState(false);
+    const [delteDialogOpen, setDelteDialogOpen] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(null);
 
     useEffect(() => {
+        pageProducts(page, size).then(response => {
+            setProducts(response.data.content);
+            setCount(response.data.totalElements);
+        }).catch(e => {
+            console.log(e);
+        });
     }, []);
 
     useEffect(() => {
+        pageProducts(page, size).then(response => {
+            setProducts(response.data.content);
+            setCount(response.data.totalElements);
+        }).catch(e => {
+            console.log(e);
+        });
     }, [page, size]);
 
     function pageProductsDefault() {
+        pageProducts(0, 5).then(response => {
+            setPage(0);
+            setProducts(response.data.content);
+            setCount(response.data.totalElements);
+        }).catch(e => {
+            console.log(e);
+        });
     }
 
     useEffect(() => {
@@ -39,7 +65,41 @@ function Product(props) {
         }
     }, [upsertStatus]);
 
+    useEffect(() => {
+        if (productDeleteSuccess) {
+            setTimeout(function () {
+                setProductDeleteSuccess(false);
+            }, 3000);
+        }
+    }, [productDeleteSuccess]);
+
+    useEffect(() => {
+        if (productDeleteError) {
+            setTimeout(function () {
+                setProductDeleteError(false);
+            }, 3000);
+        }
+    }, [productDeleteError]);
+
     const handleDelete = (id) => {
+        setDelteDialogOpen(true);
+        setIdToDelete(id);
+    }
+
+    const handleDeleteAfterConfirm = () => {
+
+        deleteProductById(idToDelete).then(response => {
+            pageProductsDefault();
+            setProductDeleteSuccess(true);
+        }).catch(e => {
+            console.log(e);
+            setProductDeleteError(true);
+        })
+        setDelteDialogOpen(false);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setDelteDialogOpen(false);
     }
 
     const handleVisible = (id) => {
@@ -80,6 +140,7 @@ function Product(props) {
     return (
         <React.Fragment>
             <CssBaseline/>
+            {createConfirmAlert(delteDialogOpen, deleteDialogText, handleDeleteDialogClose, handleDeleteAfterConfirm)}
             <Container maxWidth="xl">
                 <div>
                     <Button variant="outlined" color="primary" onClick={handleCreateModalClickOpen}>
@@ -97,11 +158,12 @@ function Product(props) {
                              handlePageChange={handlePageChange}
                              handleRowsPerPageChange={handleRowsPerPageChange}
                              isOperation={true}
+                             activePage={page}
                              count={count}
                              handleDelete={handleDelete}
                              handleVisible={handleVisible}
                              handleUpdate={handleUpdate}
-                             hiddenIndexes={[3, 4, 5]}
+                             hiddenIndexes={[3, 4, 6, 7, 8, 9]}
                 />
             </Container>
         </React.Fragment>
