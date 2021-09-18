@@ -18,15 +18,11 @@ public class QuestionEntity extends BaseEntity {
     @JoinColumn(name = "explanation")
     private String explanation;
 
-    @Column(name = "question_type")
-    @Convert(converter = QuestionType.Converter.class)
-    private QuestionType questionType;
-
-    @JoinColumn(name = "is_active")
-    private boolean isActive;
-
     @JoinColumn(name = "is_deleted")
     private boolean isDeleted;
+
+    @JoinColumn(name="last_answer_id")
+    private Long lastAnswerId;
 
     @OneToMany(mappedBy = "question")
     private Set<AnswerEntity> answers;

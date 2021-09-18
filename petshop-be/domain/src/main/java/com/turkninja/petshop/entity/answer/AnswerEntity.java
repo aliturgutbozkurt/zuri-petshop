@@ -20,12 +20,11 @@ public class AnswerEntity extends BaseEntity {
     @JoinColumn(name = "explanation")
     private String explanation;
 
-    @JoinColumn(name = "is_active")
-    private boolean isActive;
-
     @JoinColumn(name = "is_deleted")
     private boolean isDeleted;
 
+    @JoinColumn(name = "parent_answer_id")
+    private Long parentAnswerId;
     @ManyToOne
     @JoinColumn(name = "question_id")
     private QuestionEntity question;
