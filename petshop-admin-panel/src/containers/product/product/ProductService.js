@@ -1,5 +1,16 @@
 import request from "../../../common/request";
 
+
+
+
+export const getProductById = (id) => {
+    const productRequest = {
+        method: "GET",
+        path: "/api/v1/product/"+id ,
+    }
+    return request(productRequest);
+}
+
 export const pageProducts = (page, size) => {
     const categoriesRequest = {
         method: "GET",

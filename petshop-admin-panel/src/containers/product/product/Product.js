@@ -4,9 +4,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import CustomTable from "../../../components/CustomTable";
 import AddProductModal from "./AddProductModal";
-import {deleteProductById, pageProducts} from "./ProductService";
-import {deleteCategoryById} from "../catgeory/ProductCategoryService";
+import {deleteProductById, getProductById, pageProducts} from "./ProductService";
 import {createConfirmAlert} from "../../../components/Alert";
+import ViewProductModal from "./ViewProductModal";
 
 
 const columns = [
@@ -29,6 +29,7 @@ function Product(props) {
     const [productDeleteError, setProductDeleteError] = useState(false);
     const [delteDialogOpen, setDelteDialogOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
+    const [viewProductData, setViewProductData] = useState([]);
 
     useEffect(() => {
         pageProducts(page, size).then(response => {
@@ -103,6 +104,12 @@ function Product(props) {
     }
 
     const handleVisible = (id) => {
+        setViewModalOpen(true);
+        getProductById(id).then(response => {
+            setViewProductData(response.data);
+        }).catch(e => {
+            console.log(e);
+        })
     }
 
     const handleUpdate = id => {
@@ -148,6 +155,10 @@ function Product(props) {
                     </Button>
                     <AddProductModal open={createModalOpen} handleClose={handleCreateModalClose}
                                      handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+                    <ViewProductModal open={viewModalOpen}
+                                      productData={viewProductData}
+                                      categoryData={viewProductData.category}
+                                      handleClose={handleViewModalClose}/>
 
                 </div>
                 <div>

@@ -5,14 +5,13 @@ import {DialogContentText} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
-import "./CategoryModal.css";
 import {generateCategoryStr} from "../ProductUtil";
 
 
-function ViewCategoryModal(props) {
+function ViewProductModal(props) {
 
     const [categoryStr,setCategoryStr] = useState("");
-    const {categoryData, open, handleClose} = props;
+    const {productData,categoryData, open, handleClose} = props;
 
     useEffect(() => {
         if (open) {
@@ -21,7 +20,7 @@ function ViewCategoryModal(props) {
     }, [open]);
 
     useEffect(() => {
-        if (categoryData.name) {
+        if (categoryData && categoryData.name) {
             setCategoryStr(generateCategoryStr(categoryData));
         }
     }, [categoryData]);
@@ -37,16 +36,27 @@ function ViewCategoryModal(props) {
                             minWidth: '40vw',
                         },
                     }}>
-                <DialogTitle id="view-category">Kategori Detay</DialogTitle>
+                <DialogTitle id="view-category">Ürün Detay</DialogTitle>
                 <DialogContent>
+
                     <h4>Kategori</h4>
                     <DialogContentText>{categoryStr}</DialogContentText>
-                    <h4>Kategori Resmi</h4>
-                    {categoryData.photoUrl && <div className="productImageItem"><img src={categoryData.photoUrl}/></div>}
+                    <h4>Ürün İsmi</h4>
+                    <DialogContentText>{productData.name}</DialogContentText>
+                    <h4>Ürün Açıklama</h4>
+                    <DialogContentText>{productData.about}</DialogContentText>
+                    <h4>Ürün Eski Fiyatı</h4>
+                    <DialogContentText>Ürünün eski fiyatı sıfır ise indirim söz konusu değildir.</DialogContentText>
+                    <DialogContentText>{productData.oldPrice}</DialogContentText>
+                    <h4>Ürün Fiyatı</h4>
+                    <DialogContentText>{productData.price}</DialogContentText>
+                    <h4>Ürün Resmileri</h4>
+                    {productData.images && productData.images.map((image,index)=>
+                    <div className="productImageItem"><img src={image.url}/></div>)}
                     <h4>Oluşturulma Tarihi</h4>
-                    <DialogContentText>{categoryData.createdAt}</DialogContentText>
+                    <DialogContentText>{productData.createdAt}</DialogContentText>
                     <h4>Oluşturan Kullanıcı</h4>
-                    <DialogContentText>{categoryData.createdBy}</DialogContentText>
+                    <DialogContentText>{productData.createdBy}</DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
@@ -61,4 +71,4 @@ function ViewCategoryModal(props) {
 
 }
 
-export default ViewCategoryModal;
+export default ViewProductModal;

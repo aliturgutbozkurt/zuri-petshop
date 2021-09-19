@@ -31,6 +31,12 @@ public class ProductResource {
         this.productValidator = productValidator;
     }
 
+    @GetMapping("/{productId}")
+    public ResponseEntity<GetProductResponse> getProduct(@PathVariable("productId") Long id) {
+        GetProductResponse response = productService.getProductById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<PageResponse<GetProductResponse>> listPage(
             @RequestParam("page") int page, @RequestParam("size") int size) {

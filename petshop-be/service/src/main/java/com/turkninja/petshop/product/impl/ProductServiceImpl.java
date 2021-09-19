@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author ali turgut bozkurt
@@ -40,6 +41,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public GetProductResponse getProductById(Long id) {
+        Optional<ProductEntity> productOptional =
+                productRepository.findByIdAndActiveTrue(id);
+        if(productOptional.isPresent()){
+            return  productMapper.entityToGetResponse(productOptional.get());
+        }
         return null;
     }
 
