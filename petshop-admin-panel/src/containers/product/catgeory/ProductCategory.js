@@ -12,7 +12,7 @@ import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../..
 
 
 const columns = [
-    "id", "Kategori Adı", "Oluşturan Kullanıcı", "İşlemler"
+    "id", "Kategori Adı", "Oluşturan Kullanıcı","Kategori Resmi", "İşlemler"
 ]
 
 const deleteDialogText = "Kategoriyi silmek istediğinizden emin misiniz?"
@@ -271,11 +271,12 @@ function ProductCategory(props) {
                              handleRowsPerPageChange={handleRowsPerPageChange}
                              isOperation={true}
                              activePage={page}
+                             previewImageUrlField={"photoUrl"}
                              count={count}
                              handleDelete={handleDelete}
                              handleVisible={handleVisible}
                              handleUpdate={handleUpdate}
-                             hiddenIndexes={[2, 4, 5,6]}
+                             hiddenIndexes={[4, 5,6]}
                 />
             </Container>
         </React.Fragment>
