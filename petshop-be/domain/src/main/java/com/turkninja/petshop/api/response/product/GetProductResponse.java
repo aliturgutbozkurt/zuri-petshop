@@ -1,8 +1,10 @@
 package com.turkninja.petshop.api.response.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.entity.product.ProductImageEntity;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,4 +29,16 @@ public class GetProductResponse {
     private GetSoleCategoryResponse category;
     private LocalDateTime createdAt;
     private LocalDateTime revisedAt;
+
+    @JsonProperty("previewImageUrl")
+    public String getPreviewImageUrl(){
+        if(images.size()>0){
+            while (images.iterator().hasNext()) {
+                if(!StringUtils.isEmpty(images.iterator().next())) {
+                    return images.iterator().next().getUrl();
+                }
+            }
+        }
+        return null;
+    }
 }

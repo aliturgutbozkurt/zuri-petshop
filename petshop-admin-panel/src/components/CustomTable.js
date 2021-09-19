@@ -95,7 +95,7 @@ function CustomTable(props) {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     const {
-        handlePageChange, handleRowsPerPageChange, count, isOperation, activePage,
+        handlePageChange, handleRowsPerPageChange, count, isOperation,previewImageUrlField, activePage,
         handleDelete, handleVisible, handleUpdate, hiddenIndexes
     } = props;
 
@@ -129,7 +129,10 @@ function CustomTable(props) {
 
                     <TableRow key={index}>
                         {Object.keys(row).map((item, i) => (
-                            !hiddenIndexes.includes(i) && <TableCell key={i} align={"left"}> {row[item]}</TableCell>
+                            !hiddenIndexes.includes(i) ?
+                                <TableCell key={i} align={"left"}> {item === previewImageUrlField && row[item] ?
+                                    <img className="imageItem" src={row[item]}/> : row[item]}</TableCell>
+                                : null
                         ))}
                         {isOperation && <TableCell
                             align={"left"}>

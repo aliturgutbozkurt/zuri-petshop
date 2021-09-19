@@ -10,7 +10,7 @@ import {createConfirmAlert} from "../../../components/Alert";
 
 
 const columns = [
-    "id", "Ürün Adı", "Oluşturan Kullanıcı", "Fiyat", "İşlemler"
+    "id", "Ürün Adı", "Oluşturan Kullanıcı", "Fiyat", "Ürün Resmi", "İşlemler"
 ]
 const deleteDialogText = "Ürünü silmek istediğinizden emin misiniz?"
 
@@ -158,6 +158,7 @@ function Product(props) {
                              handlePageChange={handlePageChange}
                              handleRowsPerPageChange={handleRowsPerPageChange}
                              isOperation={true}
+                             previewImageUrlField={"previewImageUrl"}
                              activePage={page}
                              count={count}
                              handleDelete={handleDelete}

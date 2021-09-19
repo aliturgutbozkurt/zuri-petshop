@@ -140,18 +140,6 @@ function SignIn(props) {
                     >
                         GİRİŞ
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Şifremi unuttum!
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Henüz hesabınız yok mu? Üye olun."}
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </div>
             </div>
             <Box mt={8}>
