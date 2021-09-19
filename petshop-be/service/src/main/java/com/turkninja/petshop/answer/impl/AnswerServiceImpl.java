@@ -8,10 +8,7 @@ import com.turkninja.petshop.api.response.answer.CreateAnswerResponse;
 import com.turkninja.petshop.entity.answer.AnswerEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.mapper.AnswerMapper;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
