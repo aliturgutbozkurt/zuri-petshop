@@ -1,6 +1,8 @@
 package com.turkninja.petshop.entity.user;
 
+import com.turkninja.petshop.entity.answer.AnswerEntity;
 import com.turkninja.petshop.entity.base.BaseEntity;
+import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.enums.Gender;
 import com.turkninja.petshop.value.Address;
 import com.turkninja.petshop.value.FullName;
@@ -11,6 +13,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * Created by aliturgut.bozkurt
@@ -53,6 +56,13 @@ public class UserEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private UserRoleEntity role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<QuestionEntity> questions;
+
+    @OneToMany(mappedBy = "user")
+    private Set<AnswerEntity> answers;
+
 
     @Override
     public String toString() {
