@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.google.http-client:google-http-client-gson:1.39.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client-gson/1.39.2/google-http-client-gson-1.39.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client-gson/1.39.2/google-http-client-gson-1.39.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/http-client/google-http-client-gson/1.39.2/google-http-client-gson-1.39.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

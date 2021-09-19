@@ -1,8 +1,7 @@
 package com.turkninja.petshop.entity.product;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,7 +13,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "PRODUCT")
-@Data
+@Getter
+@Setter
+@ToString
 public class ProductEntity extends BaseEntity {
 
     @Column(name = "name",nullable = false)

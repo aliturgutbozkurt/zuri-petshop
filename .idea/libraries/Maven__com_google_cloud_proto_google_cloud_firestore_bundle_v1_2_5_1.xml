@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.google.cloud:proto-google-cloud-firestore-bundle-v1:2.5.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/cloud/proto-google-cloud-firestore-bundle-v1/2.5.1/proto-google-cloud-firestore-bundle-v1-2.5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/cloud/proto-google-cloud-firestore-bundle-v1/2.5.1/proto-google-cloud-firestore-bundle-v1-2.5.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/cloud/proto-google-cloud-firestore-bundle-v1/2.5.1/proto-google-cloud-firestore-bundle-v1-2.5.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

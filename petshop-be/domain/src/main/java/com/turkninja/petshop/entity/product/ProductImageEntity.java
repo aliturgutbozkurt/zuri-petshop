@@ -1,8 +1,7 @@
 package com.turkninja.petshop.entity.product;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,7 +13,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "PRODUCT_IMAGE")
 @EqualsAndHashCode(of = {"id", "url", "orderNumber"})
-@Data
+@Getter
+@Setter
+@ToString
 public class ProductImageEntity extends BaseEntity {
 
     @Column(name = "url", nullable = false)

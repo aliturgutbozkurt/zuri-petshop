@@ -10,7 +10,7 @@ public interface ProductImageService {
 
     public Page<GetProductImageResponse> list();
 
-    public CreateProductImageResponse create(MultipartFile file, Long productId);
+    public String create(MultipartFile file, Long productId);
 
     public void delete(Long id);
 }

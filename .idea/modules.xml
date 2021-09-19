@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/application/application.iml" filepath="$PROJECT_DIR$/petshop-be/application/application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/core/core.iml" filepath="$PROJECT_DIR$/petshop-be/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/domain/domain.iml" filepath="$PROJECT_DIR$/petshop-be/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/petshop.iml" filepath="$PROJECT_DIR$/petshop-be/petshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/repository/repository.iml" filepath="$PROJECT_DIR$/petshop-be/repository/repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/security/security.iml" filepath="$PROJECT_DIR$/petshop-be/security/security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/service/service.iml" filepath="$PROJECT_DIR$/petshop-be/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/petshop-be/web/web.iml" filepath="$PROJECT_DIR$/petshop-be/web/web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/zuri-petshop.iml" filepath="$PROJECT_DIR$/.idea/zuri-petshop.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,8 +1,7 @@
 package com.turkninja.petshop.entity.product;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +17,9 @@ import java.util.Set;
 @Entity
 @Table(name = "CATEGORY")
 @EqualsAndHashCode(of = {"id"})
+@Getter
+@Setter
+@ToString
 @Data
 public class ProductCategoryEntity extends BaseEntity {
 

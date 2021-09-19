@@ -10,8 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>6</source>
+                    <target>6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-<dependencies>
+    <dependencies>
     <dependency>
         <groupId>com.turkninja.petshop</groupId>
         <artifactId>core</artifactId>
@@ -32,5 +44,11 @@
         <artifactId>firebase-admin</artifactId>
         <version>8.0.0</version>
     </dependency>
+        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.29.0</version>
+        </dependency>
 </dependencies>
 </project>
