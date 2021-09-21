@@ -256,9 +256,9 @@ function AddProductModal(props) {
                         }}
                         active={open}
                     />
-                    <br/>
-                    <br/>
                     <div className="error">{categoryErrorArray.map(error => error)}</div>
+                    <br/>
+                    <br/>
 
                     <TextField
                         autoFocus
@@ -272,10 +272,9 @@ function AddProductModal(props) {
                         variant="outlined"
                     />
 
-
-                    <br/>
-                    <br/>
                     <div className="error">{nameErrorArray.map(error => error)}</div>
+                    <br/>
+                    <br/>
                     <div>Eski fiyat yoksa, yani indirim söz konusu değilse boş bırakınız</div>
                     <TextField
                         autoFocus
@@ -288,9 +287,9 @@ function AddProductModal(props) {
                         fullWidth
                         variant="outlined"
                     />
-                    <br/>
-                    <br/>
                     <div className="error">{oldPriceErrorArray.map(error => error)}</div>
+                    <br/>
+                    <br/>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -302,9 +301,9 @@ function AddProductModal(props) {
                         fullWidth
                         variant="outlined"
                     />
-                    <br/>
-                    <br/>
                     <div className="error">{priceErrorArray.map(error => error)}</div>
+                    <br/>
+                    <br/>
                     <TextField
                         id="about"
                         label="Ürün Açıklması"
@@ -315,9 +314,9 @@ function AddProductModal(props) {
                         fullWidth
                         variant="outlined"
                     />
-                    <br/>
-                    <br/>
                     <div className="error">{aboutErrorArray.map(error => error)}</div>
+                    <br/>
+                    <br/>
                     <div>
                         <p>Foto 1</p>
                         <div className="error">{photoErrorArray.map(error => error)}</div>
