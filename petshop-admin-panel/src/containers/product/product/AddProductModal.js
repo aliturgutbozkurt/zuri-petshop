@@ -9,11 +9,20 @@ import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import CategoryList from "../catgeory/CategoryList";
 import Divider from "@material-ui/core/Divider";
-import {createProductCategory} from "../catgeory/ProductCategoryService";
 import {createProductImage} from "./ProductImageService";
 import {createErrorAlert, createSuccessAlert} from "../../../components/Alert";
 import {createProduct} from "./ProductService";
 import "./AddProductModal.css";
+import {
+    aboutError,
+    activeCategoryError,
+    isValid,
+    nameError,
+    allPhotoError,
+    oldPriceError,
+    priceError, validatePrice, validateCategory, validatePhoto, validateAbout, validateOldPrice, emptyValidationErrors
+} from "./ProductValidation";
+import {validateName} from "../catgeory/ProductCategoryValidation";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -42,11 +51,19 @@ function AddProductModal(props) {
     const [photoSuccess, setPhotoSuccess] = useState(false);
     const [photoError, setPhotoError] = useState(false);
     const [activeCategory, setActiveCategory] = useState("");
+    const [categoryErrorArray, setCategoryErrorArray] = useState([]);
+    const [nameErrorArray, setNameErrorArray] = useState([]);
+    const [aboutErrorArray, setAboutErrorArray] = useState([]);
+    const [oldPriceErrorArray, setOldPriceErrorArray] = useState([]);
+    const [priceErrorArray, setPriceErrorArray] = useState([]);
+    const [photoErrorArray, setPhotoErrorArray] = useState([]);
     const {open, handleClose, handleUpdateUpsertStatus} = props;
 
     useEffect(() => {
         if (open) {
+            emptyValidationErrors();
             resetFormValues();
+            resetErrorArrays();
         }
     }, [open]);
 
@@ -66,22 +83,35 @@ function AddProductModal(props) {
         }
     }, [photoError]);
 
+    useEffect(() => {
+        const foto1 = photo1;
+        const foto2 = photo2;
+        const foto3 = photo3;
+        const foto4 = photo4;
+        setPhotoErrorArray(validatePhoto(createImageSet(foto1, foto2, foto3, foto4)));
+    }, [photo1, photo2, photo3, photo4]);
+
 
     const handleNameChange = (e) => {
         setName(e.target.value);
+        setNameErrorArray(validateName(e.target.value));
     }
     const handlePriceChange = (e) => {
         setPrice(e.target.value);
+        setPriceErrorArray(validatePrice(e.target.value));
     }
     const handleOldPriceChange = (e) => {
         setOldPrice(e.target.value);
+        setOldPriceErrorArray(validateOldPrice(e.target.value));
     }
     const handleAboutChange = (e) => {
         setAbout(e.target.value);
+        setAboutErrorArray(validateAbout(e.target.value));
     }
 
     const handleActiveCategoryChange = categoryId => {
         setActiveCategory(categoryId);
+        setCategoryErrorArray(validateCategory(categoryId));
     }
 
     const handlePhoto1Change = (e) => {
@@ -129,7 +159,7 @@ function AddProductModal(props) {
     }
 
 
-    const createImageSet = () => {
+    const createImageSet = (photo1, photo2, photo3, photo4) => {
         const imageSet = [];
         if (photo1) {
             imageSet.push({url: photo1, orderNumber: 0})
@@ -158,6 +188,16 @@ function AddProductModal(props) {
         setActiveCategory("");
     }
 
+    const resetErrorArrays = () => {
+        setCategoryErrorArray([]);
+        setNameErrorArray([]);
+        setAboutErrorArray([]);
+        setOldPriceErrorArray([]);
+        setPriceErrorArray([]);
+        setOldPriceErrorArray([]);
+        setPhotoErrorArray([]);
+    }
+
     const handleCreate = () => {
         const {handleCreateResult} = props;
         const request = {
@@ -165,8 +205,17 @@ function AddProductModal(props) {
             oldPrice: oldPrice,
             price: price,
             about: about,
-            images: createImageSet(),
+            images: createImageSet(photo1, photo2, photo3, photo4),
             categoryId: activeCategory
+        }
+        if (!isValid(request)) {
+            setCategoryErrorArray(activeCategoryError);
+            setNameErrorArray(nameError);
+            setAboutErrorArray(aboutError);
+            setOldPriceErrorArray(oldPriceError);
+            setPriceErrorArray(priceError);
+            setPhotoErrorArray(allPhotoError);
+            return;
         }
         createProduct(request).then(response => {
             console.log("created");
@@ -207,6 +256,9 @@ function AddProductModal(props) {
                         }}
                         active={open}
                     />
+                    <br/>
+                    <br/>
+                    <div className="error">{categoryErrorArray.map(error => error)}</div>
 
                     <TextField
                         autoFocus
@@ -220,8 +272,10 @@ function AddProductModal(props) {
                         variant="outlined"
                     />
 
+
                     <br/>
                     <br/>
+                    <div className="error">{nameErrorArray.map(error => error)}</div>
                     <div>Eski fiyat yoksa, yani indirim söz konusu değilse boş bırakınız</div>
                     <TextField
                         autoFocus
@@ -236,6 +290,7 @@ function AddProductModal(props) {
                     />
                     <br/>
                     <br/>
+                    <div className="error">{oldPriceErrorArray.map(error => error)}</div>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -249,6 +304,7 @@ function AddProductModal(props) {
                     />
                     <br/>
                     <br/>
+                    <div className="error">{priceErrorArray.map(error => error)}</div>
                     <TextField
                         id="about"
                         label="Ürün Açıklması"
@@ -259,9 +315,12 @@ function AddProductModal(props) {
                         fullWidth
                         variant="outlined"
                     />
-                    -
+                    <br/>
+                    <br/>
+                    <div className="error">{aboutErrorArray.map(error => error)}</div>
                     <div>
                         <p>Foto 1</p>
+                        <div className="error">{photoErrorArray.map(error => error)}</div>
                         <input ref={photo1Ref} type="file"
                                id="photo1" name="photo1"
                                accept="image/png, image/jpeg"

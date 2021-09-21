@@ -83,6 +83,12 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                 </ListItem>
                 <ListItemLink to="/product-category" primary="Kategoriler" icon={<CategoryIcon/>}/>
                 <ListItemLink to="/product" primary="Ürünler" icon={<ArtTrackIcon/>}/>
+            </List>
+            <Divider/>
+            <List>
+                <ListItem>
+                    <ListItemText>Sipariş Yönetimi</ListItemText>
+                </ListItem>
                 <ListItem button key={3}>
                     <ListItemIcon><AssignmentIcon/></ListItemIcon>
                     <ListItemText primary={'Siparişler'}/>

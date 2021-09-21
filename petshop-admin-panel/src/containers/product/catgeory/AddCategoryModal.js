@@ -82,7 +82,7 @@ function AddCategoryModal(props) {
 
     const handleNameChange = (e) => {
         const name = e.target.value;
-        setNameErrorArray(validateName(name))
+        setNameErrorArray(validateName(name));
         setName(name);
     }
 
