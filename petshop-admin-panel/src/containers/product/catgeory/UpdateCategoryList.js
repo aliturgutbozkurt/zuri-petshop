@@ -4,7 +4,6 @@ import Select from "@material-ui/core/Select";
 import React, {useEffect, useState} from "react";
 import {listCategoriesByParentId} from "./ProductCategoryService";
 import {makeStyles} from "@material-ui/core/styles";
-import {bindActionCreators} from "redux";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CategoryList(props) {
+function UpdateCategoryList(props) {
     const classes = useStyles();
     const [activeDepth, setActiveDepth] = useState(0);
     const [categoryChange, setCategoryChange] = useState(false);
@@ -35,7 +34,7 @@ function CategoryList(props) {
 
     const {
         handleActiveCategoryChange, handleLastDepthChange, active,
-        handleActiveDepthChange, handleActiveNameChange, categoryData
+        handleActiveDepthChange, categoryData
     } = props;
 
     useEffect(() => {
@@ -398,4 +397,4 @@ function CategoryList(props) {
 }
 
 
-export default CategoryList;
+export default UpdateCategoryList;

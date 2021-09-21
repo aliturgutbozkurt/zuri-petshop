@@ -43,8 +43,8 @@ public class ProductServiceImpl implements ProductService {
     public GetProductResponse getProductById(Long id) {
         Optional<ProductEntity> productOptional =
                 productRepository.findByIdAndActiveTrue(id);
-        if(productOptional.isPresent()){
-            return  productMapper.entityToGetResponse(productOptional.get());
+        if (productOptional.isPresent()) {
+            return productMapper.entityToGetResponse(productOptional.get());
         }
         return null;
     }
@@ -58,6 +58,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public CreateProductResponse create(UpsertProductRequest request) {
+        ProductEntity entity = getProductEntityForUpsert(request);
+        return productMapper.entityToCreateResponse(productRepository.save(entity));
+    }
+
+    @Override
+    public UpdateProductResponse update(UpsertProductRequest request) {
+        Optional<ProductEntity> productOptional = productRepository.findByIdAndActiveTrue(request.getId());
+        if (!productOptional.isPresent()) {
+            throw new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                    AppParameter.get("productId", request.getId()));
+        }
+        ProductEntity entity = getProductEntityForUpsert(request);
+        return productMapper.entityToUpdateResponse(productRepository.save(entity));
+    }
+
+    private ProductEntity getProductEntityForUpsert(UpsertProductRequest request) {
         ProductCategoryEntity category = null;
         if (Objects.nonNull(request.getCategoryId())) {
             category = productCategoryRepository.findByIdAndActiveTrue(request.getCategoryId()).orElseThrow(() ->
@@ -68,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entity = productMapper.upsertRequestToEntity(request);
         entity.setCategory(category);
         entity.setProductToImage();
-        return productMapper.entityToCreateResponse(productRepository.save(entity));
+        return entity;
     }
 
     private void checkCategoryHasSubCategories(ProductCategoryEntity category) {
@@ -79,16 +95,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public UpdateProductResponse update(UpsertProductRequest product) {
-        return null;
-    }
-
-    @Override
     public void delete(Long id) {
         ProductEntity productEntity = productRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
                 new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                         AppParameter.get("productId", id)));
-       productEntity.setActive(false);
-       productRepository.save(productEntity);
+        productEntity.setActive(false);
+        productRepository.save(productEntity);
     }
 }

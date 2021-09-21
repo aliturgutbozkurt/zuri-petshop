@@ -1,5 +1,6 @@
 package com.turkninja.petshop.api.response.product;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import lombok.Data;
 
@@ -20,6 +21,8 @@ public class GetSoleCategoryResponse {
     private GetSoleCategoryResponse parent;
     private String createdBy;
     private int depth;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime revisedAt;
 }

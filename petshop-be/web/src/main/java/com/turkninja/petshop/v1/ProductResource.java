@@ -4,6 +4,7 @@ import com.turkninja.petshop.api.request.product.UpsertProductRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
+import com.turkninja.petshop.api.response.product.UpdateProductResponse;
 import com.turkninja.petshop.product.ProductService;
 import com.turkninja.petshop.validation.product.ProductValidator;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,19 @@ public class ProductResource {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
         CreateProductResponse response = productService.create(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> update(
+            @Valid @RequestBody UpsertProductRequest request,
+            BindingResult bindingResult) {
+
+        productValidator.validate(request, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        UpdateProductResponse response = productService.update(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

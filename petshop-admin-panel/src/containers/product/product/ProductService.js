@@ -30,6 +30,15 @@ export const createProduct = data => {
     return request(createProductRequest);
 }
 
+export const updateProduct = data => {
+    const updateProductRequest = {
+        method: "PUT",
+        path: "/api/v1/product",
+        data: data,
+    }
+    return request(updateProductRequest);
+}
+
 export const deleteProductById = id => {
     const deleteProductRequest = {
         method: "DELETE",

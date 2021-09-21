@@ -5,14 +5,24 @@ import Container from "@material-ui/core/Container";
 import CustomTable from "../../../components/CustomTable";
 import AddProductModal from "./AddProductModal";
 import {deleteProductById, getProductById, pageProducts} from "./ProductService";
-import {createConfirmAlert} from "../../../components/Alert";
+import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../../components/Alert";
 import ViewProductModal from "./ViewProductModal";
+import UpdateCategoryModal from "../catgeory/UpdateCategoryModal";
+import UpdateProductModal from "./UpdateProductModal";
+import {getCategoryById} from "../catgeory/ProductCategoryService";
 
 
 const columns = [
     "id", "Ürün Adı", "Oluşturan Kullanıcı", "Fiyat", "Ürün Resmi", "İşlemler"
 ]
+
 const deleteDialogText = "Ürünü silmek istediğinizden emin misiniz?"
+const createSuccessDialogText = "Ürünü oluşturma işlemi başarılı"
+const createErrorDialogText = "Ürünü oluşturma işlemi başarısız"
+const updateSuccessDialogText = "Ürünü güncelleme işlemi başarılı"
+const updateErrorDialogText = "Ürünü güncelleme işlemi başarısız"
+const deleteSuccessDialogText = "Ürünü güncelleme işlemi başarılı"
+const deleteErrorDialogText = "Ürünü güncelleme işlemi başarısız"
 
 function Product(props) {
 
@@ -27,6 +37,10 @@ function Product(props) {
     const [products, setProducts] = useState([]);
     const [productDeleteSuccess, setProductDeleteSuccess] = useState(false);
     const [productDeleteError, setProductDeleteError] = useState(false);
+    const [productUpdateSuccess, setProductUpdateSuccess] = useState(false);
+    const [productUpdateError, setProductUpdateError] = useState(false);
+    const [productCreateSuccess, setProductCreateSuccess] = useState(false);
+    const [productCreateError, setProductCreateError] = useState(false);
     const [delteDialogOpen, setDelteDialogOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
     const [viewProductData, setViewProductData] = useState([]);
@@ -67,6 +81,38 @@ function Product(props) {
     }, [upsertStatus]);
 
     useEffect(() => {
+        if (productCreateSuccess) {
+            setTimeout(function () {
+                setProductCreateSuccess(false);
+            }, 3000);
+        }
+    }, [productCreateSuccess]);
+
+    useEffect(() => {
+        if (productCreateError) {
+            setTimeout(function () {
+                setProductCreateError(false);
+            }, 3000);
+        }
+    }, [productCreateError]);
+
+    useEffect(() => {
+        if (productUpdateSuccess) {
+            setTimeout(function () {
+                setProductUpdateSuccess(false);
+            }, 3000);
+        }
+    }, [productUpdateSuccess]);
+
+    useEffect(() => {
+        if (productUpdateError) {
+            setTimeout(function () {
+                setProductUpdateError(false);
+            }, 3000);
+        }
+    }, [productUpdateError]);
+
+    useEffect(() => {
         if (productDeleteSuccess) {
             setTimeout(function () {
                 setProductDeleteSuccess(false);
@@ -99,6 +145,22 @@ function Product(props) {
         setDelteDialogOpen(false);
     }
 
+    const handleUpdateResult = result => {
+        if (result) {
+            setProductUpdateSuccess(true);
+        } else {
+            setProductUpdateError(true);
+        }
+    }
+
+    const handleCreateResult = result => {
+        if (result) {
+            setProductCreateSuccess(true);
+        } else {
+            setProductCreateError(true);
+        }
+    }
+
     const handleDeleteDialogClose = () => {
         setDelteDialogOpen(false);
     }
@@ -113,7 +175,14 @@ function Product(props) {
     }
 
     const handleUpdate = id => {
+        setUpdateModalOpen(true);
+        getProductById(id).then(response => {
+            setViewProductData(response.data);
+        }).catch(e => {
+            console.log(e);
+        })
     }
+
 
     const handleCreateModalClickOpen = () => {
         setCreateModalOpen(true);
@@ -148,13 +217,28 @@ function Product(props) {
         <React.Fragment>
             <CssBaseline/>
             {createConfirmAlert(delteDialogOpen, deleteDialogText, handleDeleteDialogClose, handleDeleteAfterConfirm)}
+            {productCreateSuccess && <div> {createSuccessAlert(createSuccessDialogText)} <br/><br/></div>}
+            {productUpdateSuccess && <div>  {createSuccessAlert(updateSuccessDialogText)} <br/><br/></div>}
+            {productDeleteSuccess && <div>  {createSuccessAlert(deleteSuccessDialogText)} <br/><br/></div>}
+            {productCreateError && <div>  {createErrorAlert(createErrorDialogText)} <br/><br/></div>}
+            {productUpdateError && <div>  {createErrorAlert(updateErrorDialogText)} <br/><br/></div>}
+            {productDeleteError && <div>  {createErrorAlert(deleteErrorDialogText)} <br/><br/></div>}
             <Container maxWidth="xl">
                 <div>
                     <Button variant="outlined" color="primary" onClick={handleCreateModalClickOpen}>
                         Ürün Ekle
                     </Button>
                     <AddProductModal open={createModalOpen} handleClose={handleCreateModalClose}
-                                     handleUpdateUpsertStatus={handleUpdateUpsertStatus}/>
+                                     handleUpdateUpsertStatus={handleUpdateUpsertStatus}
+                                     handleCreateResult={handleCreateResult}
+                    />
+                    <UpdateProductModal open={updateModalOpen}
+                                         handleClose={handleUpdateModalClose}
+                                         handleUpdateUpsertStatus={handleUpdateUpsertStatus}
+                                         categoryData={viewProductData.category}
+                                         productData={viewProductData}
+                                         handleUpdateResult={handleUpdateResult}
+                    />
                     <ViewProductModal open={viewModalOpen}
                                       productData={viewProductData}
                                       categoryData={viewProductData.category}

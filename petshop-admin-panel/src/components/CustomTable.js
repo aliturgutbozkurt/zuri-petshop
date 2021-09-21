@@ -142,17 +142,11 @@ function CustomTable(props) {
                         }
                     </TableRow>
                 ))}
-
-                {emptyRows > 0 && (
-                    <TableRow style={{height: 53 * emptyRows}}>
-                        <TableCell colSpan={6}/>
-                    </TableRow>
-                )}
             </TableBody>
             <TableFooter>
                 <TableRow>
                     <TablePagination
-                        rowsPerPageOptions={[5, 10, 25, {label: 'Hepsi', value: -1}]}
+                        rowsPerPageOptions={[5, 10, 25, {label: 'Hepsi', value: 10000}]}
                         colSpan={3}
                         count={count}
                         rowsPerPage={rowsPerPage}

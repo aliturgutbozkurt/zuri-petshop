@@ -10,8 +10,8 @@ import {generateCategoryStr} from "../ProductUtil";
 
 function ViewProductModal(props) {
 
-    const [categoryStr,setCategoryStr] = useState("");
-    const {productData,categoryData, open, handleClose} = props;
+    const [categoryStr, setCategoryStr] = useState("");
+    const {productData, categoryData, open, handleClose} = props;
 
     useEffect(() => {
         if (open) {
@@ -38,32 +38,38 @@ function ViewProductModal(props) {
                     }}>
                 <DialogTitle id="view-category">Ürün Detay</DialogTitle>
                 <DialogContent>
+                    <div>
+                        <h4>Kategori</h4>
+                        <DialogContentText>{categoryStr}</DialogContentText>
+                        <h4>Ürün İsmi</h4>
+                        <DialogContentText>{productData.name}</DialogContentText>
+                        <h4>Ürün Açıklama</h4>
+                        <DialogContentText>{productData.about}</DialogContentText>
+                        <h4>Ürün Eski Fiyatı</h4>
+                        <DialogContentText>Ürünün eski fiyatı sıfır ise indirim söz konusu değildir.</DialogContentText>
+                        <DialogContentText>{productData.oldPrice}</DialogContentText>
+                        <h4>Ürün Fiyatı</h4>
+                        <DialogContentText>{productData.price}</DialogContentText>
+                    </div>
+                    <div>
+                        <h4>Ürün Resmileri</h4>
 
-                    <h4>Kategori</h4>
-                    <DialogContentText>{categoryStr}</DialogContentText>
-                    <h4>Ürün İsmi</h4>
-                    <DialogContentText>{productData.name}</DialogContentText>
-                    <h4>Ürün Açıklama</h4>
-                    <DialogContentText>{productData.about}</DialogContentText>
-                    <h4>Ürün Eski Fiyatı</h4>
-                    <DialogContentText>Ürünün eski fiyatı sıfır ise indirim söz konusu değildir.</DialogContentText>
-                    <DialogContentText>{productData.oldPrice}</DialogContentText>
-                    <h4>Ürün Fiyatı</h4>
-                    <DialogContentText>{productData.price}</DialogContentText>
-                    <h4>Ürün Resmileri</h4>
-                    {productData.images && productData.images.map((image,index)=>
-                    <div className="productImageItem"><img src={image.url}/></div>)}
-                    <h4>Oluşturulma Tarihi</h4>
-                    <DialogContentText>{productData.createdAt}</DialogContentText>
-                    <h4>Oluşturan Kullanıcı</h4>
-                    <DialogContentText>{productData.createdBy}</DialogContentText>
+                        {productData.images && productData.images.map((image, index) =>
+                            <div key={index} className="productImageItem" style={{float: "left"}}><img src={image.url}/></div>)}
+                    </div>
+                    <div style={{clear: "both"}}>
+                        <h4>Oluşturulma Tarihi</h4>
+                        <DialogContentText>{productData.createdAt}</DialogContentText>
+                        <h4>Oluşturan Kullanıcı</h4>
+                        <DialogContentText>{productData.createdBy}</DialogContentText>
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         İptal
                     </Button>
                 </DialogActions>
-                </Dialog>
+            </Dialog>
 
 
         </React.Fragment>

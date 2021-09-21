@@ -17,11 +17,11 @@ const columns = [
 
 const deleteDialogText = "Kategoriyi silmek istediğinizden emin misiniz?"
 const createSuccessDialogText = "Kategoriyi oluşturma işlemi başarılı"
-const createErrorDialogText = "Kategoriyi oluşturma işlemi başarılı"
+const createErrorDialogText = "Kategoriyi oluşturma işlemi başarısız"
 const updateSuccessDialogText = "Kategoriyi güncelleme işlemi başarılı"
-const updateErrorDialogText = "Kategoriyi güncelleme işlemi başarılı"
+const updateErrorDialogText = "Kategoriyi güncelleme işlemi başarısız"
 const deleteSuccessDialogText = "Kategoriyi güncelleme işlemi başarılı"
-const deleteErrorDialogText = "Kategoriyi güncelleme işlemi başarılı"
+const deleteErrorDialogText = "Kategoriyi güncelleme işlemi başarısız"
 
 
 function ProductCategory(props) {
