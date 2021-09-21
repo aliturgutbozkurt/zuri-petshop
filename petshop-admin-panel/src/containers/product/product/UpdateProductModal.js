@@ -257,7 +257,7 @@ function AddProductModal(props) {
             {photoError &&
             createErrorAlert("Resim Yükleme Başarısız")
             }
-            <DialogTitle id="add-category">Ürün Ekle</DialogTitle>
+            <DialogTitle id="add-category">Ürün Güncelle</DialogTitle>
             <DialogContent>
                 <form className={classes.root} noValidate autoComplete="off">
                     <DialogContentText>
