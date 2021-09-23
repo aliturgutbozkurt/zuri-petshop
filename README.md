@@ -1,5 +1,5 @@
 # zuri-petshop
-A Spring Boot - React Petshop Application
+A Spring Boot-React-React Native Petshop Application
 
 
 # Installation
