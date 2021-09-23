@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import Button from '@material-ui/core/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import AddCategoryModal from "./AddCategoryModal";
+import AddCategoryModal from "./modals/AddCategoryModal";
 import CategoryList from "./CategoryList";
 import CustomTable from "../../../components/CustomTable";
 import {deleteCategoryById, getCategoryById, pageCategoriesByParentId} from "./ProductCategoryService";
-import ViewCategoryModal from "./ViewCategoryModal";
-import UpdateCategoryModal from "./UpdateCategoryModal";
+import ViewCategoryModal from "./modals/ViewCategoryModal";
+import UpdateCategoryModal from "./modals/UpdateCategoryModal";
 import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../../components/Alert";
 
 

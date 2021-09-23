@@ -7,12 +7,14 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import CategoryList from "../catgeory/CategoryList";
+import CategoryList from "../../catgeory/CategoryList";
 import Divider from "@material-ui/core/Divider";
-import {createProductImage} from "./ProductImageService";
-import {createErrorAlert, createSuccessAlert} from "../../../components/Alert";
-import {createProduct} from "./ProductService";
+import {createProductCategory, updateProductCategory} from "../../catgeory/ProductCategoryService";
+import {createProductImage} from "../ProductImageService";
+import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert";
+import {createProduct, updateProduct} from "../ProductService";
 import "./AddProductModal.css";
+import UpdateCategoryList from "../../catgeory/UpdateCategoryList";
 import {
     aboutError,
     activeCategoryError,
@@ -20,9 +22,8 @@ import {
     nameError,
     allPhotoError,
     oldPriceError,
-    priceError, validatePrice, validateCategory, validatePhoto, validateAbout, validateOldPrice, emptyValidationErrors
-} from "./ProductValidation";
-import {validateName} from "../catgeory/ProductCategoryValidation";
+    priceError, validateName, validatePrice, validateCategory, validatePhoto, validateAbout, validateOldPrice, emptyValidationErrors
+} from "../ProductValidation";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -57,7 +58,7 @@ function AddProductModal(props) {
     const [oldPriceErrorArray, setOldPriceErrorArray] = useState([]);
     const [priceErrorArray, setPriceErrorArray] = useState([]);
     const [photoErrorArray, setPhotoErrorArray] = useState([]);
-    const {open, handleClose, handleUpdateUpsertStatus} = props;
+    const {categoryData, productData, open, handleClose, handleUpdateUpsertStatus} = props;
 
     useEffect(() => {
         if (open) {
@@ -66,6 +67,22 @@ function AddProductModal(props) {
             resetErrorArrays();
         }
     }, [open]);
+
+    useEffect(() => {
+        if (open && productData && categoryData) {
+            setName(productData.name);
+            setPrice(productData.price);
+            setOldPrice(productData.oldPrice);
+            setAbout(productData.about);
+            if (productData.images) {
+                setPhoto1(productData.images[0] ? productData.images[0].url : "");
+                setPhoto2(productData.images[1] ? productData.images[1].url : "");
+                setPhoto3(productData.images[2] ? productData.images[2].url : "");
+                setPhoto4(productData.images[3] ? productData.images[3].url : "");
+            }
+            setActiveCategory(categoryData.id);
+        }
+    }, [open, productData]);
 
     useEffect(() => {
         if (photoSuccess) {
@@ -198,9 +215,11 @@ function AddProductModal(props) {
         setPhotoErrorArray([]);
     }
 
-    const handleCreate = () => {
-        const {handleCreateResult} = props;
+
+    const handleUpdate = () => {
+        const {handleUpdateResult} = props;
         const request = {
+            id: productData.id,
             name: name,
             oldPrice: oldPrice,
             price: price,
@@ -217,15 +236,14 @@ function AddProductModal(props) {
             setPhotoErrorArray(allPhotoError);
             return;
         }
-        createProduct(request).then(response => {
-            console.log("created");
+        updateProduct(request).then(response => {
             resetFormValues();
             handleUpdateUpsertStatus();
-            handleCreateResult(true);
+            handleUpdateResult(true);
             handleClose();
         }).catch(e => {
             console.error(e);
-            handleCreateResult(false);
+            handleUpdateResult(false);
         })
     }
 
@@ -239,22 +257,23 @@ function AddProductModal(props) {
             {photoError &&
             createErrorAlert("Resim Yükleme Başarısız")
             }
-            <DialogTitle id="add-category">Ürün Ekle</DialogTitle>
+            <DialogTitle id="add-category">Ürün Güncelle</DialogTitle>
             <DialogContent>
                 <form className={classes.root} noValidate autoComplete="off">
                     <DialogContentText>
                         İlgili üst kategorileri seçerek ilerleyiniz.
                     </DialogContentText>
 
-                    <CategoryList
+                    <UpdateCategoryList
                         handleActiveCategoryChange={handleActiveCategoryChange}
-                        handlePageChange={() => {
-                        }}
                         handleLastDepthChange={() => {
+                        }}
+                        handleActiveNameChange={() => {
                         }}
                         handleActiveDepthChange={() => {
                         }}
                         active={open}
+                        categoryData={categoryData}
                     />
                     <div className="error">{categoryErrorArray.map(error => error)}</div>
                     <br/>
@@ -271,11 +290,10 @@ function AddProductModal(props) {
                         fullWidth
                         variant="outlined"
                     />
-
                     <div className="error">{nameErrorArray.map(error => error)}</div>
                     <br/>
                     <br/>
-                    <div>Eski fiyat yoksa, yani indirim söz konusu değilse boş bırakınız</div>
+                    <div>Eski fiyat yoksa, yani indirim söz konusu değilse boş veya 0 bırakınız</div>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -308,6 +326,7 @@ function AddProductModal(props) {
                         id="about"
                         label="Ürün Açıklması"
                         multiline
+                        value={about}
                         autoFocus
                         rows={4}
                         onChange={handleAboutChange}
@@ -392,7 +411,7 @@ function AddProductModal(props) {
                     İptal
                 </Button>
 
-                < Button onClick={handleCreate} color="primary">
+                < Button onClick={handleUpdate} color="primary">
                     Ekle
                 </Button>
 

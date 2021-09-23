@@ -3,12 +3,12 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import CustomTable from "../../../components/CustomTable";
-import AddProductModal from "./AddProductModal";
+import AddProductModal from "./modals/AddProductModal";
 import {deleteProductById, getProductById, pageProducts} from "./ProductService";
 import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../../components/Alert";
-import ViewProductModal from "./ViewProductModal";
-import UpdateCategoryModal from "../catgeory/UpdateCategoryModal";
-import UpdateProductModal from "./UpdateProductModal";
+import ViewProductModal from "./modals/ViewProductModal";
+import UpdateCategoryModal from "../catgeory/modals/UpdateCategoryModal";
+import UpdateProductModal from "./modals/UpdateProductModal";
 import {getCategoryById} from "../catgeory/ProductCategoryService";
 
 

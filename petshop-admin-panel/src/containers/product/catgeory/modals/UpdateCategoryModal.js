@@ -6,8 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
-import {createCategoryImage, updateProductCategory} from "./ProductCategoryService";
-import UpdateCategoryList from "./UpdateCategoryList";
+import {createCategoryImage, updateProductCategory} from "../ProductCategoryService";
+import UpdateCategoryList from "../UpdateCategoryList";
 import "./CategoryModal.css";
 import {
     depthError,
@@ -16,8 +16,8 @@ import {
     nameError, photoUrlError,
     validateDepth,
     validateName, validatePhotoUrl
-} from "./ProductCategoryValidation";
-import {createErrorAlert, createSuccessAlert} from "../../../components/Alert";
+} from "../ProductCategoryValidation";
+import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert";
 
 function UpdateCategoryModal(props) {
     const {open, handleClose, handleUpdateUpsertStatus, categoryData} = props;
