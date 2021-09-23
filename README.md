@@ -12,3 +12,4 @@ In order to install the development environment, please follow below steps to ha
 6-In order to start be, go to project folder, mvn clean install. And run Java application.
 7- IDE for frontend development(e.g. WebStorm, Visual Studio Code, etc.)
 8- In order to start admin panel, go to project folder, npm install and npm start.
+9- In order to start mobile app, go to project folder, npm run android or npm run ios.
