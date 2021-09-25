@@ -1,6 +1,6 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from "./src/screens/HomeScreen";
@@ -11,8 +11,7 @@ export default function App() {
 
     const styles = StyleSheet.create({
         backgroundStyle : {
-            paddingTop: 35,
-            padding: 20,
+            margin: Dimensions.get('window').width * 0.05,
         }
     })
 
@@ -20,7 +19,6 @@ export default function App() {
         <View style={styles.backgroundStyle}>
             <StatusBar style="auto"/>
             <HomeScreen/>
-            {myIcon}
         </View>
     );
 
