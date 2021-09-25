@@ -14,7 +14,7 @@ const ImageCarousel = ({images}) => {
     const onFlatlistUpdate = useCallback(({viewableItems}) => {
         if (viewableItems.length > 0) {
             setActiveIndex(viewableItems[0].index || 0);
-        } 
+        }
     }, []);
 
     return (
