@@ -113,10 +113,7 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                 <ListItem>
                     <ListItemText>Kullanıcı Yönetimi</ListItemText>
                 </ListItem>
-                <ListItem button key={1}>
-                    <ListItemIcon><AccountBoxIcon/></ListItemIcon>
-                    <ListItemText primary={'Kullanıcılar'}/>
-                </ListItem>
+                <ListItemLink primary={'Kullanıcılar'} to='/user' icon={<AccountBoxIcon/>} />
             </List>
             <Divider/>
             <List>
