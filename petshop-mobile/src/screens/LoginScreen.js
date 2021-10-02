@@ -11,11 +11,20 @@ import {theme} from '../core/theme'
 import {emailValidator} from '../helpers/emailValidator'
 import {passwordValidator} from '../helpers/passwordValidator'
 import {useDispatch, useSelector} from "react-redux";
+import {loginUser} from "../store/login";
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState({value: '', error: ''})
     const [password, setPassword] = useState({value: '', error: ''})
 
+    const dispatch = useDispatch();
+    const {login, loading} = useSelector((state) => state.entities)
+
+    useEffect(() => {
+        console.log("Login... : ");
+        console.log(login);
+        console.log(login.loading);
+    }, [])
 
     const onLoginPressed = () => {
         const emailError = emailValidator(email.value)
@@ -25,6 +34,7 @@ export default function LoginScreen({navigation}) {
             setPassword({...password, error: passwordError})
             return
         }
+        dispatch(loginUser({email: email.value, password: password.value}));
         navigation.reset({
             index: 0,
             routes: [{name: 'Dashboard'}],

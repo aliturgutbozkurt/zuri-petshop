@@ -8,14 +8,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import entities from "../store/entities";
 
 export default function StartScreen({ navigation }) {
-    const dispatch = useDispatch();
-    const {users, loading} = useSelector((state) => state.entities)
-
-    useEffect(()=>{
-        console.log("Users... : ");
-        console.log(users.list);
-        console.log(users.loading);
-    },[])
 
 
     return (
