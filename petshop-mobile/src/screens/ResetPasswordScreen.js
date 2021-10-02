@@ -35,7 +35,7 @@ export default function ResetPasswordScreen({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-        description="Şifrenizi yenilemeniz için email adresinize şifre gelecek."
+        description="Şifrenizi yenilemeniz için email adresinize şifre yenileme linki gelecek."
       />
       <Button
         mode="contained"
