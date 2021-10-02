@@ -1,11 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
+import {useDispatch, useSelector} from "react-redux";
+import entities from "../store/entities";
 
 export default function Dashboard({ navigation }) {
+
+
+
   return (
     <Background>
       <Logo />

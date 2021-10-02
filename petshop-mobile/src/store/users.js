@@ -4,7 +4,11 @@ let lastId = 0;
 
 const slice = createSlice({
   name: 'users',
-  initialState: [],
+  initialState: {
+    list: [],
+    loading: false,
+    lastFetch: null,
+  },
   reducers: {
     userAdded: (users, action) => {
       users.push({

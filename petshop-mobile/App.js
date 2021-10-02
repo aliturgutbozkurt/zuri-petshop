@@ -19,7 +19,7 @@ import {
 } from './src/screens'
 
 
-import {createStore} from "./store/configureStore";
+import {createStore} from "./src/store/configureStore";
 
 const store = createStore();
 

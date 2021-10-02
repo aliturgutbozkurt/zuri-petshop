@@ -4,14 +4,18 @@ import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import Paragraph from '../components/Paragraph'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import entities from "../store/entities";
 
 export default function StartScreen({ navigation }) {
-
+    const dispatch = useDispatch();
+    const {users, loading} = useSelector((state) => state.entities)
 
     useEffect(()=>{
-       // console.log(store);
-    },[]);
+        console.log("Users... : ");
+        console.log(users.list);
+        console.log(users.loading);
+    },[])
 
 
     return (
