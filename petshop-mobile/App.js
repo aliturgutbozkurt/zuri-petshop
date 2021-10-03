@@ -21,7 +21,7 @@ import {
 
 import {createStore} from "./src/store/configureStore";
 
-const store = createStore();
+export const store = createStore();
 
 
 export default function App() {
