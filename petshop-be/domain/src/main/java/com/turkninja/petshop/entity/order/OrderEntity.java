@@ -1,52 +1,54 @@
 package com.turkninja.petshop.entity.order;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
+import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDER")
 @Data
 public class OrderEntity extends BaseEntity {
 
-    @Column(name = "NUMBER")
-    private int number;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "NUMBER", unique = true, nullable = false, insertable = false, updatable = false)
+    private Integer number;
 
-    @JoinColumn(name = "STATE", nullable = false)
+    @Column(name = "STATE", nullable = false)
     private OrderState state;
 
-    @JoinColumn(name = "PRICE", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @JoinColumn(name = "PAYMENT_METHOD", nullable = false)
+    @Column(name = "PAYMENT_METHOD", nullable = false)
     private PaymentMethod paymentMethod;
 
-    @JoinColumn(name = "PREFERRED_DELIVERY_DATE")
-    private Date preferredDeliveryDate;
+    @Column(name = "DELIVERY_DATE", nullable = false)
+    private Date deliveryDate;
 
-    @JoinColumn(name = "PREFERRED_DELIVERY_TIME_START")
-    private Time preferredDeliveryTimeStart;
+    @Column(name = "DELIVERY_TIME_START", nullable = false)
+    private Time deliveryTimeStart;
 
-    @JoinColumn(name = "PREFERRED_DELIVERY_TIME_END")
-    private Time preferredDeliveryTimeEnd;
+    @Column(name = "DELIVERY_TIME_END", nullable = false)
+    private Time deliveryTimeEnd;
 
-    @JoinColumn(name = "DEALER_NOTE")
-    private String dealerNote;
+    @Column(name = "NOTE")
+    private String note;
 
-    @JoinColumn(name = "CUSTOMER_NOTE")
-    private String customerNote;
+    @Column(name = "PROMOTION_CODE")
+    private String promotionCode;
 
-    @JoinColumn(name = "EXPLANATION")
-    private String explanation;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderItemEntity> orderItems;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<OrderItemEntity> orderItems;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ADDRESS_ID")
+    private UserAddressEntity userAddress;
 }

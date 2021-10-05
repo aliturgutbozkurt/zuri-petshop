@@ -16,13 +16,13 @@ public class OrderItemEntity extends BaseEntity {
     @JoinColumn(name = "ORDER_ID")
     private OrderEntity order;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PRODUCT_ID")
     private ProductEntity product;
 
-    @Column(name = "PRODUCT_COUNT", nullable = false)
-    private int productCount;
+    @Column(name = "COUNT", nullable = false)
+    private int count;
 
-    @JoinColumn(name = "EXPLANATION")
+    @Column(name = "EXPLANATION")
     private String explanation;
 }
