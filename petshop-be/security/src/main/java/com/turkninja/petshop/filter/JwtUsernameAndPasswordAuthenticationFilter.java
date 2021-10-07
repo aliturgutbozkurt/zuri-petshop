@@ -62,14 +62,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-
+        // Add token to header
         Long now = System.currentTimeMillis();
         String token = tokenProvider.getTokenString(auth, now);
-        String refreshToken = tokenProvider.getRefreshTokenString(auth, now);
-
-        // Add token to header
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+
+        // Add refrsh token to header
+        now = System.currentTimeMillis();
+        String refreshToken = tokenProvider.getRefreshTokenString(auth, now);
         response.addHeader(jwtConfig.getRefreshHeader(), jwtConfig.getPrefix() + refreshToken);
+
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("Login success");
         response.getWriter().flush();

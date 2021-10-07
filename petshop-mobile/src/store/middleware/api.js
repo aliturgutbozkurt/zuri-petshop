@@ -14,7 +14,7 @@ const api = ({dispatch}) => (next) => async (action) => {
     try {
         console.log(data);
         const response = await http.request({
-            baseURL: 'http://localhost:8081/api',
+            baseURL: 'http://172.31.176.1:8081/api',
             url,
             method,
             data,

@@ -15,13 +15,12 @@ import {
     LoginScreen,
     RegisterScreen,
     ResetPasswordScreen,
-    Dashboard,
+    Dashboard
 } from './src/screens'
+import {injectStore} from "./src/common/axios";
+import {store} from "./src/store/store";
 
-
-import {createStore} from "./src/store/configureStore";
-
-export const store = createStore();
+injectStore(store);
 
 
 export default function App() {

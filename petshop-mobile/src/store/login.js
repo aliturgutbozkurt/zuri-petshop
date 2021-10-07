@@ -1,31 +1,27 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {apiCallBegan} from "./apiactions";
-import {getData, storeData} from "../common/asyncStorageService";
+import {cleanTokens, getData, storeData} from "../common/asyncStorageService";
 
 const url = '/v1/auth';
 
-let token = null;
-let refreshToken = null;
 
-getData("accesstoken").then(value => {
-    token = value;
-});
-getData("refreshToken").then(value => {
-    refreshToken = value;
-});
+const initialState = {
+    token: "",
+    refreshToken: "",
+    loggedIn: false,
+    loading: false,
+    lastFetch: "",
+}
 
 const slice = createSlice({
     name: 'login',
-    initialState: {
-        loginData: {
-            token: token,
-            refreshToken: refreshToken
-        },
-        loggedIn: !!token,
-        loading: false,
-        lastFetch: null,
-    },
+    initialState: initialState,
     reducers: {
+        initToken: (login, action) => {
+            login.token = action.payload.data.token;
+            login.refreshToken = action.payload.data.refreshToken;
+            login.loggedIn = action.payload.data.token ? true : false;
+        },
         loginRequested: (login, action) => {
             console.log("login requested");
             login.loading = true;
@@ -34,24 +30,34 @@ const slice = createSlice({
         loginReceived: (login, action) => {
             console.log("login received");
             const token = action.payload.headers["authorization"];
-            login.loginData.token = token;
-            storeData("accesstoken", token);
-            const refreshToken = action.payload.headers["refreshToken"];
-            login.loginData.refreshToken = refreshToken;
+            const refreshToken = action.payload.headers["refreshtoken"];
+            storeData("accessToken", token);
             storeData("refreshToken", refreshToken);
-            login.loading = false;
+            login.token = token;
+            login.refreshToken = refreshToken;
+            login.loggedIn = true;
             login.lastFetch = Date.now();
             console.log(token);
-
+            login.loading = false;
         },
 
         loginRequestFailed: (login, action) => {
             console.log("login failed");
             login.loading = false;
         },
+        logout: (login, action) => {
+            console.log("logout");
+            cleanTokens();
+            login.loggedIn = initialState.loggedIn;
+            login.token = initialState.token;
+            login.refreshToken = initialState.refreshToken;
+            login.loading = initialState.loggedIn;
+            login.lastFetch = initialState.lastFetch;
+
+        }
     },
 });
-export const {loginRequested, loginReceived, loginRequestFailed} = slice.actions;
+export const {initToken, loginRequested, loginReceived, loginRequestFailed, logout} = slice.actions;
 
 
 export const loginUser = (loginRequest) =>
@@ -63,4 +69,5 @@ export const loginUser = (loginRequest) =>
         onSuccess: loginReceived.type,
         onError: loginRequestFailed.type
     });
+
 export default slice.reducer;

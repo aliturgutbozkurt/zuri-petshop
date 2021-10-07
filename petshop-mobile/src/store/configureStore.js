@@ -11,7 +11,7 @@ export const createStore = () => configureStore({
         ...getDefaultMiddleware(),
         api,
         //logger({ Destination: 'console' }),
-        toast,
+        //toast,
     ],
 });
 

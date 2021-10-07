@@ -11,20 +11,40 @@ import {theme} from '../core/theme'
 import {emailValidator} from '../helpers/emailValidator'
 import {passwordValidator} from '../helpers/passwordValidator'
 import {useDispatch, useSelector} from "react-redux";
-import {loginUser} from "../store/login";
+import {initToken, loginUser} from "../store/login";
+import {getAccessToken, getData, getRefreshToken} from "../common/asyncStorageService";
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState({value: '', error: ''})
     const [password, setPassword] = useState({value: '', error: ''})
-
     const dispatch = useDispatch();
     const {login, loading} = useSelector((state) => state.entities)
 
     useEffect(() => {
-        console.log("Login... : ");
-        console.log(login);
-        console.log(login.loading);
+
+        getAccessToken().then(token => {
+            if (token) {
+                getRefreshToken().then(refreshToken => {
+                    if (refreshToken) {
+                        dispatch(
+                            {
+                                type: initToken.type, payload: {data: {token: token, refreshToken: refreshToken}}
+                            })
+                    }
+                })
+            }
+        })
+
     }, [])
+
+    useEffect(() => {
+        if (login.loggedIn) {
+            navigation.reset({
+                index: 0,
+                routes: [{name: 'Dashboard'}],
+            })
+        }
+    }, [login.loggedIn])
 
     const onLoginPressed = () => {
         const emailError = emailValidator(email.value)
@@ -35,11 +55,8 @@ export default function LoginScreen({navigation}) {
             return
         }
         dispatch(loginUser({email: email.value, password: password.value}));
-        navigation.reset({
-            index: 0,
-            routes: [{name: 'Dashboard'}],
-        })
     }
+
 
     return (
         <Background>
