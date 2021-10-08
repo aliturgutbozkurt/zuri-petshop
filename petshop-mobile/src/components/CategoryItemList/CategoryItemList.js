@@ -3,15 +3,15 @@ import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import CartCategoryItem from "../CartCategoryItem/CartProductItem";
 import {useDispatch, useSelector} from "react-redux";
-import {getCategories} from "../../store/categoryProduct";
+import {getCategories} from "../../store/category";
 
 const CategoryItemList = () => {
 
-    const {categoryProduct, loading} = useSelector((state) => state.entities)
+    const {category, categoryLoading} = useSelector((state) => state.entities)
 
     return (
         <View style={styles.root}>
-            {categoryProduct.categories.map((category,index) => (
+            {category.categories.map((category,index) => (
                 <CartCategoryItem key={index} name={category.name} url={category.photoUrl}/>
             ))}
 

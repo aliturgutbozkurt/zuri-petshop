@@ -45,6 +45,13 @@ public class ProductResource {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<PageResponse<GetProductResponse>> listPageByCategory(
+            @PathVariable("categoryId") Long categoryId, @RequestParam("page") int page, @RequestParam("size") int size) {
+        PageResponse<GetProductResponse> response = productService.list(page, size, categoryId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Object> create(
             @Valid @RequestBody UpsertProductRequest request,

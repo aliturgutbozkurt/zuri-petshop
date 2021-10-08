@@ -6,12 +6,12 @@ import ImageCarousel from "../components/ImageCarusel/ImageCarousel";
 import Button from "../components/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../store/login";
-import {getCategories} from "../store/categoryProduct";
+import {getCategories} from "../store/category";
+import ProductItemList from "../components/ProductItemList/ProductItemList";
 
 const Dashboard = ({navigation}) => {
     const dispatch = useDispatch();
     const {login} = useSelector((state) => state.entities)
-    const {categoryProduct, loading} = useSelector((state) => state.entities)
 
     const logoutUser = () => {
         dispatch(logout({data: {token: "", refreshToken: ""}}));
@@ -28,15 +28,10 @@ const Dashboard = ({navigation}) => {
 
     useEffect(() => {
         dispatch(getCategories());
-        console.log(categoryProduct.loading);
     }, [])
 
     return (
         <ScrollView style={styles.page}>
-            <View style={styles.imageView}>
-                <Image style={styles.image}
-                       source={{uri: "https://firebasestorage.googleapis.com/v0/b/zuri-petshop.appspot.com/o/common-images%2Flogo.png?alt=media&token=0f64d743-3696-4dec-aebe-21e023906e3a"}}/>
-            </View>
             <View>
                 <ImageCarousel
                     images={["https://www.petaddress.com.tr/wp-content/uploads/2021/01/evcil-hayvnalar-nerede-satilir.jpg", "https://hayalakvaryum.com/wp-content/uploads/2021/04/whiskas-puch-1.png"]}/>
@@ -44,7 +39,7 @@ const Dashboard = ({navigation}) => {
 
             <View>
                 <CategoryItemList/>
-                {categoryProduct.products.length > 0 ? <ProductItemList/> : null}
+                <ProductItemList/>
             </View>
             <Button
                 mode="outlined"

@@ -3,24 +3,22 @@ import React, {useEffect} from 'react';
 import {StyleSheet, Text, View,FlatList} from 'react-native';
 import CartCategoryItem from "../CartCategoryItem/CartProductItem";
 import {useDispatch, useSelector} from "react-redux";
-import {getCategories} from "../../store/categoryProduct";
+import {getCategories} from "../../store/category";
 import ProductItem from "../ProductItem/ProductItem";
 
-const CategoryItemList = () => {
+const ProductItemList = () => {
 
     const dispatch = useDispatch();
-    const {categoryProduct, loading} = useSelector((state) => state.entities)
+    const {product, loading} = useSelector((state) => state.entities)
 
     useEffect(() => {
-        dispatch(getCategories());
-        console.log(categoryProduct.loading);
     }, [])
 
     useEffect(() => {
         console.log("Category Product... : ");
-        console.log(categoryProduct);
-        console.log(categoryProduct.loading);
-    }, [categoryProduct])
+        console.log(product);
+        console.log(product.productLoading);
+    }, [product])
 
     return (
         <View  style={styles.root}>
@@ -37,4 +35,4 @@ const styles = StyleSheet.create ({
     }
 })
 
-export default CategoryItemList;
+export default ProductItemList;

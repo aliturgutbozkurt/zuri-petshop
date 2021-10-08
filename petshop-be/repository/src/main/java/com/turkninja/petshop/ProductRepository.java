@@ -12,4 +12,6 @@ public interface ProductRepository extends ExtendedQueryDslJpaRepository<Product
     Page<ProductEntity> findAllByActiveTrue(Pageable pageRequest);
 
     Optional<ProductEntity> findByIdAndActiveTrue(Long id);
+
+    Page<ProductEntity> findAllByCategoryIdAndActiveTrue(Long categoryId, Pageable pageable);
 }

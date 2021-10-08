@@ -1,6 +1,7 @@
 package com.turkninja.petshop.api.response.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.entity.product.ProductImageEntity;
@@ -27,6 +28,7 @@ public class GetProductResponse {
     private double oldPrice;
     private double price;
     private Set<GetProductImageResponse> images = new HashSet<>();
+    @JsonIgnoreProperties({"photoUrl","createdBy","depth","createdAt","revisedAt"})
     private GetSoleCategoryResponse category;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdAt;

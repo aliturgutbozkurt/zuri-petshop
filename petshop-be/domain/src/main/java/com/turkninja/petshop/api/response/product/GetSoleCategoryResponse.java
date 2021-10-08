@@ -1,6 +1,7 @@
 package com.turkninja.petshop.api.response.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class GetSoleCategoryResponse {
     private Long id;
     private String name;
     private String photoUrl;
+    @JsonIgnoreProperties({"photoUrl","createdBy","depth","createdAt","revisedAt"})
     private GetSoleCategoryResponse parent;
     private String createdBy;
     private int depth;

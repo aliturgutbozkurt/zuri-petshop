@@ -9,13 +9,15 @@ import org.springframework.data.domain.Page;
 
 public interface ProductService {
 
-    public GetProductResponse getProductById(Long id);
+    GetProductResponse getProductById(Long id);
 
-    public PageResponse<GetProductResponse> list(int page, int size);
+    PageResponse<GetProductResponse> list(int page, int size);
 
-    public CreateProductResponse create(UpsertProductRequest product);
+    PageResponse<GetProductResponse> list(int page, int size, Long categoryId);
 
-    public UpdateProductResponse update(UpsertProductRequest product);
+    CreateProductResponse create(UpsertProductRequest product);
 
-    public void delete(Long id);
+    UpdateProductResponse update(UpsertProductRequest product);
+
+    void delete(Long id);
 }

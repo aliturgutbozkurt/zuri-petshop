@@ -57,6 +57,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public PageResponse<GetProductResponse> list(int page, int size, Long categoryId) {
+        Page<ProductEntity> productEntities =
+                productRepository.findAllByCategoryIdAndActiveTrue(categoryId,PageRequest.of(page, size, Sort.by("name")));
+        return productMapper.pageEntitiesToGetPageResponse(productEntities);
+    }
+
+    @Override
     public CreateProductResponse create(UpsertProductRequest request) {
         ProductEntity entity = getProductEntityForUpsert(request);
         return productMapper.entityToCreateResponse(productRepository.save(entity));
