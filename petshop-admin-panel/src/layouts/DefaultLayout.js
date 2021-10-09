@@ -99,7 +99,7 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                 </ListItem>
                 <ListItem button key={2}>
                     <ListItemIcon><MailIcon/></ListItemIcon>
-                    <ListItemText primary={'Gelen Sorular'}/>
+                    <ListItemLink  to="/questions" primary={'Gelen Sorular'}/>
                 </ListItem>
             </List>
             <Divider/>
