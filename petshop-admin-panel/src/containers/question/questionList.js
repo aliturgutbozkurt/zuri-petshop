@@ -5,9 +5,12 @@ export default function QustionList() {
   const columns = [
     "id", "Soran Kişi", "Soru Açıklaması", "Detay"
   ]
-
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(5);
+  const [count, setCount] = useState(0);
   const [questions, setQuestions] = useState([{id: 1, SoramKisi:"mucahit",aciklama:"açıklama"}]);
  
+  
 
   return (
   
