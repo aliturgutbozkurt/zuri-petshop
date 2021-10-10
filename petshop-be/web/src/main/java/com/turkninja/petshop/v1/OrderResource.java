@@ -1,50 +1,41 @@
 package com.turkninja.petshop.v1;
 
 import com.turkninja.petshop.api.request.order.OrderCreateRequest;
-import com.turkninja.petshop.api.request.order.OrderSearchRequest;
-import com.turkninja.petshop.api.request.order.OrderUpdateRequest;
-import com.turkninja.petshop.api.response.order.OrderCreateResponse;
+import com.turkninja.petshop.api.request.order.OrderProductAddRequest;
+import com.turkninja.petshop.api.request.order.OrderProductRemoveRequest;
 import com.turkninja.petshop.api.response.order.OrderGetResponse;
-import com.turkninja.petshop.api.response.order.OrderSearchResponse;
-import com.turkninja.petshop.api.response.order.OrderUpdateResponse;
+import com.turkninja.petshop.api.response.order.OrderItemGetResponse;
 import com.turkninja.petshop.order.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
 public class OrderResource {
-    private static final int DEFAULT_PAGE_NUMBER = 0;
-    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private final OrderService service;
 
-    @PostMapping
-    public ResponseEntity<OrderCreateResponse> create(@RequestBody @Valid OrderCreateRequest request) {
-        OrderCreateResponse response = service.create(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<OrderUpdateResponse> update(@PathVariable(value = "id") Long id,
-                                                      @RequestBody @Valid OrderUpdateRequest request) {
-        OrderUpdateResponse response = service.update(id, request);
+    @PostMapping("/products")
+    public ResponseEntity<List<OrderItemGetResponse>> addProduct(@RequestBody @Valid OrderProductAddRequest request) {
+        List<OrderItemGetResponse> response = service.addProduct(request);
         return ResponseEntity.ok().body(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<OrderGetResponse> delete(@PathVariable(value = "id") Long id) {
-        service.delete(id);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/products")
+    public ResponseEntity<List<OrderItemGetResponse>> removeProduct(@RequestBody @Valid OrderProductRemoveRequest request) {
+        List<OrderItemGetResponse> response = service.removeProduct(request);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping
+    public ResponseEntity<OrderGetResponse> create(@RequestBody @Valid OrderCreateRequest request) {
+        OrderGetResponse response = service.create(request);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{id}")
@@ -54,11 +45,8 @@ public class OrderResource {
     }
 
     @GetMapping
-    public ResponseEntity<OrderSearchResponse> search(
-            @RequestBody @Valid OrderSearchRequest request,
-            @PageableDefault(page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE) @SortDefault.SortDefaults({
-                    @SortDefault(sort = "number", direction = Sort.Direction.DESC)}) Pageable pageable) {
-        OrderSearchResponse response = service.search(request, pageable);
+    public ResponseEntity<List<OrderGetResponse>> getByUserId(@RequestParam("userId") Long userId) {
+        List<OrderGetResponse> response = service.getByUserId(userId);
         return ResponseEntity.ok().body(response);
     }
 }

@@ -1,24 +1,21 @@
 package com.turkninja.petshop.order;
 
 import com.turkninja.petshop.api.request.order.OrderCreateRequest;
-import com.turkninja.petshop.api.request.order.OrderSearchRequest;
-import com.turkninja.petshop.api.request.order.OrderUpdateRequest;
-import com.turkninja.petshop.api.response.order.OrderCreateResponse;
+import com.turkninja.petshop.api.request.order.OrderProductAddRequest;
+import com.turkninja.petshop.api.request.order.OrderProductRemoveRequest;
 import com.turkninja.petshop.api.response.order.OrderGetResponse;
-import com.turkninja.petshop.api.response.order.OrderSearchResponse;
-import com.turkninja.petshop.api.response.order.OrderUpdateResponse;
-import org.springframework.data.domain.Pageable;
+import com.turkninja.petshop.api.response.order.OrderItemGetResponse;
+
+import java.util.List;
 
 public interface OrderService {
-    OrderCreateResponse create(OrderCreateRequest request);
-
-    OrderUpdateResponse update(Long id, OrderUpdateRequest request);
-
-    void delete(Long id);
+    OrderGetResponse create(OrderCreateRequest request);
 
     OrderGetResponse getById(Long id);
 
-    OrderGetResponse getByNumber(int number);
+    List<OrderGetResponse> getByUserId(Long userId);
 
-    OrderSearchResponse search(OrderSearchRequest searchRequest, Pageable pageable);
+    List<OrderItemGetResponse> addProduct(OrderProductAddRequest request);
+
+    List<OrderItemGetResponse> removeProduct(OrderProductRemoveRequest request);
 }

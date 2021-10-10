@@ -1,7 +1,5 @@
 package com.turkninja.petshop.api.request.order;
 
-import com.turkninja.petshop.entity.order.OrderItemEntity;
-import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.enums.PaymentMethod;
 import lombok.*;
 
@@ -9,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class OrderCreateRequest {
+    @NotNull
+    private Long id;
+
     @NotNull
     private BigDecimal price;
 
@@ -36,7 +36,6 @@ public class OrderCreateRequest {
 
     private String promotionCode;
 
-    private List<OrderItemEntity> orderItems;
-
-    private UserAddressEntity userAddress;
+    @NotNull
+    private Long userAddressId;
 }

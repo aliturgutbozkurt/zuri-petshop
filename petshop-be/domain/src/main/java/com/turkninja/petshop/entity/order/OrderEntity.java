@@ -2,9 +2,10 @@ package com.turkninja.petshop.entity.order;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.user.UserAddressEntity;
+import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,30 +14,28 @@ import java.sql.Time;
 import java.util.List;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 @Data
 public class OrderEntity extends BaseEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "NUMBER", unique = true, nullable = false, insertable = false, updatable = false)
-    private Integer number;
+    // TODO: Auto incremented order number will be added!
 
     @Column(name = "STATE", nullable = false)
     private OrderState state;
 
-    @Column(name = "PRICE", nullable = false)
+    @Column(name = "PRICE")
     private BigDecimal price;
 
-    @Column(name = "PAYMENT_METHOD", nullable = false)
+    @Column(name = "PAYMENT_METHOD")
     private PaymentMethod paymentMethod;
 
-    @Column(name = "DELIVERY_DATE", nullable = false)
+    @Column(name = "DELIVERY_DATE")
     private Date deliveryDate;
 
-    @Column(name = "DELIVERY_TIME_START", nullable = false)
+    @Column(name = "DELIVERY_TIME_START")
     private Time deliveryTimeStart;
 
-    @Column(name = "DELIVERY_TIME_END", nullable = false)
+    @Column(name = "DELIVERY_TIME_END")
     private Time deliveryTimeEnd;
 
     @Column(name = "NOTE")
@@ -45,10 +44,14 @@ public class OrderEntity extends BaseEntity {
     @Column(name = "PROMOTION_CODE")
     private String promotionCode;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItemEntity> orderItems;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ADDRESS_ID")
     private UserAddressEntity userAddress;
 }
