@@ -1,7 +1,6 @@
 package com.turkninja.petshop.api.response.order;
 
-import com.turkninja.petshop.entity.order.OrderEntity;
-import com.turkninja.petshop.entity.product.ProductEntity;
+import com.turkninja.petshop.api.response.product.GetProductResponse;
 import lombok.*;
 
 
@@ -11,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class OrderItemGetResponse {
-    private OrderEntity order;
-    private ProductEntity product;
+    private GetProductResponse product;
     private Integer count;
 }

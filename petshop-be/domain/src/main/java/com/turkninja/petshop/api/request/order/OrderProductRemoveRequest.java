@@ -14,8 +14,5 @@ public class OrderProductRemoveRequest {
     private Long userId;
 
     @NotNull
-    private Long orderId;
-
-    @NotNull
     private Long productId;
 }

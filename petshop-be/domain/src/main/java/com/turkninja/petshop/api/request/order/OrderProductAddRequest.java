@@ -13,8 +13,6 @@ public class OrderProductAddRequest {
     @NotNull
     private Long userId;
 
-    private Long orderId;
-
     @NotNull
     private Long productId;
 }

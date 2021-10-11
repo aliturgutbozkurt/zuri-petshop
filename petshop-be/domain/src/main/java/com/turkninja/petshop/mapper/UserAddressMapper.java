@@ -8,7 +8,7 @@ import com.turkninja.petshop.entity.user.UserAddressEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {UserAddressMapper.class})
+@Mapper(componentModel = "spring")
 public interface UserAddressMapper {
     @Mapping(source = "userId", target = "user.id")
     UserAddressEntity createRequestToEntity(UserAddressCreateRequest request);

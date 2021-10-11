@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItemGetResponse> addProduct(OrderProductAddRequest request) {
         log.info("Add a product by request:{}", request);
 
-        OrderEntity draftOrder = getDraftOrder(request.getUserId(), request.getOrderId());
+        OrderEntity draftOrder = getDraftOrder(request.getUserId());
 
         addProduct(draftOrder, request);
 
@@ -96,15 +96,20 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItemGetResponse> removeProduct(OrderProductRemoveRequest request) {
         log.info("Remove a new product by request:{}", request);
 
-        OrderEntity draftOrder = getDraftOrderById(request.getOrderId());
+        OrderEntity draftOrder = getDraftOrder(request.getUserId());
 
         removeProduct(draftOrder, request);
 
         return getAllOrderItems(draftOrder);
     }
 
-    private OrderEntity getDraftOrder(Long userId, Long orderId){
-        return orderId == null ? createDraftOrder(userId) : getDraftOrderById(orderId);
+    private OrderEntity getDraftOrder(Long userId) {
+        Optional<OrderEntity> order = orderRepository.findByIdAndStateAndActiveTrue(userId, OrderState.DRAFT);
+        if (order.isPresent()) {
+            return order.get();
+        } else {
+            return createDraftOrder(userId);
+        }
     }
 
     private OrderEntity createDraftOrder(Long userId) {
@@ -122,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity order = orderRepository.findById(id).orElseThrow(() ->
                 new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("orderId", id)));
 
-        if(order.getState() != OrderState.DRAFT) {
+        if (order.getState() != OrderState.DRAFT) {
             throw new ApplicationException(AppMessage.METHOD_ARGUMENT_NOT_VALID, AppParameter.get("state", order.getState()));
         }
 
@@ -157,16 +162,16 @@ public class OrderServiceImpl implements OrderService {
     private void removeProduct(OrderEntity draftOrder, OrderProductRemoveRequest request) {
         Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderIdAndProductIdAndActiveTrue(draftOrder.getId(), request.getProductId());
 
-        if(orderItem.isEmpty()){
+        if (orderItem.isEmpty()) {
             throw new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("Order item is not found!", null));
         }
 
         OrderItemEntity orderItemEntity = orderItem.get();
         orderItemEntity.setCount(orderItemEntity.getCount() - 1);
 
-        if(orderItemEntity.getCount() > 0) {
+        if (orderItemEntity.getCount() > 0) {
             orderItemRepository.save(orderItemEntity);
-        }else {
+        } else {
             orderItemRepository.delete(orderItemEntity);
         }
     }
