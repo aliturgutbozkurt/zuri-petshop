@@ -11,3 +11,16 @@ export const getQuestionById = (questionId)=>{
     return request(questionRequest)
 
 }
+
+export const getAllQuestions = (page,size) => {
+
+    const questionGetAllQuestion = {
+        method: "GET",
+        path: "/api/v1/question/get-all-questions",
+        params: ["page","size"],
+        values: [page,size]
+
+    }
+    return request(questionGetAllQuestion);
+
+}

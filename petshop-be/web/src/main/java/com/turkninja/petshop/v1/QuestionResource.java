@@ -2,6 +2,7 @@ package com.turkninja.petshop.v1;
 
 
 import com.turkninja.petshop.api.request.question.CreateQuestionRequest;
+import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.question.CreateQuestionResponse;
 import com.turkninja.petshop.api.response.question.GetQuestionResponse;
 import com.turkninja.petshop.question.QuestionService;
@@ -31,6 +32,12 @@ public class QuestionResource {
     public ResponseEntity<GetQuestionResponse> getQuestionById(@RequestParam long questionId){
         GetQuestionResponse response = questionService.GetQuestionById(questionId);
         return new ResponseEntity(response,HttpStatus.OK);
+    }
+
+    @GetMapping("get-all-questions")
+    public ResponseEntity<PageResponse<GetQuestionResponse>> getAllQuestions(@RequestParam int page, @RequestParam int size){
+        PageResponse<GetQuestionResponse> allQuestions = questionService.getAllQuestions(page,size);
+        return new ResponseEntity<>(allQuestions,HttpStatus.OK);
     }
 
 

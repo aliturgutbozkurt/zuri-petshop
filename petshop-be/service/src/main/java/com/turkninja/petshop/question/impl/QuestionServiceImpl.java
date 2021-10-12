@@ -2,6 +2,7 @@ package com.turkninja.petshop.question.impl;
 
 import com.turkninja.petshop.QuestionRepository;
 import com.turkninja.petshop.api.request.question.CreateQuestionRequest;
+import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.question.CreateQuestionResponse;
 import com.turkninja.petshop.api.response.question.GetQuestionResponse;
 import com.turkninja.petshop.entity.answer.AnswerEntity;
@@ -40,6 +41,12 @@ public class QuestionServiceImpl implements QuestionService {
         QuestionEntity result = questionRepository.getOne(questionId);
         GetQuestionResponse resultDto = questionMapper.GetQuestionEntityToDto(result);
         return resultDto;
+    }
+
+    @Override
+    public PageResponse<GetQuestionResponse> getAllQuestions(int page, int size) {
+        Page<QuestionEntity> allQuestions = questionRepository.findAll(PageRequest.of(page,size,Sort.by("createdAt")));
+        return questionMapper.pageEntitiesToGetPageResponse(allQuestions);
     }
 
 }

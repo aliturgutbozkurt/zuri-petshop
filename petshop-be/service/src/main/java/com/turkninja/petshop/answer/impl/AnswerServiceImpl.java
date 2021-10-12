@@ -5,6 +5,7 @@ import com.turkninja.petshop.QuestionRepository;
 import com.turkninja.petshop.answer.AnswerService;
 import com.turkninja.petshop.api.request.answer.CreateAnswerRequest;
 import com.turkninja.petshop.api.response.answer.CreateAnswerResponse;
+import com.turkninja.petshop.api.response.answer.GetAllAnswerResponse;
 import com.turkninja.petshop.entity.answer.AnswerEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.mapper.AnswerMapper;
@@ -42,5 +43,11 @@ public class AnswerServiceImpl implements AnswerService {
         questionRepository.save(question);
         return mapper.createAnswerEntityToDto(addedAnswer);
 
+    }
+
+    @Override
+    public List<GetAllAnswerResponse> getAllAnswerByQuestionId(long questionId) {
+        List<AnswerEntity> allAnswers = answerRepository.findAllByQuestionId(questionId);
+        return mapper.listEntitesToGetListResponse(answerRepository.findAllByQuestionId(questionId));
     }
 }
