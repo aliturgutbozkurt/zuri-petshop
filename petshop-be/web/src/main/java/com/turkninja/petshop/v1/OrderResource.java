@@ -38,9 +38,9 @@ public class OrderResource {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderGetResponse> get(@PathVariable(value = "id") Long id) {
-        OrderGetResponse response = service.getById(id);
+    @GetMapping("/{number}")
+    public ResponseEntity<OrderGetResponse> get(@PathVariable(value = "number") String number) {
+        OrderGetResponse response = service.getByNumber(number);
         return ResponseEntity.ok().body(response);
     }
 

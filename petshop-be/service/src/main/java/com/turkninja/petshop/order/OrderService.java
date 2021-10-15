@@ -11,7 +11,7 @@ import java.util.List;
 public interface OrderService {
     OrderGetResponse create(OrderCreateRequest request);
 
-    OrderGetResponse getById(Long id);
+    OrderGetResponse getByNumber(String number);
 
     List<OrderGetResponse> getByUserId(Long userId);
 

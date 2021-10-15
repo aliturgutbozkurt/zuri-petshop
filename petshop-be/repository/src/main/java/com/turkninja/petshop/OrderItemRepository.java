@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderItemRepository extends ExtendedQueryDslJpaRepository<OrderItemEntity, Long> {
-    Optional<OrderItemEntity> findByIdAndActiveTrue(Long id);
+    List<OrderItemEntity> findByOrderNumberAndActiveTrue(String orderNumber);
 
-    List<OrderItemEntity> findByOrderIdAndActiveTrue(Long orderId);
-
-    Optional<OrderItemEntity> findByOrderIdAndProductIdAndActiveTrue(Long orderId, Long productId);
+    Optional<OrderItemEntity> findByOrderNumberAndProductIdAndActiveTrue(String number, Long productId);
 }
