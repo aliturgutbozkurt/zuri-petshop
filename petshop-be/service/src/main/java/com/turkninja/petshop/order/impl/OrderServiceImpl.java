@@ -41,12 +41,12 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemMapper orderItemMapper;
 
     @Override
-    public OrderGetResponse getById(Long id) {
-        log.info("Get the order by id:{}", id);
+    public OrderGetResponse getByNumber(String number) {
+        log.info("Get the order by number:{}", number);
 
-        OrderEntity entity = orderRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
+        OrderEntity entity = orderRepository.findByNumber(number).orElseThrow(() ->
                 new ApplicationException(AppMessage.RECORD_NOT_FOUND,
-                        AppParameter.get("id", id)));
+                        AppParameter.get("number", number)));
 
         return orderMapper.entityToGetResponse(entity);
     }
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderGetResponse> getByUserId(Long userId) {
         log.info("Get all orders by userId:{}", userId);
 
-        List<OrderEntity> entities = orderRepository.findByUserIdAndActiveTrue(userId);
+        List<OrderEntity> entities = orderRepository.findByUserId(userId);
 
         return entities.stream().map(orderMapper::entityToGetResponse).collect(Collectors.toList());
     }
@@ -63,8 +63,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderGetResponse create(OrderCreateRequest request) {
         log.info("Create a new order by request:{}", request);
-
-        OrderEntity order = getDraftOrderById(request.getId());
+        OrderEntity order = getDraftOrderByNumber(request.getNumber());
         UserAddressEntity userAddress = userAddressRepository.findByIdAndActiveTrue(request.getUserAddressId()).get();
         order.setPrice(request.getPrice());
         order.setPaymentMethod(request.getPaymentMethod());
@@ -104,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderEntity getDraftOrder(Long userId) {
-        Optional<OrderEntity> order = orderRepository.findByIdAndStateAndActiveTrue(userId, OrderState.DRAFT);
+        Optional<OrderEntity> order = orderRepository.findByUserIdAndState(userId, OrderState.DRAFT);
         if (order.isPresent()) {
             return order.get();
         } else {
@@ -123,9 +122,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-    private OrderEntity getDraftOrderById(Long id) {
-        OrderEntity order = orderRepository.findById(id).orElseThrow(() ->
-                new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("orderId", id)));
+    private OrderEntity getDraftOrderByNumber(String number) {
+        OrderEntity order = orderRepository.findByNumber(number).orElseThrow(() ->
+                new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("number", number)));
 
         if (order.getState() != OrderState.DRAFT) {
             throw new ApplicationException(AppMessage.METHOD_ARGUMENT_NOT_VALID, AppParameter.get("state", order.getState()));
@@ -135,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void addProduct(OrderEntity draftOrder, OrderProductAddRequest request) {
-        Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderIdAndProductIdAndActiveTrue(draftOrder.getId(), request.getProductId());
+        Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderNumberAndProductIdAndActiveTrue(draftOrder.getNumber(), request.getProductId());
 
         if (orderItem.isPresent()) {
             OrderItemEntity orderItemEntity = orderItem.get();
@@ -155,12 +154,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<OrderItemGetResponse> getAllOrderItems(OrderEntity draftOrder) {
-        List<OrderItemEntity> orderItems = orderItemRepository.findByOrderIdAndActiveTrue(draftOrder.getId());
+        List<OrderItemEntity> orderItems = orderItemRepository.findByOrderNumberAndActiveTrue(draftOrder.getNumber());
         return orderItems.stream().map(orderItemMapper::entityToGetResponse).collect(Collectors.toList());
     }
 
     private void removeProduct(OrderEntity draftOrder, OrderProductRemoveRequest request) {
-        Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderIdAndProductIdAndActiveTrue(draftOrder.getId(), request.getProductId());
+        Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderNumberAndProductIdAndActiveTrue(draftOrder.getNumber(), request.getProductId());
 
         if (orderItem.isEmpty()) {
             throw new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("Order item is not found!", null));

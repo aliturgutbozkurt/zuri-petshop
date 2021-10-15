@@ -1,24 +1,28 @@
 package com.turkninja.petshop.entity.order;
 
-import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
+import com.turkninja.petshop.sequence.OrderNumberGenerator;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
 @Data
-public class OrderEntity extends BaseEntity {
-
-    // TODO: Auto incremented order number will be added!
+public class OrderEntity {
+    @Id
+    @GeneratedValue(generator = OrderNumberGenerator.NAME)
+    @GenericGenerator(name = OrderNumberGenerator.NAME, strategy = OrderNumberGenerator.STRATEGY)
+    @Column(name = "NUMBER", nullable = false)
+    private String number;
 
     @Column(name = "STATE", nullable = false)
     private OrderState state;
@@ -30,13 +34,13 @@ public class OrderEntity extends BaseEntity {
     private PaymentMethod paymentMethod;
 
     @Column(name = "DELIVERY_DATE")
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @Column(name = "DELIVERY_TIME_START")
-    private Time deliveryTimeStart;
+    private LocalTime deliveryTimeStart;
 
     @Column(name = "DELIVERY_TIME_END")
-    private Time deliveryTimeEnd;
+    private LocalTime deliveryTimeEnd;
 
     @Column(name = "NOTE")
     private String note;

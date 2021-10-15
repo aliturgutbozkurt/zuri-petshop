@@ -7,9 +7,9 @@ import com.turkninja.petshop.enums.PaymentMethod;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -18,28 +18,20 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class OrderGetResponse {
-    private Long id;
-    private String createdBy;
+    private String number;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime createdAt;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime revisedAt;
-
-    private Integer number;
     private OrderState state;
     private BigDecimal price;
     private PaymentMethod paymentMethod;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private Time deliveryTimeStart;
+    private LocalTime deliveryTimeStart;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private Time deliveryTimeEnd;
+    private LocalTime deliveryTimeEnd;
 
     private String note;
     private String dealerMessage;

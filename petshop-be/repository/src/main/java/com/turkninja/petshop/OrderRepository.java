@@ -7,10 +7,10 @@ import com.turkninja.petshop.enums.OrderState;
 import java.util.List;
 import java.util.Optional;
 
-public interface OrderRepository extends ExtendedQueryDslJpaRepository<OrderEntity, Long> {
-    Optional<OrderEntity> findByIdAndActiveTrue(Long id);
+public interface OrderRepository extends ExtendedQueryDslJpaRepository<OrderEntity, String> {
+    Optional<OrderEntity> findByNumber(String number);
 
-    List<OrderEntity> findByUserIdAndActiveTrue(Long userId);
+    List<OrderEntity> findByUserId(Long userId);
 
-    Optional<OrderEntity> findByIdAndStateAndActiveTrue(Long userId, OrderState state);
+    Optional<OrderEntity> findByUserIdAndState(Long userId, OrderState state);
 }

@@ -5,8 +5,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -15,7 +15,7 @@ import java.sql.Time;
 @ToString
 public class OrderCreateRequest {
     @NotNull
-    private Long id;
+    private String number;
 
     @NotNull
     private BigDecimal price;
@@ -24,13 +24,13 @@ public class OrderCreateRequest {
     private PaymentMethod paymentMethod;
 
     @NotNull
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @NotNull
-    private Time deliveryTimeStart;
+    private LocalTime deliveryTimeStart;
 
     @NotNull
-    private Time deliveryTimeEnd;
+    private LocalTime deliveryTimeEnd;
 
     private String note;
 
