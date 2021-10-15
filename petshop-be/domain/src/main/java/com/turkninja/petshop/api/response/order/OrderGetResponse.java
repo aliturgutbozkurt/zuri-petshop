@@ -20,12 +20,6 @@ import java.util.List;
 public class OrderGetResponse {
     private String number;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime createdAt;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime revisedAt;
-
     private OrderState state;
     private BigDecimal price;
     private PaymentMethod paymentMethod;
