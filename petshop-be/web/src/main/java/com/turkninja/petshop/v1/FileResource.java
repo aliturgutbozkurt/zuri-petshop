@@ -1,7 +1,7 @@
 package com.turkninja.petshop.v1;
 
 import com.turkninja.petshop.file.FirebaseFileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +11,11 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * @author ali turgut bozkurt
- * Created at 8/12/2021
- */
-
 @RestController
 @RequestMapping("/api/v1/file")
+@RequiredArgsConstructor
 public class FileResource {
-
-    @Autowired
-    FirebaseFileService firebaseFileService;
+    private final FirebaseFileService firebaseFileService;
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file, @RequestParam("firebasePath") String firebasePath) throws IOException {

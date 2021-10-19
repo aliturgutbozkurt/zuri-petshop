@@ -7,6 +7,7 @@ import com.turkninja.petshop.api.response.product.GetProductResponse;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
 import com.turkninja.petshop.product.ProductService;
 import com.turkninja.petshop.validation.product.ProductValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,23 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-/**
- * @author ali turgut bozkurt
- * Created at 8/13/2021
- */
-
 @RestController
 @RequestMapping("/api/v1/product")
+@RequiredArgsConstructor
 public class ProductResource {
-
     private final ProductService productService;
-
     private final ProductValidator productValidator;
-
-    public ProductResource(ProductService productService, ProductValidator productValidator) {
-        this.productService = productService;
-        this.productValidator = productValidator;
-    }
 
     @GetMapping("/{productId}")
     public ResponseEntity<GetProductResponse> getProduct(@PathVariable("productId") Long id) {
