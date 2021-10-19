@@ -1,13 +1,17 @@
 package com.turkninja.petshop.v1;
 
 import com.turkninja.petshop.api.request.product.UpsertProductRequest;
-import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
+import com.turkninja.petshop.api.response.product.ProductSearchCriteria;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
 import com.turkninja.petshop.product.ProductService;
 import com.turkninja.petshop.validation.product.ProductValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,6 +23,9 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/product")
 @RequiredArgsConstructor
 public class ProductResource {
+    private static final int DEFAULT_PAGE_NUMBER = 0;
+    private static final int DEFAULT_PAGE_SIZE = 10;
+
     private final ProductService productService;
     private final ProductValidator productValidator;
 
@@ -29,17 +36,14 @@ public class ProductResource {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponse<GetProductResponse>> listPage(
-            @RequestParam("page") int page, @RequestParam("size") int size) {
-        PageResponse<GetProductResponse> response = productService.list(page, size);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<PageResponse<GetProductResponse>> listPageByCategory(
-            @PathVariable("categoryId") Long categoryId, @RequestParam("page") int page, @RequestParam("size") int size) {
-        PageResponse<GetProductResponse> response = productService.list(page, size, categoryId);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<Page<GetProductResponse>> search(
+            @RequestBody @Valid ProductSearchCriteria searchCriteria,
+            @PageableDefault(page = DEFAULT_PAGE_NUMBER, size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({
+                    @SortDefault(sort = "category"),
+                    @SortDefault(sort = "name")}) Pageable pageable) {
+        Page<GetProductResponse> response = productService.search(searchCriteria, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
