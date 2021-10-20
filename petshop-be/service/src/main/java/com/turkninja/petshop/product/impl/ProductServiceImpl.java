@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<GetProductResponse> search(ProductSearchCriteria searchCriteria, Pageable pageable) {
-        checkProductName(searchCriteria);
+        checkProductName(searchCriteria.getName());
 
         Example<ProductEntity> example = createExample(searchCriteria);
 
@@ -117,8 +117,7 @@ public class ProductServiceImpl implements ProductService {
         return Example.of(product, matcher);
     }
 
-    private void checkProductName(ProductSearchCriteria searchCriteria) {
-        String productName = searchCriteria.getName();
+    private void checkProductName(String productName) {
         if (productName != null && productName.length() <= 3) {
             throw new ApplicationException(AppMessage.METHOD_ARGUMENT_NOT_VALID, AppParameter.get("Product Name", productName));
         }
