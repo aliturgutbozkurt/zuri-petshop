@@ -16,14 +16,13 @@ import java.io.IOException;
 @CrossOrigin("*")
 public class AuthResource {
 
-    @PostMapping(path = "login",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void authenticate(@RequestBody @Valid UserLoginRequest userLoginRequest, HttpServletResponse response) throws IOException {
         response.getWriter().println("Hello World!");
     }
 
     @PostMapping("refresh")
-    public ResponseEntity<?> refresh(HttpServletRequest request){
+    public ResponseEntity<?> refresh(HttpServletRequest request) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

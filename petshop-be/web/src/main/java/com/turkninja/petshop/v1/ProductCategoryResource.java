@@ -8,34 +8,21 @@ import com.turkninja.petshop.api.response.product.GetSoleCategoryResponse;
 import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
 import com.turkninja.petshop.product.CategoryService;
 import com.turkninja.petshop.validation.product.ProductCategoryValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * @author ali turgut bozkurt
- * Created at 7/31/2021
- */
-
 @RestController
 @RequestMapping("/api/v1/category")
+@RequiredArgsConstructor
 public class ProductCategoryResource {
-
     private final CategoryService categoryService;
-
     private final ProductCategoryValidator productCategoryValidator;
-
-    public ProductCategoryResource(CategoryService categoryService, ProductCategoryValidator productCategoryValidator) {
-        this.categoryService = categoryService;
-        this.productCategoryValidator = productCategoryValidator;
-    }
 
     @GetMapping("/listByParentId")
     public ResponseEntity<List<GetCategoryResponse>> listCategoriesByParentId(
@@ -69,7 +56,7 @@ public class ProductCategoryResource {
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Valid UpsertCategoryRequest request,
                                          BindingResult bindingResult) {
-        productCategoryValidator.validate(request,bindingResult);
+        productCategoryValidator.validate(request, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
@@ -77,11 +64,10 @@ public class ProductCategoryResource {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-
     @PutMapping
     public ResponseEntity<Object> update(@RequestBody UpsertCategoryRequest request,
                                          BindingResult bindingResult) {
-        productCategoryValidator.validate(request,bindingResult);
+        productCategoryValidator.validate(request, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }

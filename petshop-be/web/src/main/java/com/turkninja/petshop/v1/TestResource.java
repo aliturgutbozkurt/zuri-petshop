@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestResource {
 
     @GetMapping("hello")
-
     public ResponseEntity<String> hello() {
         return new ResponseEntity<String>("Hello", HttpStatus.OK);
     }
 
     @GetMapping("exception")
-    public void exception(){
+    public void exception() {
         throw new ApplicationException(AppMessage.ALREADY_EXIST,
                 AppParameter.get(ParameterConstants.USER_NAME, "test"));
     }
-
 }
