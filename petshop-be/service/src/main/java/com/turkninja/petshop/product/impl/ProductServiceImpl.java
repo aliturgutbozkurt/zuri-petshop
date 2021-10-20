@@ -16,6 +16,7 @@ import com.turkninja.petshop.mapper.ProductMapper;
 import com.turkninja.petshop.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -102,7 +103,6 @@ public class ProductServiceImpl implements ProductService {
         Optional<ProductCategoryEntity> productCategory = Optional.empty();
         if(searchCriteria.getCategoryId() != null){
             productCategory = productCategoryRepository.findByIdAndActiveTrue(searchCriteria.getCategoryId());
-
         }
 
         ProductEntity product = ProductEntity.builder()
@@ -111,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
                 .category(productCategory.isPresent()? productCategory.get() : null)
                 .build();
 
-        return Example.of(product);
+        ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(StringMatcher.CONTAINING);
+        return Example.of(product, matcher);
     }
 }
