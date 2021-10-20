@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductResource {
     private static final int DEFAULT_PAGE_NUMBER = 0;
@@ -29,8 +29,8 @@ public class ProductResource {
     private final ProductService productService;
     private final ProductValidator productValidator;
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<GetProductResponse> getProduct(@PathVariable("productId") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<GetProductResponse> getProduct(@PathVariable("id") Long id) {
         GetProductResponse response = productService.getProductById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -72,8 +72,8 @@ public class ProductResource {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Object> delete(@PathVariable("productId") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
         productService.delete(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

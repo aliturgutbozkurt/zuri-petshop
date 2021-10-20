@@ -161,7 +161,7 @@ public class OrderServiceImpl implements OrderService {
     private void removeProduct(OrderEntity draftOrder, OrderProductRemoveRequest request) {
         Optional<OrderItemEntity> orderItem = orderItemRepository.findByOrderNumberAndProductIdAndActiveTrue(draftOrder.getNumber(), request.getProductId());
 
-        if (orderItem.isEmpty()) {
+        if (!orderItem.isPresent()) {
             throw new ApplicationException(AppMessage.RECORD_NOT_FOUND, AppParameter.get("Order item is not found!", null));
         }
 
