@@ -59,8 +59,8 @@ public class UserResource {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(
             @PathVariable("id") Long id,
-            @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
-        UserResponse userResponse = userService.update(id, userUpdateRequest);
+            @Valid @RequestBody UserUpdateRequest request) {
+        UserResponse userResponse = userService.update(id, request);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 

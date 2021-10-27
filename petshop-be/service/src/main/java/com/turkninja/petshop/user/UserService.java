@@ -11,6 +11,6 @@ public interface UserService extends UserDetailsService {
     void signUp(UserSignupRequest request);
     PageResponse<UserResponse> list(int page, int size);
     UserResponse getOne(Long id);
-    UserResponse update(Long id, UserUpdateRequest userUpdateRequest);
+    UserResponse update(Long id, UserUpdateRequest request);
     void delete(Long id);
 }
