@@ -2,18 +2,19 @@ package com.turkninja.petshop.user.impl;
 
 import com.turkninja.petshop.UserRepository;
 import com.turkninja.petshop.UserRoleRepository;
-import com.turkninja.petshop.api.request.user.UserImageInsertRequest;
 import com.turkninja.petshop.api.request.user.UserSignupRequest;
+import com.turkninja.petshop.api.request.user.UserUpdateRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
-import com.turkninja.petshop.api.response.user.UserImageInsertResponse;
 import com.turkninja.petshop.api.response.user.UserResponse;
 import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.entity.user.UserRoleEntity;
+import com.turkninja.petshop.enums.Gender;
 import com.turkninja.petshop.exception.AppMessage;
 import com.turkninja.petshop.exception.AppParameter;
 import com.turkninja.petshop.exception.ApplicationException;
 import com.turkninja.petshop.mapper.UserMapper;
 import com.turkninja.petshop.user.UserService;
+import com.turkninja.petshop.value.Phone;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,6 +26,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,7 +68,7 @@ public class UserServiceImpl implements UserService {
      * Finds the user with given id and returns a UserResponse object.
      * @param id Id of the user.
      * @return UserResponse representation of the found user.
-     * @throws ApplicationException
+     * @throws ApplicationException Returns RECORD_NOT_FOUND exception.
      */
     @Override
     public UserResponse getOne(Long id) throws ApplicationException {
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
      * @param page Page number.
      * @param size Size of page.
      * @return PageResponse representation of UserResponse.
-     * @throws ApplicationException
+     * @throws ApplicationException Returns ApplicationException.
      */
     @Override
     public PageResponse<UserResponse> list(int page, int size)
@@ -97,20 +99,59 @@ public class UserServiceImpl implements UserService {
     /**
      * Deactivates a user.
      * @param id Id of the user.
+     * @throws ApplicationException Returns RECORD_NOT_FOUND exception.
      */
     @Override
     public void delete(Long id)
             throws ApplicationException  {
-        UserEntity entity = userRepository.findByIdAndActiveTrue(id).orElseThrow(() ->
+        UserEntity entity = userRepository
+                .findByIdAndActiveTrue(id)
+                .orElseThrow(() ->
                 new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                         AppParameter.get("userId", id)));
         entity.setActive(false);
         userRepository.save(entity);
     }
 
+    /**
+     * Updates User entity with provided field values.
+     * @param id Id of the user entity.
+     * @param userUpdateRequest An object holding updatable fields and vaules.
+     * @throws ApplicationException Return RECORD_NOT_FOUND exception.
+     */
     @Override
-    public UserImageInsertResponse insertUserImage(UserImageInsertRequest request) {
-        return new UserImageInsertResponse();
+    public UserResponse update(Long id, @Valid UserUpdateRequest userUpdateRequest)
+            throws ApplicationException {
+        UserEntity entity = userRepository
+                .findByIdAndActiveTrue(id)
+                .orElseThrow(() ->
+                new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                        AppParameter.get("userId", id)));
+
+        if (userUpdateRequest.getName() != null
+                && !userUpdateRequest.getName().trim().isEmpty()) {
+            entity.getFullName().setName(userUpdateRequest.getName());
+        }
+
+        if (userUpdateRequest.getLastName() != null
+                && !userUpdateRequest.getLastName().trim().isEmpty()) {
+            entity.getFullName().setLastName(userUpdateRequest.getLastName());
+        }
+
+        if (userUpdateRequest.getGender() != null
+                && !userUpdateRequest.getGender().isEmpty()) {
+            entity.setGender(Gender.valueOf(userUpdateRequest.getGender()));
+        }
+
+        if (userUpdateRequest.getMobilePhone() != null
+                && !userUpdateRequest.getMobilePhone().isEmpty()) {
+            Phone phone = new Phone();
+            phone.setMobilePhone(userUpdateRequest.getMobilePhone());
+            entity.setPhone(phone);
+        }
+
+        userRepository.save(entity);
+        return userMapper.entityToUserResponse(entity);
     }
 
     private void setDefaultUserRole(UserEntity userEntity){
