@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -66,6 +67,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Finds the user with given id and returns a UserResponse object.
+     *
      * @param id Id of the user.
      * @return UserResponse representation of the found user.
      * @throws ApplicationException Returns RECORD_NOT_FOUND exception.
@@ -74,7 +76,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse getOne(Long id) throws ApplicationException {
         Optional<UserEntity> optionalUserEntity = userRepository
                 .findByIdAndActiveTrue(id);
-        if(!optionalUserEntity.isPresent()) {
+        if (!optionalUserEntity.isPresent()) {
             throw new ApplicationException(AppMessage.RECORD_NOT_FOUND);
         }
 
@@ -83,6 +85,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Returns a paged response of users.
+     *
      * @param page Page number.
      * @param size Size of page.
      * @return PageResponse representation of UserResponse.
@@ -98,55 +101,61 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Deactivates a user.
+     *
      * @param id Id of the user.
      * @throws ApplicationException Returns RECORD_NOT_FOUND exception.
      */
     @Override
     public void delete(Long id)
-            throws ApplicationException  {
+            throws ApplicationException {
         UserEntity entity = userRepository
                 .findByIdAndActiveTrue(id)
                 .orElseThrow(() ->
-                new ApplicationException(AppMessage.RECORD_NOT_FOUND,
-                        AppParameter.get("userId", id)));
+                        new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                                AppParameter.get("userId", id)));
         entity.setActive(false);
         userRepository.save(entity);
     }
 
     /**
      * Updates User entity with provided field values.
-     * @param id Id of the user entity.
-     * @param userUpdateRequest An object holding updatable fields and vaules.
+     *
+     * @param id User id.
+     * @param request An object holding updatable fields and values.
      * @throws ApplicationException Return RECORD_NOT_FOUND exception.
      */
     @Override
-    public UserResponse update(Long id, @Valid UserUpdateRequest userUpdateRequest)
+    public UserResponse update(Long id, @Valid UserUpdateRequest request)
             throws ApplicationException {
         UserEntity entity = userRepository
                 .findByIdAndActiveTrue(id)
                 .orElseThrow(() ->
-                new ApplicationException(AppMessage.RECORD_NOT_FOUND,
-                        AppParameter.get("userId", id)));
+                        new ApplicationException(AppMessage.RECORD_NOT_FOUND,
+                                AppParameter.get("userId", id)));
 
-        if (userUpdateRequest.getName() != null
-                && !userUpdateRequest.getName().trim().isEmpty()) {
-            entity.getFullName().setName(userUpdateRequest.getName());
+        if (request.getName() != null
+                && !request.getName().trim().isEmpty()) {
+            entity.getFullName().setName(request.getName());
         }
 
-        if (userUpdateRequest.getLastName() != null
-                && !userUpdateRequest.getLastName().trim().isEmpty()) {
-            entity.getFullName().setLastName(userUpdateRequest.getLastName());
+        if (request.getLastName() != null
+                && !request.getLastName().trim().isEmpty()) {
+            entity.getFullName().setLastName(request.getLastName());
         }
 
-        if (userUpdateRequest.getGender() != null
-                && !userUpdateRequest.getGender().isEmpty()) {
-            entity.setGender(Gender.valueOf(userUpdateRequest.getGender()));
+        if (request.getGender() != null
+                && !request.getGender().isEmpty()) {
+            String genderValue = request.getGender().trim()
+                    .toLowerCase(Locale.ROOT);
+            Gender gender = genderValue.equals("e")
+                    ? Gender.MALE : Gender.FEMALE;
+            entity.setGender(gender);
         }
 
-        if (userUpdateRequest.getMobilePhone() != null
-                && !userUpdateRequest.getMobilePhone().isEmpty()) {
+        if (request.getMobilePhone() != null
+                && !request.getMobilePhone().isEmpty()) {
             Phone phone = new Phone();
-            phone.setMobilePhone(userUpdateRequest.getMobilePhone());
+            phone.setMobilePhone(request.getMobilePhone());
             entity.setPhone(phone);
         }
 
@@ -154,10 +163,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.entityToUserResponse(entity);
     }
 
-    private void setDefaultUserRole(UserEntity userEntity){
+    private void setDefaultUserRole(UserEntity userEntity) {
         Optional<UserRoleEntity> defaultUserRoleOptional = userRoleRepository.findById(1L);
         UserRoleEntity userRoleEntity = null;
-        if (defaultUserRoleOptional.isPresent()){
+        if (defaultUserRoleOptional.isPresent()) {
             userRoleEntity = defaultUserRoleOptional.get();
             userRoleEntity.getUsers().add(userEntity);
         }
