@@ -133,29 +133,27 @@ public class UserServiceImpl implements UserService {
                         new ApplicationException(AppMessage.RECORD_NOT_FOUND,
                                 AppParameter.get("userId", id)));
 
-        if (request.getName() != null
-                && !request.getName().trim().isEmpty()) {
-            entity.getFullName().setName(request.getName());
+        String name = request.getName();
+        String lastName = request.getLastName();
+        String genderValue = request.getGender();
+        String mobilePhone = request.getMobilePhone();
+
+        if (name != null && !name.isBlank()) {
+            entity.getFullName().setName(name);
         }
 
-        if (request.getLastName() != null
-                && !request.getLastName().trim().isEmpty()) {
-            entity.getFullName().setLastName(request.getLastName());
+        if (lastName != null && !lastName.isBlank()) {
+            entity.getFullName().setLastName(lastName);
         }
 
-        if (request.getGender() != null
-                && !request.getGender().isEmpty()) {
-            String genderValue = request.getGender().trim()
-                    .toLowerCase(Locale.ROOT);
-            Gender gender = genderValue.equals("e")
+        if (genderValue != null && !genderValue.isBlank()) {
+            Gender gender = genderValue.toLowerCase(Locale.ROOT).equals("e")
                     ? Gender.MALE : Gender.FEMALE;
             entity.setGender(gender);
         }
 
-        if (request.getMobilePhone() != null
-                && !request.getMobilePhone().isEmpty()) {
-            Phone phone = new Phone();
-            phone.setMobilePhone(request.getMobilePhone());
+        if (mobilePhone != null && !mobilePhone.isBlank()) {
+            Phone phone = new Phone(mobilePhone);
             entity.setPhone(phone);
         }
 
