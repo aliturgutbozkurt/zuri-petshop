@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Objects;
 
 /**
- * Request object for user image creation.
+ * Request object for user image insertion.
  *
  * @author mstar
  * @version 1.0
