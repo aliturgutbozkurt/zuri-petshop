@@ -48,6 +48,7 @@ In petshop-be/application/src/main/resources/application.properties
 ####Insert data using mysql Workbench by running these two sql files:
 * auth_role.sql
 * users.sql
+* 
 
 ####Test connection via postman: 
 Method : POST
