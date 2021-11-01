@@ -46,6 +46,7 @@ In petshop-be/application/src/main/resources/application.properties
   * spring.datasource.url=jdbc:mysql://localhost:3306/petshop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=CET
 
 ####Insert data using mysql Workbench by running these two sql files:
+Files can be obtained separately
 * auth_role.sql
 * users.sql 
 
