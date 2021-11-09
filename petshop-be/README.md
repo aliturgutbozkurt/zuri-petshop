@@ -40,14 +40,17 @@ In order to setup and run PetShop application we need to install following appli
 ####Change the settings with the given user and password:
 In petshop-be/application/src/main/resources/application.properties 
 
-* Database connetion settings (please change the user, password and timezone):
+* Database connetion setting: (please change the user, password and timezone):
   * spring.datasource.username=user
   * spring.datasource.password=password
   * spring.datasource.url=jdbc:mysql://localhost:3306/petshop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=CET
 
 ####Insert data using mysql Workbench by running these two sql files:
+Files can be obtained separately
 * auth_role.sql
-* users.sql
+* users.sql 
+
+
 
 ####Test connection via postman: 
 Method : POST
