@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UserRepository extends ExtendedQueryDslJpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByEmailAndActiveTrue(String email);
     Page<UserEntity> findAllByActiveTrue(@PageableDefault() Pageable pageRequest);
     Optional<UserEntity> findByIdAndActiveTrue(Long id);
-    Optional<UserEntity> findByIdAndActiveFalse(Long id);
 }
