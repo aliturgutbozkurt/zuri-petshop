@@ -1,64 +1,35 @@
-import {StatusBar} from 'expo-status-bar';
-import React from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper'
-import {NavigationContainer} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import {theme} from './src/core/theme'
-import {Provider} from 'react-redux'
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from 'expo-app-loading';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-const myIcon = <Icon name="rocket" size={30} color="#900"/>;
-import {
-    StartScreen,
-    LoginScreen,
-    RegisterScreen,
-    ResetPasswordScreen,
-    Dashboard
-} from './src/screens'
-import {injectStore} from "./src/common/axios";
-import {store} from "./src/store/store";
-
-injectStore(store);
-
+import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
+import OfflineNotice from "./app/components/OfflineNotice";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import AuthContext from "./app/auth/context";
+import authStorage from "./app/auth/storage";
+import { navigationRef } from "./app/navigation/rootNavigation";
 
 export default function App() {
+  const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState(false);
 
+  const restoreUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
+  };
 
-    const styles = StyleSheet.create({
-        backgroundStyle: {
-            margin: Dimensions.get('window').width * 0.05,
-        }
-    })
-
-    const Stack = createStackNavigator()
-
+  if (!isReady)
     return (
-        <Provider store={store}>
-
-            <PaperProvider theme={theme}>
-                <StatusBar/>
-                <NavigationContainer>
-                    <Stack.Navigator
-                        initialRouteName="StartScreen"
-                        screenOptions={{
-                            headerShown: false,
-                        }}
-                    >
-                        <Stack.Screen name="StartScreen" component={StartScreen}/>
-                        <Stack.Screen name="LoginScreen" component={LoginScreen}/>
-                        <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-                        <Stack.Screen name="Dashboard" component={Dashboard}/>
-                        <Stack.Screen
-                            name="ResetPasswordScreen"
-                            component={ResetPasswordScreen}
-                        />
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </PaperProvider>
-        </Provider>
+      <AppLoading startAsync={restoreUser} onError={()=>{}} onFinish={() => setIsReady(true)} />
     );
 
-
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      <OfflineNotice />
+      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+        {user ? <AppNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 }

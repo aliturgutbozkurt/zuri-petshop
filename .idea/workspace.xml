@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b1753b8a-ab25-4efd-9b19-0ca84296d2a6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/arrow_back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/arrow_back@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/background_dot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/background_dot@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/assets/logo@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/common/asyncStorageService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/common/axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/BackButton.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/Background.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/Button.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/CartCategoryItem/CartCategoryItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/CartProductItem/CartProductItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/CategoryItemList/CategoryItemList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/ImageCarusel/ImageCarousel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/Logo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/Paragraph.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/ProductItem/ProductItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/ProductItemList/ProductItemList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/QuantitySelector/QuantitySelector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/components/TextInput.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/context/storeContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/core/theme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/helpers/emailValidator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/helpers/nameValidator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/helpers/passwordValidator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/Dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/ListCategories.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/ListProducts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/LoginScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/RegisterScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/ResetPasswordScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/StartScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/screens/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/apiactions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/category.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/configureStore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/entities.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/middleware/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/middleware/logger.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/middleware/toast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/products.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/petshop-mobile/src/store/tests/bugs.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petshop-mobile/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/petshop-mobile/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petshop-mobile/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/petshop-mobile/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petshop-mobile/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/petshop-mobile/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petshop-mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/petshop-mobile/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="20t1o0xQA6if5BKiRyFfjBUkITH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../End" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1753b8a-ab25-4efd-9b19-0ca84296d2a6" name="Default Changelist" comment="" />
+      <created>1636849241352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1636849241352</updated>
+      <workItem from="1636849243188" duration="49000" />
+      <workItem from="1636849325814" duration="29000" />
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="804" y="310" key="FileChooserDialogImpl" timestamp="1636849353285">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="804" y="310" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1636849353285" />
+  </component>
+</project>
