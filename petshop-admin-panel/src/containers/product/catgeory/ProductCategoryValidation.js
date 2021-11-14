@@ -1,4 +1,4 @@
-import {isEmptyOrNull} from "../../../utils/validationUtil";
+import {isEmptyOrNull} from "../../../utils/validationUtil.js";
 
 export let nameError = [];
 export let depthError = [];

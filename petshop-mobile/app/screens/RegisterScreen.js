@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
-import Screen from "../components/Screen";
-import usersApi from "../api/users";
-import authApi from "../api/auth";
-import useAuth from "../auth/useAuth";
+import Screen from "../components/Screen.js";
+import usersApi from "../api/users.js";
+import authApi from "../api/auth.js";
+import useAuth from "../auth/useAuth.js";
 import {
   ErrorMessage,
   Form,
   FormField,
   SubmitButton,
-} from "../components/forms";
-import useApi from "../hooks/useApi";
-import ActivityIndicator from "../components/ActivityIndicator";
+} from "../components/forms.js";
+import useApi from "../hooks/useApi.js";
+import ActivityIndicator from "../components/ActivityIndicator.js";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label("Name"),

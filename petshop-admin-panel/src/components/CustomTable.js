@@ -19,7 +19,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import {pageProducts} from "../containers/product/product/ProductService";
+import {pageProducts} from "../containers/product/product/ProductService.js";
 
 const useStyles1 = makeStyles((theme) => ({
     root: {

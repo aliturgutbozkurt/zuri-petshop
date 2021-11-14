@@ -7,8 +7,8 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import {createCategoryImage, createProductCategory} from "../ProductCategoryService";
-import CategoryList from "../CategoryList";
+import {createCategoryImage, createProductCategory} from "../ProductCategoryService.js";
+import CategoryList from "../CategoryList.js";
 import "./CategoryModal.css";
 import {
     emptyValidationErrors,
@@ -18,9 +18,9 @@ import {
     photoUrlError,
     validateDepth,
     validateName, validatePhotoUrl
-} from "../ProductCategoryValidation";
-import {createProductImage} from "../../product/ProductImageService";
-import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert";
+} from "../ProductCategoryValidation.js";
+import {createProductImage} from "../../product/ProductImageService.js";
+import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert.js";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

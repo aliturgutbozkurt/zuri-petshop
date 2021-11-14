@@ -1,4 +1,4 @@
-import request from "../../common/request";
+import request from "../../common/request.js";
 
 /**
  * Retrieves paged list of users.

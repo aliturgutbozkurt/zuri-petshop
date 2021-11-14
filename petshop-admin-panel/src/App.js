@@ -1,20 +1,20 @@
 import './App.css';
-import SignIn from "./containers/signIn/SignIn";
+import SignIn from "./containers/signIn/SignIn.js";
 import React from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-import http from "./common/axios";
-import {requestLogout} from "./actions/loginActions";
-import {history} from "./common/history";
-import Home from "./containers/home/Home";
-import PrivateRoute from "./hoc/PrivateRoute";
-import DefaultLayout from "./layouts/DefaultLayout";
+import http from "./common/axios.js";
+import {requestLogout} from "./actions/loginActions.js";
+import {history} from "./common/history.js";
+import Home from "./containers/home/Home.js";
+import PrivateRoute from "./hoc/PrivateRoute.js";
+import DefaultLayout from "./layouts/DefaultLayout.js";
 import {Redirect} from "react-router";
-import ProductCategory from "./containers/product/catgeory/ProductCategory";
-import Product from "./containers/product/product/Product";
-import User from "./containers/user/User";
+import ProductCategory from "./containers/product/catgeory/ProductCategory.js";
+import Product from "./containers/product/product/Product.js";
+import User from "./containers/user/User.js";
 
 
 function App(props) {

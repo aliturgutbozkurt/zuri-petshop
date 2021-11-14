@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {bindActionCreators} from "redux";
-import {DoLogin, requestLogin} from "../../actions/loginActions";
+import {DoLogin, requestLogin} from "../../actions/loginActions.js";
 import { connect } from "react-redux";
 
 function Copyright() {

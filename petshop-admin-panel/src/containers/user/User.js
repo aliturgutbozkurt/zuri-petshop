@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import CustomTable from "../../components/CustomTable";
-import {pageUsers, getUserById, deleteUserById} from "./UserService";
-import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../components/Alert";
-import ViewUserModal from "./modal/ViewUserModal";
+import CustomTable from "../../components/CustomTable.js";
+import {pageUsers, getUserById, deleteUserById} from "./UserService.js";
+import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../components/Alert.js";
+import ViewUserModal from "./modal/ViewUserModal.js";
 
 
 const columns = [

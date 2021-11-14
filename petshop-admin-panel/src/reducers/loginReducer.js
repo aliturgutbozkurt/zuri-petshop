@@ -4,8 +4,8 @@ import {
     REQUEST_ERROR,
     LOGIN_INFO_RECEIVED,
     LOGOUT_SUCCESS
-} from "../actions/loginActions";
-import * as localStorageService from "../services/localStorageService"
+} from "../actions/loginActions.js";
+import * as localStorageService from "../services/localStorageService.js"
 
 const initialState = {
     error: false,

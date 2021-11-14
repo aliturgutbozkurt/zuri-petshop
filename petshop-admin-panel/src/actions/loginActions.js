@@ -1,4 +1,4 @@
-import request from "../common/request";
+import request from "../common/request.js";
 
 export const REQUEST_LOGIN = "REQUEST_LOGIN";
 export const LOGIN_INFO_RECEIVED = "LOGIN_INFO_RECEIVED";

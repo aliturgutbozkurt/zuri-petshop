@@ -2,8 +2,8 @@ import React from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 
-import Text from "./Text";
-import colors from "../config/colors";
+import Text from "./Text.js";
+import colors from "../config/colors.js";
 
 function Card({ title, subTitle, imageUrl, onPress, thumbnailUrl }) {
   return (

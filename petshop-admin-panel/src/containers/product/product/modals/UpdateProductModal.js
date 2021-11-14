@@ -7,14 +7,14 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import React, {useEffect, useRef, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
-import CategoryList from "../../catgeory/CategoryList";
+import CategoryList from "../../catgeory/CategoryList.js";
 import Divider from "@material-ui/core/Divider";
-import {createProductCategory, updateProductCategory} from "../../catgeory/ProductCategoryService";
-import {createProductImage} from "../ProductImageService";
-import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert";
-import {createProduct, updateProduct} from "../ProductService";
+import {createProductCategory, updateProductCategory} from "../../catgeory/ProductCategoryService.js";
+import {createProductImage} from "../ProductImageService.js";
+import {createErrorAlert, createSuccessAlert} from "../../../../components/Alert.js";
+import {createProduct, updateProduct} from "../ProductService.js";
 import "./AddProductModal.css";
-import UpdateCategoryList from "../../catgeory/UpdateCategoryList";
+import UpdateCategoryList from "../../catgeory/UpdateCategoryList.js";
 import {
     aboutError,
     activeCategoryError,
@@ -23,7 +23,7 @@ import {
     allPhotoError,
     oldPriceError,
     priceError, validateName, validatePrice, validateCategory, validatePhoto, validateAbout, validateOldPrice, emptyValidationErrors
-} from "../ProductValidation";
+} from "../ProductValidation.js";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
-import { ListItem, ListItemSeparator } from "../components/lists";
-import colors from "../config/colors";
-import Icon from "../components/Icon";
-import routes from "../navigation/routes";
-import Screen from "../components/Screen";
-import useAuth from "../auth/useAuth";
+import { ListItem, ListItemSeparator } from "../components/lists.js";
+import colors from "../config/colors.js";
+import Icon from "../components/Icon.js";
+import routes from "../navigation/routes.js";
+import Screen from "../components/Screen.js";
+import useAuth from "../auth/useAuth.js";
 
 const menuItems = [
   {

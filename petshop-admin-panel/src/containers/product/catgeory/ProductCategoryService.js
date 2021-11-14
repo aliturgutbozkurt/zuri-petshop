@@ -1,4 +1,4 @@
-import request from "../../../common/request";
+import request from "../../../common/request.js";
 
 
 export const pageCategoriesByParentId = (parentId, page, size) => {

@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import {BrowserRouter as Router} from "react-router-dom";
 import {Provider} from "react-redux";
-import configureStore from "./store";
-import rootSaga from "./sagas";
+import configureStore from "./store.js";
+import rootSaga from "./sagas.js";
 
 export const store = configureStore();
 store.runSaga(rootSaga);

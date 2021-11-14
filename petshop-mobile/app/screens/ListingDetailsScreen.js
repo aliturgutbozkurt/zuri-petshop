@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { Image } from "react-native-expo-image-cache";
 
-import colors from "../config/colors";
-import ContactSellerForm from "../components/ContactSellerForm";
-import ListItem from "../components/lists/ListItem";
-import Text from "../components/Text";
+import colors from "../config/colors.js";
+import ContactSellerForm from "../components/ContactSellerForm.js";
+import ListItem from "../components/lists/ListItem.js";
+import Text from "../components/Text.js";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function ListingDetailsScreen({ route }) {

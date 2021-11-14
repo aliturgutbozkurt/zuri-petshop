@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormikContext } from "formik";
 
-import Picker from "../Picker";
-import ErrorMessage from "./ErrorMessage";
+import Picker from "../Picker.js";
+import ErrorMessage from "./ErrorMessage.js";
 
 function AppFormPicker({
   items,

@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import "./CategoryModal.css";
-import {generateCategoryStr} from "../../ProductUtil";
+import {generateCategoryStr} from "../../ProductUtil.js";
 
 
 function ViewCategoryModal(props) {

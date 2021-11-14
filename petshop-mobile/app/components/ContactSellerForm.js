@@ -3,8 +3,8 @@ import { Alert, Keyboard } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Yup from "yup";
 
-import { Form, FormField, SubmitButton } from "./forms";
-import messagesApi from "../api/messages";
+import { Form, FormField, SubmitButton } from "./forms.js";
+import messagesApi from "../api/messages.js";
 
 function ContactSellerForm({ listing }) {
   const handleSubmit = async ({ message }, { resetForm }) => {

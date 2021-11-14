@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 
-import expoPushTokensApi from "../api/expoPushTokens";
+import expoPushTokensApi from "../api/expoPushTokens.js";
 
 const useNotifications = (notificationListener) => {
   useEffect(() => {

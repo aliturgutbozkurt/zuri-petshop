@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as localStorageService from "../services/localStorageService";
+import * as localStorageService from "../services/localStorageService.js";
 
 const http = axios.create();
 

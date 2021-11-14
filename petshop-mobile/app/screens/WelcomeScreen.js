@@ -1,8 +1,8 @@
 import React from "react";
 import {ImageBackground, StyleSheet, View, Image, Text} from "react-native";
 
-import Button from "../components/Button";
-import routes from "../navigation/routes";
+import Button from "../components/Button.js";
+import routes from "../navigation/routes.js";
 
 function WelcomeScreen({navigation}) {
     return (

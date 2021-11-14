@@ -2,13 +2,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import AccountNavigator from "./AccountNavigator";
-import FeedNavigator from "./FeedNavigator";
-import ListingEditScreen from "../screens/ListingEditScreen";
-import NewListingButton from "./NewListingButton";
-import routes from "./routes";
-import navigation from "./rootNavigation";
-import useNotifications from "../hooks/useNotifications";
+import AccountNavigator from "./AccountNavigator.js";
+import FeedNavigator from "./FeedNavigator.js";
+import ListingEditScreen from "../screens/ListingEditScreen.js";
+import NewListingButton from "./NewListingButton.js";
+import routes from "./routes.js";
+import navigation from "./rootNavigation.js";
+import useNotifications from "../hooks/useNotifications.js";
 
 const Tab = createBottomTabNavigator();
 

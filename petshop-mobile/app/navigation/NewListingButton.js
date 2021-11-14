@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import colors from "../config/colors";
+import colors from "../config/colors.js";
 
 function NewListingButton({ onPress }) {
   return (

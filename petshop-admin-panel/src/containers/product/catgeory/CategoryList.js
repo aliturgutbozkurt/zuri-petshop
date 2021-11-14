@@ -2,7 +2,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import React, {useEffect, useState} from "react";
-import {listCategoriesByParentId} from "./ProductCategoryService";
+import {listCategoriesByParentId} from "./ProductCategoryService.js";
 import {makeStyles} from "@material-ui/core/styles";
 import {bindActionCreators} from "redux";
 

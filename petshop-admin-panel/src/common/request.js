@@ -1,4 +1,4 @@
-import http from "../common/axios";
+import http from "../common/axios.js";
 import {BASE_URL} from "../env.json";
 import {trackPromise} from "react-promise-tracker";
 import { store } from '../index';

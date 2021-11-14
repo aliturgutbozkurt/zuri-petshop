@@ -1,12 +1,12 @@
 import {take, put, all, call, fork} from "redux-saga/effects";
-import * as localStorageService from "../services/localStorageService"
+import * as localStorageService from "../services/localStorageService.js"
 
 import {
     REQUEST_LOGIN,
     DoLogin,
     receiveLoginInfo,
     REQUEST_LOGOUT, receiveLogout
-} from "../actions/loginActions";
+} from "../actions/loginActions.js";
 
 export function* startup() {
 }

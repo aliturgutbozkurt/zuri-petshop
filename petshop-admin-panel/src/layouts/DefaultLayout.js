@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemLink from './ListItemLink';
+import ListItemLink from './ListItemLink.js';
 import MailIcon from '@material-ui/icons/Mail';
 import PetsIcon from '@material-ui/icons/Pets';
 import CategoryIcon from '@material-ui/icons/Category';

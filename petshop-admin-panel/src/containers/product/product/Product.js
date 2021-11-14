@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import Button from '@material-ui/core/Button';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import CustomTable from "../../../components/CustomTable";
+import CustomTable from "../../../components/CustomTable.js";
 import AddProductModal from "./modals/AddProductModal";
-import {deleteProductById, getProductById, pageProducts} from "./ProductService";
-import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../../components/Alert";
-import ViewProductModal from "./modals/ViewProductModal";
-import UpdateCategoryModal from "../catgeory/modals/UpdateCategoryModal";
-import UpdateProductModal from "./modals/UpdateProductModal";
-import {getCategoryById} from "../catgeory/ProductCategoryService";
+import {deleteProductById, getProductById, pageProducts} from "./ProductService.js";
+import {createConfirmAlert, createErrorAlert, createSuccessAlert} from "../../../components/Alert.js";
+import ViewProductModal from "./modals/ViewProductModal.js";
+import UpdateCategoryModal from "../catgeory/modals/UpdateCategoryModal.js";
+import UpdateProductModal from "./modals/UpdateProductModal.js";
+import {getCategoryById} from "../catgeory/ProductCategoryService.js";
 
 
 const columns = [
