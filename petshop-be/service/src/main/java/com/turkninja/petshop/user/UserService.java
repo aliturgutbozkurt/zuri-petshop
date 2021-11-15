@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
 
     void signUp(UserSignupRequest request);
+    void addAdminUser(UserSignupRequest request);
     PageResponse<UserResponse> list(int page, int size);
     UserResponse getOne(Long id);
     UserResponse update(Long id, UserUpdateRequest request);
