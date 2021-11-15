@@ -29,28 +29,36 @@ In order to setup and run PetShop application we need to install following appli
 
 * git clone https://github.com/aliturgutbozkurt/zuri-petshop.git
 * In terminal open mysql client and run the following commands:
-    * CREATE USER 'user'@'localhost' IDENTIFIED BY 'password'; 
-    * GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';
-
-####Run Project Main appliction with the settings below:
-* create run configuration:
-  * Main Class: com.turkninja.petshop.PetshopApplication
-  * Use classpath of module: application 
-  
-####Change the settings with the given user and password:
-In petshop-be/application/src/main/resources/application.properties 
-
-* Database connetion setting: (please change the user, password and timezone):
-  * spring.datasource.username=user
-  * spring.datasource.password=password
-  * spring.datasource.url=jdbc:mysql://localhost:3306/petshop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=CET
+    * `CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';`
+    * `GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';`
 
 ####Insert data using mysql Workbench by running these two sql files:
 Files can be obtained separately
 * auth_role.sql
-* users.sql 
+* users.sql
 
+####Change the settings with the given user and password:
+Below is a code snippet which shows sample connection parameters for MySQL server. Those parameters are
+included in the `application-local.properties` file under the `application`
+module's
+[resources](https://github.com/aliturgutbozkurt/zuri-petshop/blob/master/petshop-be/application/src/main/resources/)
+folder and should be set according to the local MySQL server setup.
 
+````properties
+spring.datasource.url=connectionStringForMySQL
+spring.datasource.username=username
+spring.datasource.password=password
+````
+
+_Changes to `application-local.properties` file should be tracked locally and should not be
+checked into source control in order to keep the example settings and avoid pushing sensitive data
+by accident. It can be achieved by adding `application-local.properties` file into `.git/info/exclude` folder.
+See your IDE manual to learn how to exclude files in git._
+
+####Run Project Main appliction with the settings below:
+* Create run configuration:
+  * Main Class: com.turkninja.petshop.PetshopApplication
+  * Use classpath of module: application
 
 ####Test connection via postman: 
 Method : POST
