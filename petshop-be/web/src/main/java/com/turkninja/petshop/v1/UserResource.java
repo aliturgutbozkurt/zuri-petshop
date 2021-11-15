@@ -34,6 +34,20 @@ public class UserResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> addAdminUser(@Valid @RequestBody UserSignupRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null
+                || auth
+                .getAuthorities()
+                .stream()
+                .anyMatch(r -> !r.getAuthority().equals("ROLE_SUPER_ADMIN"))) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        userService.addAdminUser(request);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @GetMapping()
     public ResponseEntity<PageResponse<UserResponse>> pageList(
             @RequestParam("page") int page,
@@ -43,7 +57,7 @@ public class UserResource {
                 || auth
                 .getAuthorities()
                 .stream()
-                .anyMatch(r -> !r.getAuthority().equals("ROLE_ADMIN"))) {
+                .anyMatch(r -> !r.getAuthority().contains("ADMIN"))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         PageResponse<UserResponse> pageResponse = userService.list(page, size);
@@ -71,7 +85,7 @@ public class UserResource {
                 || auth
                 .getAuthorities()
                 .stream()
-                .anyMatch(r -> !r.getAuthority().equals("ROLE_ADMIN"))) {
+                .anyMatch(r -> !r.getAuthority().contains("ADMIN"))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         userService.delete(id);
