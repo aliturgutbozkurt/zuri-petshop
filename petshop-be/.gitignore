@@ -34,3 +34,4 @@ build/
 
 ### security ###
 **/src/main/resources/zuri-petshop-firebase.json
+**/src/main/resources/application-local.properties
