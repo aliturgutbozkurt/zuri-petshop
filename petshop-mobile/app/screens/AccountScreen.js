@@ -10,14 +10,14 @@ import useAuth from "../auth/useAuth";
 
 const menuItems = [
   {
-    title: "My Listings",
+    title: "Favorilerim",
     icon: {
-      name: "format-list-bulleted",
+      name: "heart",
       backgroundColor: colors.primary,
     },
   },
   {
-    title: "My Messages",
+    title: "Taleplerim",
     icon: {
       name: "email",
       backgroundColor: colors.secondary,
@@ -33,9 +33,9 @@ function AccountScreen({ navigation }) {
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title={user.name}
-          subTitle={user.email}
-          image={require("../assets/mosh.jpg")}
+          title={user.sub}
+          //subTitle={user.sub}
+          image={require("../assets/small-avatar.jpg")}
         />
       </View>
       <View style={styles.container}>
@@ -58,7 +58,7 @@ function AccountScreen({ navigation }) {
         />
       </View>
       <ListItem
-        title="Log Out"
+        title="Çıkış"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
         onPress={() => logOut()}
       />

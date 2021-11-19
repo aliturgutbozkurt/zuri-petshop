@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DoneWithIt",
-    "slug": "DoneWithIt",
+    "name": "ZuriPetshop",
+    "slug": "ZuriPetshop",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,14 +17,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.codewithmosh.donewithit",
+      "bundleIdentifier": "com.turkninja.zuripetshop",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.codewithmosh.donewithit",
+      "package": "com.turkninja.zuripetshop",
       "versionCode": 1
     },
-    "description": "A marketplace for selling the stuff you don't need anymore.",
+    "description": "Petshop mobil ecommerce project.",
     "notification": {
       "iosDisplayInForeground": true
     },

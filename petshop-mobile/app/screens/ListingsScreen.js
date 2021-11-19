@@ -15,7 +15,7 @@ function ListingsScreen({ navigation }) {
   const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
-    getListingsApi.request();
+    //getListingsApi.request();
   }, []);
 
   return (
