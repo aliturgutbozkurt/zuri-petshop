@@ -1,6 +1,7 @@
 package com.turkninja.petshop.api.response.order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.turkninja.petshop.api.response.user.UserAddressGetResponse;
 import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
@@ -37,5 +38,5 @@ public class OrderGetResponse {
     private String dealerMessage;
     private String promotionCode;
     private List<OrderItemGetResponse> orderItems;
-    private UserAddressEntity userAddress;
+    private UserAddressGetResponse userAddress;
 }

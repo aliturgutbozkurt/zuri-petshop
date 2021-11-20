@@ -4,6 +4,7 @@ import com.turkninja.petshop.*;
 import com.turkninja.petshop.api.request.order.OrderCreateRequest;
 import com.turkninja.petshop.api.request.order.OrderProductAddRequest;
 import com.turkninja.petshop.api.request.order.OrderProductRemoveRequest;
+import com.turkninja.petshop.api.request.sales.SalesCreateRequest;
 import com.turkninja.petshop.api.response.order.OrderGetResponse;
 import com.turkninja.petshop.api.response.order.OrderItemGetResponse;
 import com.turkninja.petshop.entity.order.OrderEntity;
@@ -12,16 +13,22 @@ import com.turkninja.petshop.entity.product.ProductEntity;
 import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.enums.OrderState;
+import com.turkninja.petshop.enums.PaymentMethod;
 import com.turkninja.petshop.exception.AppMessage;
 import com.turkninja.petshop.exception.AppParameter;
 import com.turkninja.petshop.exception.ApplicationException;
 import com.turkninja.petshop.mapper.OrderItemMapper;
 import com.turkninja.petshop.mapper.OrderMapper;
 import com.turkninja.petshop.order.OrderService;
+import com.turkninja.petshop.sales.SalesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
+    private final SalesService salesService;
 
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
@@ -76,6 +84,8 @@ public class OrderServiceImpl implements OrderService {
         order.setState(OrderState.NEW);
 
         orderRepository.save(order);
+
+        createSales(order);
 
         return orderMapper.entityToGetResponse(order);
     }
@@ -173,5 +183,17 @@ public class OrderServiceImpl implements OrderService {
         } else {
             orderItemRepository.delete(orderItemEntity);
         }
+    }
+
+    private void createSales(OrderEntity order) {
+        SalesCreateRequest request = SalesCreateRequest.builder()
+                .paymentMethod(order.getPaymentMethod())
+                .amount(order.getPrice())
+                .userId(order.getUser().getId())
+                .isPaid(true)
+                .orderNumber(order.getNumber())
+                .userEmail(order.getUser().getEmail())
+                .build();
+        salesService.create(request);
     }
 }
