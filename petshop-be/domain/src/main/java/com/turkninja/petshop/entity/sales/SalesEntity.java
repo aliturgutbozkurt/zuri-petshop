@@ -32,7 +32,7 @@ public class SalesEntity extends BaseEntity {
     @JoinColumn(name = "ORDER_ID")
     private OrderEntity order;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 }
