@@ -1,6 +1,5 @@
 package com.turkninja.petshop.product;
 
-import com.turkninja.petshop.api.request.product.CreateCategoryRequest;
 import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateCategoryResponse;

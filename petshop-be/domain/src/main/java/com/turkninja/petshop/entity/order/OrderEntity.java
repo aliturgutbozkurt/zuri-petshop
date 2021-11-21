@@ -4,9 +4,11 @@ import com.turkninja.petshop.entity.user.UserAddressEntity;
 import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
+
 import com.turkninja.petshop.sequence.OrderNumberGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;

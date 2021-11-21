@@ -1,9 +1,7 @@
 package com.turkninja.petshop.validation.product;
 
 import com.turkninja.petshop.api.request.product.CreateProductImageRequest;
-import com.turkninja.petshop.api.request.product.UpsertCategoryRequest;
 import com.turkninja.petshop.api.request.product.UpsertProductRequest;
-import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.validation.util.ValidationUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

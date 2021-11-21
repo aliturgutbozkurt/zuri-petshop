@@ -4,7 +4,9 @@ import com.turkninja.petshop.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
