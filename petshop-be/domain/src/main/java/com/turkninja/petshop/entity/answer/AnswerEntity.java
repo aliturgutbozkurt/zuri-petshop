@@ -4,7 +4,6 @@ package com.turkninja.petshop.entity.answer;
 import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.entity.user.UserEntity;
-import com.turkninja.petshop.entity.user.UserRoleEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;

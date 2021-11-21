@@ -4,7 +4,6 @@ import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.enums.OrderState;
 import com.turkninja.petshop.enums.PaymentMethod;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,7 +12,7 @@ import java.sql.Time;
 import java.util.Set;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 @Data
 public class OrderEntity extends BaseEntity {
 

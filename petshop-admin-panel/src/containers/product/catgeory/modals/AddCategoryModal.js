@@ -122,12 +122,12 @@ function AddCategoryModal(props) {
             parentId: activeCategory
         }
 
-        if (!isValid(request)) {
-            setNameErrorArray(nameError);
-            setDepthErrorArray(depthError);
-            setPhotoUrlErrorArray(photoUrlError);
-            return;
-        }
+        // if (!isValid(request)) {
+        //     setNameErrorArray(nameError);
+        //     setDepthErrorArray(depthError);
+        //     setPhotoUrlErrorArray(photoUrlError);
+        //     return;
+        // }
         createProductCategory(request).then(response => {
             console.log("created");
             setName("");

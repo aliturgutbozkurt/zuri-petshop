@@ -3,7 +3,6 @@ package com.turkninja.petshop.entity.order;
 import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.product.ProductEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
