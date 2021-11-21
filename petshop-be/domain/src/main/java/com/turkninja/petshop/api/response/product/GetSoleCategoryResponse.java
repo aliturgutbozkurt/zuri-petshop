@@ -1,11 +1,8 @@
 package com.turkninja.petshop.api.response.product;
 
-import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author ali turgut bozkurt

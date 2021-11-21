@@ -4,9 +4,7 @@ package com.turkninja.petshop.mapper;
 import com.turkninja.petshop.api.request.answer.CreateAnswerRequest;
 import com.turkninja.petshop.api.response.answer.CreateAnswerResponse;
 import com.turkninja.petshop.api.response.answer.GetAllAnswerResponse;
-import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.entity.answer.AnswerEntity;
-import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;

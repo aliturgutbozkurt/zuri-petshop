@@ -4,10 +4,6 @@ import com.turkninja.petshop.api.request.question.CreateQuestionRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.question.CreateQuestionResponse;
 import com.turkninja.petshop.api.response.question.GetQuestionResponse;
-import com.turkninja.petshop.entity.question.QuestionEntity;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
-
-import java.util.List;
 
 public interface QuestionService {
      CreateQuestionResponse createQuestion(CreateQuestionRequest request);

@@ -15,7 +15,7 @@ import {Redirect} from "react-router";
 import ProductCategory from "./containers/product/catgeory/ProductCategory";
 import Product from "./containers/product/product/Product";
 import QuestionList  from"./containers/question/QuestionList";
-
+import ParameterList from "./containers/parameter/ParameterList"
 
 function App(props) {
     return (
@@ -32,8 +32,11 @@ function App(props) {
                                   component={Product}
                                   loggedIn={props.loggedIn}/>
 
-                <PrivateRoute exact path="/questions" layout={DefaultLayout}
+                    <PrivateRoute exact path="/questions" layout={DefaultLayout}
                                   component={QuestionList}
+                                  loggedIn={props.loggedIn}/>
+                    <PrivateRoute exact path="/parameters" layout={DefaultLayout}
+                                  component={ParameterList}
                                   loggedIn={props.loggedIn}/>
                     <Route
                         exact

@@ -101,6 +101,10 @@ const DefaultLayout = ({window: window, component: Component, ...rest}) => {
                     <ListItemIcon><MailIcon/></ListItemIcon>
                     <ListItemLink  to="/questions" primary={'Gelen Sorular'}/>
                 </ListItem>
+                <ListItem button key={2}>
+                    <ListItemIcon><MailIcon/></ListItemIcon>
+                    <ListItemLink  to="/parameters" primary={'Parametreler'}/>
+                </ListItem>
             </List>
             <Divider/>
             <List>

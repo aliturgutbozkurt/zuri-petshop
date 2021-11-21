@@ -5,7 +5,6 @@ import com.turkninja.petshop.api.request.question.CreateQuestionRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.question.CreateQuestionResponse;
 import com.turkninja.petshop.api.response.question.GetQuestionResponse;
-import com.turkninja.petshop.entity.answer.AnswerEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.mapper.QuestionMapper;
 import com.turkninja.petshop.question.QuestionService;
@@ -15,8 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {

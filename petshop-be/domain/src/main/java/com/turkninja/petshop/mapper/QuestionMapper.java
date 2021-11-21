@@ -2,10 +2,8 @@ package com.turkninja.petshop.mapper;
 
 import com.turkninja.petshop.api.request.question.CreateQuestionRequest;
 import com.turkninja.petshop.api.response.common.PageResponse;
-import com.turkninja.petshop.api.response.product.GetCategoryResponse;
 import com.turkninja.petshop.api.response.question.CreateQuestionResponse;
 import com.turkninja.petshop.api.response.question.GetQuestionResponse;
-import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;

@@ -4,9 +4,9 @@ import  {getQuestionById} from "./QuestionService"
 import {getAnswersByQuestionId} from "./AnswerService"
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
 import Button from "@material-ui/core/Button";
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
-import DialogContent from "@material-ui/core/DialogContent";
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -52,7 +52,7 @@ function QuestionDetailsModal(props){
           <Grid justifyContent="left" item xs zeroMinWidth>
             <h4 style={{ margin: 0, textAlign: "left" }}>{question.name}</h4>
             <p style={{ textAlign: "left" }}>
-             {dummyData.explanation}{" "}
+             {question.explanation}{" "}
             </p>
             <p style={{ textAlign: "left", color: "gray" }}>
               posted 1 minute ago
