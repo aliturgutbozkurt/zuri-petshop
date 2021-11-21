@@ -9,6 +9,7 @@ import com.turkninja.petshop.api.response.user.UserResponse;
 import com.turkninja.petshop.entity.user.UserEntity;
 import com.turkninja.petshop.entity.user.UserRoleEntity;
 import com.turkninja.petshop.enums.Gender;
+import com.turkninja.petshop.enums.UserRole;
 import com.turkninja.petshop.exception.AppMessage;
 import com.turkninja.petshop.exception.AppParameter;
 import com.turkninja.petshop.exception.ApplicationException;
@@ -62,6 +63,15 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userMapper.userSignupRequestToUserEntity(request);
         userEntity.setPassword(encodedPassword);
         setDefaultUserRole(userEntity);
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public void addAdminUser(UserSignupRequest request) {
+        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+        UserEntity userEntity = userMapper.userSignupRequestToUserEntity(request);
+        userEntity.setPassword(encodedPassword);
+        setDefaultUserRole(userEntity, UserRole.ADMIN);
         userRepository.save(userEntity);
     }
 
@@ -168,6 +178,15 @@ public class UserServiceImpl implements UserService {
             userRoleEntity = defaultUserRoleOptional.get();
             userRoleEntity.getUsers().add(userEntity);
         }
+        userEntity.setRole(userRoleEntity);
+    }
+
+    private void setDefaultUserRole(UserEntity userEntity, UserRole role) {
+        String roleName = role.name().toUpperCase(Locale.ROOT);
+        UserRoleEntity userRoleEntity = userRoleRepository.findByName(roleName)
+                .orElseThrow(() -> new ApplicationException(AppMessage.BAD_REQUEST,
+                        AppParameter.get("userRoleName", roleName)));
+        userRoleEntity.getUsers().add(userEntity);
         userEntity.setRole(userRoleEntity);
     }
 }
