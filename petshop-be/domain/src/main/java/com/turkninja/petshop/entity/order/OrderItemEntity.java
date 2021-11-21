@@ -2,7 +2,9 @@ package com.turkninja.petshop.entity.order;
 
 import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.product.ProductEntity;
-import lombok.Data;
+
+import lombok.*;
+
 
 import javax.persistence.*;
 
@@ -15,13 +17,10 @@ public class OrderItemEntity extends BaseEntity {
     @JoinColumn(name = "ORDER_ID")
     private OrderEntity order;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PRODUCT_ID")
     private ProductEntity product;
 
-    @Column(name = "PRODUCT_COUNT", nullable = false)
-    private int productCount;
-
-    @JoinColumn(name = "EXPLANATION")
-    private String explanation;
+    @Column(name = "COUNT", nullable = false)
+    private Integer count;
 }

@@ -2,15 +2,15 @@ package com.turkninja.petshop;
 
 import com.turkninja.petshop.base.ExtendedQueryDslJpaRepository;
 import com.turkninja.petshop.entity.order.OrderEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.turkninja.petshop.enums.OrderState;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface OrderRepository extends ExtendedQueryDslJpaRepository<OrderEntity, Long> {
-    Optional<OrderEntity> findByIdAndActiveTrue(Long id);
+public interface OrderRepository extends ExtendedQueryDslJpaRepository<OrderEntity, String> {
+    Optional<OrderEntity> findByNumber(String number);
 
-    Optional<OrderEntity> findByNumberAndActiveTrue(int number);
+    List<OrderEntity> findByUserId(Long userId);
 
-    Page<OrderEntity> findAllByActiveTrue(PageRequest pageRequest);
+    Optional<OrderEntity> findByUserIdAndState(Long userId, OrderState state);
 }

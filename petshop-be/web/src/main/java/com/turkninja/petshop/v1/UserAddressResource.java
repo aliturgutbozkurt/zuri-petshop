@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/api/v1/users/addresses")
 @RequiredArgsConstructor
 public class UserAddressResource {
-
     private final UserAddressService service;
 
     @PostMapping

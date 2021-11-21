@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public enum OrderState implements PersistableEnum<Integer> {
-    NEW(1, "New"), PACKAGED(2, "Packaged"), SHIPPED(3, "Shipped"), DELIVERED(4, "Delivered"), CANCELLED(5, "Cancelled");
+    DRAFT(0, "Draft"), NEW(1, "New"), PACKAGED(2, "Packaged"), SHIPPED(3, "Shipped"), DELIVERED(4, "Delivered"), CANCELLED(5, "Cancelled");
 
     private OrderState(int code, String name) {
         this.code = code;

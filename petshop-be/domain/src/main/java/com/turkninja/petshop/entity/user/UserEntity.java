@@ -4,7 +4,6 @@ import com.turkninja.petshop.entity.answer.AnswerEntity;
 import com.turkninja.petshop.entity.base.BaseEntity;
 import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.enums.Gender;
-import com.turkninja.petshop.value.Address;
 import com.turkninja.petshop.value.FullName;
 import com.turkninja.petshop.value.Image;
 import com.turkninja.petshop.value.Phone;
@@ -15,10 +14,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-/**
- * Created by aliturgut.bozkurt
- * Date: 12/22/18.
- */
 @Data
 @Entity
 @Table(name = "users")
@@ -38,16 +33,13 @@ public class UserEntity extends BaseEntity {
     private Phone phone;
 
     @Embedded
-    private Address address;
-
-    @Embedded
     private Image image;
 
     @Column(name = "gender")
     @Convert(converter = Gender.Converter.class)
     private Gender gender;
 
-    @Column(name = "active",columnDefinition="BOOLEAN DEFAULT true", nullable=false)
+    @Column(name = "active", columnDefinition = "BOOLEAN DEFAULT true", nullable = false)
     private boolean active;
 
     @Column(name = "last_logged_in")

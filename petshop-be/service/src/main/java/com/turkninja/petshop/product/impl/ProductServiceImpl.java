@@ -3,9 +3,9 @@ package com.turkninja.petshop.product.impl;
 import com.turkninja.petshop.ProductCategoryRepository;
 import com.turkninja.petshop.ProductRepository;
 import com.turkninja.petshop.api.request.product.UpsertProductRequest;
-import com.turkninja.petshop.api.response.common.PageResponse;
 import com.turkninja.petshop.api.response.product.CreateProductResponse;
 import com.turkninja.petshop.api.response.product.GetProductResponse;
+import com.turkninja.petshop.api.response.product.ProductSearchCriteria;
 import com.turkninja.petshop.api.response.product.UpdateProductResponse;
 import com.turkninja.petshop.entity.product.ProductCategoryEntity;
 import com.turkninja.petshop.entity.product.ProductEntity;
@@ -14,30 +14,22 @@ import com.turkninja.petshop.exception.AppParameter;
 import com.turkninja.petshop.exception.ApplicationException;
 import com.turkninja.petshop.mapper.ProductMapper;
 import com.turkninja.petshop.product.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-/**
- * @author ali turgut bozkurt
- * Created at 7/12/2021
- */
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-
+    private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductCategoryRepository productCategoryRepository;
-    private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductMapper productMapper, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
-        this.productMapper = productMapper;
-        this.productCategoryRepository = productCategoryRepository;
-        this.productRepository = productRepository;
-    }
 
     @Override
     public GetProductResponse getProductById(Long id) {
@@ -50,17 +42,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageResponse<GetProductResponse> list(int page, int size) {
-        Page<ProductEntity> productEntities =
-                productRepository.findAllByActiveTrue(PageRequest.of(page, size, Sort.by("name")));
-        return productMapper.pageEntitiesToGetPageResponse(productEntities);
-    }
+    public Page<GetProductResponse> search(ProductSearchCriteria searchCriteria, Pageable pageable) {
+        checkProductName(searchCriteria.getName());
 
-    @Override
-    public PageResponse<GetProductResponse> list(int page, int size, Long categoryId) {
-        Page<ProductEntity> productEntities =
-                productRepository.findAllByCategoryIdAndActiveTrue(categoryId,PageRequest.of(page, size, Sort.by("name")));
-        return productMapper.pageEntitiesToGetPageResponse(productEntities);
+        Example<ProductEntity> example = createExample(searchCriteria);
+
+        List<GetProductResponse> products = productRepository.findAll(example, pageable).stream()
+                .map(productMapper::entityToGetResponse)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(products);
     }
 
     @Override
@@ -108,5 +99,27 @@ public class ProductServiceImpl implements ProductService {
                         AppParameter.get("productId", id)));
         productEntity.setActive(false);
         productRepository.save(productEntity);
+    }
+
+    private Example<ProductEntity> createExample(ProductSearchCriteria searchCriteria){
+        Optional<ProductCategoryEntity> productCategory = Optional.empty();
+        if(searchCriteria.getCategoryId() != null){
+            productCategory = productCategoryRepository.findByIdAndActiveTrue(searchCriteria.getCategoryId());
+        }
+
+        ProductEntity product = ProductEntity.builder()
+                .name(searchCriteria.getName())
+                .price(searchCriteria.getPrice())
+                .category(productCategory.isPresent()? productCategory.get() : null)
+                .build();
+
+        ExampleMatcher matcher = ExampleMatcher.matching().withStringMatcher(StringMatcher.CONTAINING);
+        return Example.of(product, matcher);
+    }
+
+    private void checkProductName(String productName) {
+        if (productName != null && productName.length() <= 3) {
+            throw new ApplicationException(AppMessage.METHOD_ARGUMENT_NOT_VALID, AppParameter.get("Product Name", productName));
+        }
     }
 }
