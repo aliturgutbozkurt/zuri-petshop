@@ -11,6 +11,8 @@ import com.turkninja.petshop.entity.question.QuestionEntity;
 import com.turkninja.petshop.mapper.AnswerMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 

@@ -138,21 +138,21 @@ public class UserServiceImpl implements UserService {
         String genderValue = request.getGender();
         String mobilePhone = request.getMobilePhone();
 
-        if (name != null && !name.isBlank()) {
+        if (name != null && !name.isEmpty()) {
             entity.getFullName().setName(name);
         }
 
-        if (lastName != null && !lastName.isBlank()) {
+        if (lastName != null && !lastName.isEmpty()) {
             entity.getFullName().setLastName(lastName);
         }
 
-        if (genderValue != null && !genderValue.isBlank()) {
+        if (genderValue != null && !genderValue.isEmpty()) {
             Gender gender = genderValue.toLowerCase(Locale.ROOT).equals("e")
                     ? Gender.MALE : Gender.FEMALE;
             entity.setGender(gender);
         }
 
-        if (mobilePhone != null && !mobilePhone.isBlank()) {
+        if (mobilePhone != null && !mobilePhone.isEmpty()) {
             Phone phone = new Phone(mobilePhone);
             entity.setPhone(phone);
         }

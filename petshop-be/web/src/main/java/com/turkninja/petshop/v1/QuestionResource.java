@@ -8,10 +8,7 @@ import com.turkninja.petshop.question.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/question")
@@ -27,16 +24,17 @@ public class QuestionResource {
 
 
     @GetMapping("get-question-by-id")
-    public ResponseEntity<GetQuestionResponse> getQuestionById(@RequestParam long questionId){
+    public ResponseEntity<GetQuestionResponse> getQuestionById(@RequestParam long questionId) {
         GetQuestionResponse response = questionService.GetQuestionById(questionId);
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("get-all-questions")
-    public ResponseEntity<PageResponse<GetQuestionResponse>> getAllQuestions(@RequestParam int page, @RequestParam int size){
-        PageResponse<GetQuestionResponse> allQuestions = questionService.getAllQuestions(page,size);
-        return new ResponseEntity<>(allQuestions,HttpStatus.OK);
+    public ResponseEntity<PageResponse<GetQuestionResponse>> getAllQuestions(@RequestParam int page, @RequestParam int size) {
+        PageResponse<GetQuestionResponse> allQuestions = questionService.getAllQuestions(page, size);
+        return new ResponseEntity<>(allQuestions, HttpStatus.OK);
     }
+}
 
 
 
