@@ -9,6 +9,7 @@ import com.turkninja.petshop.api.response.product.UpdateCategoryResponse;
 import com.turkninja.petshop.product.CategoryService;
 import com.turkninja.petshop.validation.product.ProductCategoryValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -46,6 +47,7 @@ public class ProductCategoryResource {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Cacheable(value = "cacheListCategoryPage")
     @GetMapping
     public ResponseEntity<PageResponse<GetCategoryResponse>> listPage(
             @RequestParam("page") int page, @RequestParam("size") int size) {

@@ -5,6 +5,7 @@ import com.turkninja.petshop.appException.AppExceptionService;
 import com.turkninja.petshop.entity.applicationexception.AppExceptionEntity;
 import com.turkninja.petshop.exception.AppMessageDescription;
 import com.turkninja.petshop.exception.ApplicationException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class AppExceptionServiceImpl implements AppExceptionService {
         this.appExceptionRepository = appExceptionRepository;
     }
 
+    @Cacheable(value = "cacheException")
     @Override
     public AppMessageDescription generateExceptionMessageByCode(ApplicationException exception) {
         Optional<AppExceptionEntity> appExceptionOptional =
